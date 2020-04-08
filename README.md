@@ -18,4 +18,4 @@ Some prerequisite knowledge is assumed:
 
 This textbook is a living document, any suggestions or errors should be reported by creating an issue on this GitHub repository.
 
-View the [changelog] to see recent edits.
+View the [changelog]([https://github.com/zackatoo/QuantumComputingSG/blob/master/QCSG%20Changelog.md](https://github.com/zackatoo/QuantumComputingSG/blob/master/QCSG Changelog.md)) to see recent edits.
