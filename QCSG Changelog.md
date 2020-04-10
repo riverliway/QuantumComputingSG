@@ -1,5 +1,10 @@
 # QCSG Changelog
 
+### Version 0.1.0
+
+* Wrote Section 2.1
+* Wrote Section 2.2
+
 #### Version 0.0.2
 
 * Created outline of chapters 3-5
@@ -21,3 +26,6 @@
 * Created outline of the second chapter
 * Wrote the proof for rotation around the X axis in spherical coordinates
 
+### Version 0.0.0
+
+* Created a GitHub repository for this project
