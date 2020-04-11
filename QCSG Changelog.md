@@ -4,6 +4,7 @@
 
 * Wrote Section 2.1
 * Wrote Section 2.2
+* Wrote Section 2.3
 
 #### Version 0.0.2
 
