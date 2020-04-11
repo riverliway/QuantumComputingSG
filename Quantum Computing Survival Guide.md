@@ -129,6 +129,8 @@ Before extending our vector based model to the true qubit model, a new style of 
 
 Paul Dirac invented a notation system for discussing quantum mechanics and it has been adopted into quantum computing. The notation is called "bra-ket" since it uses the angle brackets $\langle\rangle$. Truly the peak of twentieth century physics humor. 
 
+#### Ket Notation
+
 Any vector can be expressed by placing it inside a vertical line ( | ) and right angle bracket ( $\rangle$ ). By placing it inside, $|\mathbf{v}\rangle$, we pronounce it "ket-v". This object conceptually represents a quantum state, however it is still mathematically equivalent to a vector. Specifically, a quantum state is a member of a _complex Hilbert space_, but thinking of them as vectors is acceptable in quantum computing. 
 
 Since a ket represents a quantum state, we can put our own quantum states inside the ket like:|above-line$\rangle$ and |below-line$\rangle$ to represent the electron being observed above or below the line on the wall. Some more examples of kets are:
@@ -157,11 +159,41 @@ Superposition is one of those words which people think is more magical than it r
 
 When the electron collides with the wall, it is observed. The moment the electron is observed, the state goes from being in superposition to a basis state. This process is called _collapsing_ and is instantaneous. The probabilities $\alpha$ and $\beta$ and destroyed and only the state |0$\rangle$ or |1$\rangle$ is left. Colliding with a wall is not the only way to collapse a quantum state. Making any sort of measurement or observation on the system will cause the superposition to be destroyed and the system will choose one of the basis states to collapse to using the assigned probabilities. 
 
+#### Bra Notation
+
+row vectors, conjugate-transpose, overlap = scalar (called linear functional/operator, calculating probability amplitudes w/ overlap, <psi|psi> = 1, inner/outer products 
+
 ### [2.4](#QCSG)   Bloch Sphere Model
 
 pure states
 
 mixed states
+
+phase is nothing
+
+Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have probabilities to randomly collapse to a basis state, but they also have another key attribute called _phase_. Where phase comes from can be a tricky subject to cover without diving headfirst into quantum mechanics. For the sake of brevity, we will not be covering how phase impacts the quantum wave equation, only how phase impacts the qubit. We need to transform the pbit model to accommodate phase.
+
+<img src="resources\2.3_pbit.png" width="400px"/>
+
+<center><i>Figure 2.3.1 - The Pbit Model</i></center>
+
+This is the pbit model we found from dividing the wave equation into two discrete sections using the unit circle. There are two transformations we need to make to our pbit to have it match the physic's model of a qubit. 
+
+* The first is to switch the $|0\rangle$ and $|1\rangle$ axes. This is equivalent to reflecting the model over the line created by  $y=x$. Now $|0\rangle$ represents the vertical axis and and $|1\rangle$ represents the horizonal axis. Notice $\theta$ is still the angle between $|0\rangle$ and $|\psi\rangle$. 
+
+* The second transformation is to pull $|1\rangle$ down so it is also vertical. This makes both $|0\rangle$ and $|1\rangle$ vertical and changes the definition of $\theta, \alpha,$ and $\beta$. 
+
+  <img src="resources\2.3_partial_qubit.png" width="500px"/>
+
+<center><i>Figure 2.3.2 - The Partial Qubit Model</i></center>
+
+The above model has some interesting things to note about it. We have changed the definition of $\theta$ so it is bounded above by $\pi$ instead of $\frac{\pi}{2}$. This has also changed how the basis coefficients are defined. Now $\alpha=cos(\frac{\theta}{2})$ and $\beta=sin(\frac{\theta}{2})$. The basis states $|0\rangle$ and $|1\rangle$ are mathematically still orthogonal, even if it doesn't appear that way visually. The horizontal state is now in _equal superposition_, which occurs when the probability of all basis states are the same. 
+$$
+|\psi\rangle=\frac{1}{\sqrt2}(|0\rangle+|1\rangle) = \frac{1}{\sqrt2}|0\rangle+\frac{1}{\sqrt2}|1\rangle \\
+(\frac{1}{\sqrt2})^2+(\frac{1}{\sqrt2})^2=1 \\
+\frac{1}{2}+\frac{1}{2}=1
+$$
+This partial model of the qubit is now ready to introduce phase. 
 
 ### [2.5](#QCSG)   Transforming a Qubit
 
@@ -174,6 +206,8 @@ new angles -> rotations around axis(es)
 Any transformation from one coord to another can be accomplished in 2 rotations
 
 You only need 2 axes to rotate to any position: XZ, YZ, or XY
+
+
 
 ### [2.7](#QCSG)   Beam Splitter
 
@@ -244,6 +278,8 @@ distributing vectors and distributing kets
 
 
 ### 4.3   Generating Entanglement
+
+mixed states, r<1
 
 undistributable
 

@@ -1,20 +1,14 @@
-## Proof 2.4.1 - Rotations in Spherical Coordinates
+## Proof 2.4.2 - Rotations from Spherical Coordinates
 
-Deriving the new spherical coordinates after a rotation around a cartesian axis is not trivial. The general outline is to convert from spherical to cartesian, then take an intersection of a plane through the sphere, convert to 2D polar, and back again.
+In the previous proof, 2.4.1, we derived the new spherical coordinates which arise from performing a rotation around a cartesian axis. This proof will derive the opposite, the rotations which arise from a new pair of spherical coordinates. Every transition from one pair of coordinates to another can be expressed by two (2) rotations around different axes. This proof will only concern deriving the values for XZ rotations.
 
-### Rotation Around the X Axis
+Any pair of spherical coordinates $(1,\theta,\phi)$ can be transformed to $(1,\theta',\phi')$ by a rotation around the X axis by $\Delta_x$ radians followed by a rotation around the Z axis by $\Delta_z$ radians.
 
-The goal of this derivation is to find the spherical coordinates $(1, \theta_x, \phi_x)$ which result from rotating the original spherical coordinates $(1, \theta, \phi)$ around the X axis counterclockwise by $\Delta$ radians. 
-
-Note that we are using the physics definition of spherical coordinates where:
-
-* $1$ is the radial distance from the origin to the surface of the unit sphere
-* $\theta$ is the inclination angle from the positive Z axis:  $0\leq\theta\leq\pi$
-* $\phi$ is the azimuth angle from the positive X axis: $0\leq\phi<2\pi$
-
-<img src="..\..\resources\bloch_sphere.png" width="250px" />
-
-To begin, first convert the spherical coordinates to cartesian.
+Even though the X rotation is applied first, for the purposes of this derivation we will find $\Delta_z$ first since it is trivial:
+$$
+\Delta_z=\phi-\phi'
+$$
+Finding the X rotation value is more involved. To begin, first convert the spherical coordinates to cartesian.
 $$
 \begin{equation}
 \begin{aligned}
@@ -32,7 +26,7 @@ The intersection of the sphere and the plane is a circle, centered on the X axis
 
 {insert image}
 
-The radius of this circle is calculated by the Pythagorean theorem.
+The radius of this circle is calculated by the pythagorean theorem.
 $$
 \begin{equation}
 \begin{aligned}
@@ -89,7 +83,6 @@ Since the $arctan$ function is an imperfect inverse, these new angles will need 
 
 As with the X rotation, first convert the spherical coordinates to cartesian.
 $$
-
 \begin{equation}\begin{aligned}x &= 1\ sin\theta\ cos\phi \\y &= 1\ sin\theta\ sin\phi \\z &= 1\ cos\theta\end{aligned}\end{equation}
 $$
 Use a plane to intersect the sphere, holding the $y$ value constant.
