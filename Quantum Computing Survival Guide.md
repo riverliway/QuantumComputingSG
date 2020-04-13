@@ -68,13 +68,13 @@ The fundamental unit of information in classical computers are bits. They can ei
 
 There is no particular reason why we must make the continuous function binary, we could divide it into 3 sections and transformed into a _trit_, the fundamental unit of information with three states. We could also divide it into 4, 5, 10, 29, 7326, or any number of discrete sections. We could even leave it continuous, without ever dividing it into sections. The only reason for dividing the function into two sections is because  there are already many decades worth of development in computer science which is in binary. Having two states allows quantum computer scientists to create algorithms, build architectures, and store data based on classical computers without factoring in a change of radix. 
 
-To extend our example from the previous section, we can convert to binary by drawing a line across our wall to see if the electron is observed above or below the line. The electron has a probability $\alpha$ of being above the line where $\alpha$ is $0\leq\alpha\leq1$. There is also a probability of $\beta = 1-\alpha$ that the electron is below the line where $\beta$ is also $0\leq\beta\leq1$. 
+To extend our example from the previous section, we can convert to binary by drawing a line across our wall to see if the electron is observed above or below the line. The electron has a probability $\alpha^{2}$ of being above the line where $\alpha^{2}$ is $0\leq\alpha^{2}\leq1$. There is also a probability of $\beta^{2} = 1-\alpha^{2}$ that the electron is below the line where $\beta^{2}$ is also $0\leq\beta^{2}\leq1$. 
 
 <img src="resources\2.2_electron_prob.png" width="650px"/>
 
 <center><i>Figure 2.2.1 - Electron Colliding with a Discretely Sectioned Wall</i></center>
 
-What we have just described is known as a _probabilistic bit_, or _pbit_. A pbit is a bit which has a certain probability or being off, which we have denoted above as $\alpha$. It also has a certain probability of being on, which we have denoted above as $\beta$. As both these values are probabilities, they are constrained to $\alpha+\beta=1$. The concept of a pbit is not exclusive to quantum, they also are used in binary classifiers from machine learning, random number generators, etc.
+What we have just described is known as a _probabilistic bit_, or _pbit_. A pbit is a bit which has a certain probability or being off, which we have denoted above as $\alpha^{2}$. It also has a certain probability of being on, which we have denoted above as $\beta^{2}$. As both these values are probabilities, they are constrained to $\alpha^2+\beta^2=1$. The concept of a pbit is not exclusive to quantum, they also are used in binary classifiers from machine learning, random number generators, etc.
 
 Our goal is to convert a wave equation like the sine function into a pbit. One of the first things a precalculus course teaches is the relationship between trigonometric functions and circles. Taking a look at the unit circle, we can see the X and Y coordinates of the circle with radius 1 are the outputs of the cosine and sine functions.
 
@@ -91,15 +91,15 @@ $$
 \begin{aligned}
 x^2+y^2&=1 \\
 cos^2\theta+sin^2\theta &= 1 \\
-\alpha + \beta &= 1
+\alpha^2 + \beta^2 &= 1
 \end{aligned}
 $$
 From this we can see our probabilistic bit relate to the quantum wave functions as:
 $$
-\alpha = cos^2\theta \\
-\beta = sin^2\theta
+\alpha^2 = cos^2\theta \\
+\beta^2 = sin^2\theta
 $$
-Since $\alpha$ and $\beta$ are always positive, we can apply the constraint $0\leq\theta\leq\frac{\pi}{2}$. 
+Since $\alpha^2$ and $\beta^{2}$ are always positive, we can apply the constraint $0\leq\theta\leq\frac{\pi}{2}$. 
 
 There are two unit vectors which are special enough to be named: $\hat{i}$ and $\hat{j}$. These vectors are both of length $1$ and are orthogonal to each other.
 $$
@@ -116,7 +116,7 @@ After viewing this relationship, we see:
 
 * $\hat{i}$ conceptually represents the off state, or 0, or the electron being observed above the line on the wall
 * $\hat{j}$ conceptually represents the on state, or 1, or the electron being observed below the line on the wall
-* $\alpha$ and $\beta$ still represent the probabilities of those states occurring
+* $\alpha^2$ and $\beta^2$ still represent the probabilities of those states occurring
 * $\mathbf{v}$ represents the entire state of the pbit, or the electron & wall system 
 
 This model of a pbit is not a completely new innovation, it is simply a transformation from the quantum wave equation which is easier to digest for computer scientists. 
@@ -155,9 +155,20 @@ Using our new form of notation, let's reason about the process of projecting an 
 
 However, what do we call the state before the electron contacts the wall? The electron is still a wave moving through space. We do not know if the electron will be observed above or below the line since they are random, but we know the likelihood of those events occurring $|\psi\rangle=\alpha|0\rangle+\beta|1\rangle$. Until the electron makes contact with the wall, it is reasonable to say "the state of the electron is both the state of being above and below the line". In other words, the electron's state is a combination of the two outcome states. When a quantum state can only be described as a combination of two or more basis states, we say the quantum state is in _superposition_. 
 
-Superposition is one of those words which people think is more magical than it really is. Flipping a coin can be described with superposition too. When the coin is in the air, before it lands, the state can be modeled as: $|coin\rangle = P|heads\rangle + Q|tails\rangle$ where P and Q are the probabilities for the events. When this coin is twirling around in the air, you have no idea which side it will land on. At this moment in time, it is reasonable to say the coin is a combination of heads and tails. The coin is in superposition. To a human, the outcome of a coin flip is a random event. The only difference between the coin and the electron is if you have a good enough computer, it could simulate the physics of the coin toss and determine the outcome before the coin landed whereas the outcome of the electron cannot be determined before it lands. 
+#### Superposition
 
-When the electron collides with the wall, it is observed. The moment the electron is observed, the state goes from being in superposition to a basis state. This process is called _collapsing_ and is instantaneous. The probabilities $\alpha$ and $\beta$ and destroyed and only the state |0$\rangle$ or |1$\rangle$ is left. Colliding with a wall is not the only way to collapse a quantum state. Making any sort of measurement or observation on the system will cause the superposition to be destroyed and the system will choose one of the basis states to collapse to using the assigned probabilities. 
+Superposition is one of those words which people think is more magical than it really is. Flipping a coin can be described with superposition too. When the coin is in the air, before it lands, the state can be modeled as: $|coin\rangle = {}^1{\mskip -5mu/\mskip -3mu}_\sqrt2|heads\rangle + {}^1{\mskip -5mu/\mskip -3mu}_\sqrt2|tails\rangle$. When this coin is twirling around in the air, you have no idea which side it will land on. At this moment in time, it is reasonable to say the coin is a combination of heads and tails. The coin is in superposition. To a human, the outcome of a coin flip is a random event. The only difference between the coin and the electron is if you have a good enough computer, it could simulate the physics of the coin toss and determine the outcome before the coin landed whereas the outcome of the electron cannot be determined before it lands. 
+
+When the electron collides with the wall, it is observed. The moment the electron is observed, the state goes from being in superposition to a basis state. This process is called _collapsing_ and is instantaneous. The probabilities $\alpha^2$ and $\beta^2$ and destroyed and only the state |0$\rangle$ or |1$\rangle$ is left. Colliding with a wall is not the only way to collapse a quantum state. Making any sort of measurement or observation on the system will cause the superposition to be destroyed and the system will choose one of the basis states to collapse to using the assigned probabilities. 
+
+Erwin Schrödinger is a famous physicist who was instrumental in developing the quantum wave equation. He also created a hypothetical scenario to help explain the concept of superposition: _Schrödinger's Cat_. This thought experiment describes putting a cat inside a soundproof box with a bomb which has a 50% chance to explode after 1 minute passes. After a minute passes, there are two possible outcomes of the experiment:
+
+* The bomb explodes, and the cat is dead
+* The bomb does not explode, and the cat is alive
+
+However, to see if the cat is alive or not, the box must be opened. Let's begin the experiment. Put the cat inside the box, close it, and wait a minute. After the minute passes, what is the state of the cat? Is it alive or dead? We don't know. Nobody does, until the box is opened and the state is observed. Before the box is opened, we can say the state of the cat is in superposition. The cat is a combination of dead and alive at the same time. We can also model the state of the cat as: $|cat\rangle = {}^1{\mskip -5mu/\mskip -3mu}_\sqrt2|alive\rangle+{}^1{\mskip -5mu/\mskip -3mu}_\sqrt2|dead\rangle$. 
+
+It is important to note that no cats were harmed in this theoretical scenario.
 
 #### Bra Notation
 
@@ -165,13 +176,9 @@ row vectors, conjugate-transpose, overlap = scalar (called linear functional/ope
 
 ### [2.4](#QCSG)   Bloch Sphere Model
 
-pure states
+#### Adjusting the Pbit
 
-mixed states
-
-phase is nothing
-
-Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have probabilities to randomly collapse to a basis state, but they also have another key attribute called _phase_. Where phase comes from can be a tricky subject to cover without diving headfirst into quantum mechanics. For the sake of brevity, we will not be covering how phase impacts the quantum wave equation, only how phase impacts the qubit. We need to transform the pbit model to accommodate phase.
+Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have the ability to randomly collapse to a basis state, but they also have another key attribute called _phase_. Finding where phase comes from can be a tricky subject to cover without diving headfirst into quantum mechanics. For the sake of brevity, we will not be covering how phase impacts the quantum wave equation, only how phase impacts the qubit. We need to transform the pbit model to accommodate phase.
 
 <img src="resources\2.3_pbit.png" width="400px"/>
 
@@ -195,11 +202,49 @@ $$
 $$
 This partial model of the qubit is now ready to introduce phase. 
 
+#### Spherical Coordinates
+
+_Polar coordinates_ are a system of coordinates in 2 dimensions which use a distance from the origin and an angle to describe every possible point: $(r, \theta)$. Our pbit model used polar coordinates but restricted $r$ to always be equal to $1$. To introduce phase, we need to add another variable to our model and add another dimension. 
+
+_Spherical coordinates_ are a system of coordinates in 3 dimensions which use a distance from the origin, an angle from the positive Z axis, and an angle from the positive X axis to describe every possible point: $(r,\theta,\phi)$. In this model, $\theta$ is the angle from the positive Z axis and is called the _inclination angle_. $\phi$ is the angle  from the positive X axis and is called the _azimuth angle_. 
+
+<img src="resources\bloch_sphere.png" width="250px" />
+
+
+
+<center><i>Figure 2.3.3 - The Bloch Sphere</i></center>
+
+The **Bloch Sphere**, named after Felix Bloch, is the full model of the qubit. It uses spherical coordinates to describe every possible state a quantum particle can occupy. A _pure state_ is any quantum state which lies on the surface of the unit sphere with radius $1$. A quantum state could also be a _mixed state_ which has radius less than $1$, but will not be discussed here. Here are some facts about our new Bloch Sphere model:
+
+* The $|0\rangle$ and $|1\rangle$ states are still vertical and orthogonal to each other.
+* The inclination angle, $\theta$, is still bounded as $0\leq\theta\leq\pi$
+* The azimuth angle, $\phi$, has the bounds: $0\leq\phi<2\pi$
+
+What about our basis coefficients? Did $\alpha$ and $\beta$ change?
+
+#### Let's Talk Phase
+
+The definitions of $\alpha$ and $\beta$ did change, but before we talk about that, what is up with phase? We were forced to bring our pbit model into another dimension so we could incorporate phase to make a qubit. How does that help? Let's take a look at the probability constraints from before:
+$$
+0\leq\alpha^2\leq1\\
+0\leq\beta^2\leq1\\
+\alpha^2+\beta^2=1
+$$
+These constraints are still true with the Bloch Sphere, even if the definitions of $\alpha$ and $\beta$ changed. Here's the thing though: every possible value of $\alpha^2$ and $\beta^2$ were accessible already in the pbit model. If we think of $\alpha^2$ as a function of $\theta$: $\alpha^2(\theta) = cos^2(\frac{\theta}{2})$, we see it is a 1-1 function since $0\leq\theta\leq\pi$ !  
+
+This realization only makes phase even more confusing! Why would we go through all the effort of adding another dimension if we could already access every value?
+
+It is true that $\alpha^2$ is always positive so any value can be accessed by the correct $\theta$ value, but what about $\alpha$? There is no guarantee $\alpha$ needs to be positive, it could be negative 
+
+global phase vs relative phase
+
 ### [2.5](#QCSG)   Transforming a Qubit
 
 Rotation around axis -> new angles
 
 new angles -> rotations around axis(es)
+
+state space, accessible state space, complete state space
 
 ### [2.6](#QCSG)   Sequential Transformations
 
@@ -207,7 +252,7 @@ Any transformation from one coord to another can be accomplished in 2 rotations
 
 You only need 2 axes to rotate to any position: XZ, YZ, or XY
 
-
+You can also swap the order XZ -> ZX by editing the rotations
 
 ### [2.7](#QCSG)   Beam Splitter
 
@@ -251,6 +296,8 @@ half a bit flip (both x and y)
 
 Hadamard, S, T
 
+Hadamard can either be ZY.5 or Y.5X
+
 ### 3.4   Quantum Registers
 
 ### 3.5   CNOT Gate
@@ -262,6 +309,8 @@ Swap = 3 cnots
 ### 3.6   Controlled-U Gate
 
 Any controlled gate!
+
+### 3.7   Reversible Computing
 
 
 

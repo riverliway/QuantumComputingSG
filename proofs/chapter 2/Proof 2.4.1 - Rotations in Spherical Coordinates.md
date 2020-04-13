@@ -89,7 +89,6 @@ Since the $arctan$ function is an imperfect inverse, these new angles will need 
 
 As with the X rotation, first convert the spherical coordinates to cartesian.
 $$
-
 \begin{equation}\begin{aligned}x &= 1\ sin\theta\ cos\phi \\y &= 1\ sin\theta\ sin\phi \\z &= 1\ cos\theta\end{aligned}\end{equation}
 $$
 Use a plane to intersect the sphere, holding the $y$ value constant.
@@ -154,4 +153,3 @@ $$
 \end{aligned}\end{equation}
 $$
 As with all of these equations, the new azimuth angle must be moved to standard form so it is bounded as $0\leq\phi_z<2\pi$. The inclination angle does not need any editing.
-
