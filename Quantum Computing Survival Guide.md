@@ -246,6 +246,10 @@ new angles -> rotations around axis(es)
 
 state space, accessible state space, complete state space
 
+Clifford Groups/Modern Algebra
+
+"destroying" a qubit/quantum state - phase collapse vs probability collapse
+
 ### [2.6](#QCSG)   Sequential Transformations
 
 Any transformation from one coord to another can be accomplished in 2 rotations
@@ -255,6 +259,8 @@ You only need 2 axes to rotate to any position: XZ, YZ, or XY
 You can also swap the order XZ -> ZX by editing the rotations
 
 ### [2.7](#QCSG)   Beam Splitter
+
+half mirror, mach zehnder interferometer for quantum optics
 
 ### [2.8](#QCSG)   Qubit Implementations
 
@@ -284,7 +290,13 @@ reversible
 
 universal set of gates
 
-### 3.2   Pauli Gates
+### 3.2 Quantum Programming
+
+Qiskit, Cirq, Qsharp
+
+Simulators vs quantum assembly
+
+### 3.3   Pauli Gates
 
 single qubit rotations
 
@@ -292,27 +304,37 @@ their matrices
 
 half a bit flip (both x and y)
 
-### 3.3   Named Gates
+### 3.4   Named Gates
 
 Hadamard, S, T
 
 Hadamard can either be ZY.5 or Y.5X
 
-### 3.4   Quantum Registers
+### 3.5   Quantum Registers
 
-### 3.5   CNOT Gate
+Significant Bits, tensors (ket version) , distributing states
+
+Summations
+
+### 3.6   CNOT Gate
 
 Interact with multiple qubits
 
 Swap = 3 cnots
 
-### 3.6   Controlled-U Gate
+### 3.7   Controlled-U Gate
 
 Any controlled gate!
 
-### 3.7   Reversible Computing
+CZ gate and it's applications
 
+Controlled anything into pauli + CNOT
 
+### 3.8   Reversible Computing
+
+Toffoli, Fredkin, Peres
+
+Universal set of reversible computing
 
 ## Chapter 4:   Entanglement
 
@@ -324,7 +346,7 @@ distributing vectors and distributing kets
 
 ### 4.2   Superposition of Quantum Registers
 
-
+Summations n stuff
 
 ### 4.3   Generating Entanglement
 
@@ -338,13 +360,13 @@ information instantly
 
 ### 4.4   Bell States
 
-hadamard -> CNOT
+Hadamard then CNOT
 
 4 bell states
 
-read 1 then know the other instantly
+read 1 then know the other instantly (Maximally Entangled)
 
-
+​	but not always! (Partially Entangled)
 
 ## Chapter 5:   Quantum Networks
 
@@ -354,6 +376,8 @@ it cool
 
 Heisenberg uncertainty principal
 
+Cloning via recomputing
+
 ### 5.2   Teleportation
 
 not like the movies
@@ -362,31 +386,65 @@ moving a qubit state over a long distance
 
 distributing quantum pairs ahead of time
 
+destroys sending qubit (measures)
+
 decoherence
 
 ### 5.3   Superdense Coding
 
 teleportation in reverse
 
-2 bits for the price of 1
+2 bits for the price of 1 (kinda)
 
+can't use Huffman encoding in quantum, so we gotta think of new encoding schemes
 
+### 5.4   Pseudo Clones
+
+Work arounds and cloning with a chance
 
 ## Chapter 6:   Quantum Cryptography
 
+BB84 and other quantum key distributions
 
+Quantum cryptography vs post-quantum cryptography
 
 ## Chapter 7:   Quantum Error Correction
 
+decoherence and fidelity
 
+probability correction
+
+phase correction
+
+physical qubits vs logical qubits
 
 ## Chapter 8:   Quantum Algorithms
 
-QFT, Shors, Grovers, Dueshs Jogns Problem, Simons? Problem, 
+QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, 
 
 ## Chapter 9:   Quantum Computer Architecture
 
+superconducting qubits (Google, IBM, Rigetti, Intel)
 
+​	dilution refrigeration (~10mK), low vibration, magnetic shielding
+
+​	current flow
+
+​	Josephson junction
+
+ion trap (IonQ)
+
+​	lasers - slow but stable
+
+​	qubit storage (quantum RAM), quantum hard drives don't really exist yet
+
+Quantum annealers (D-WAVE)
+
+​	different qubits than the gate model. Low degrees of freedom comparatively 
+
+Quantum walks on graphs
+
+​	wacky
 
 ## Chapter 10:   Quantum Compilers
 
@@ -414,6 +472,8 @@ deferred form partitioning
 
 ## Chapter 12:   Quantum Artificial Intelligence
 
-
+I know very little right now
 
 ## Chapter 13:   Chemical Simulation
+
+I know **nothing** right now
