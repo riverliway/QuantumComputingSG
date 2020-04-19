@@ -392,6 +392,8 @@ QFT, Shors, Grovers, Dueshs Jogns Problem, Simons? Problem,
 
 phase normal form
 
+#of cnots in circuit > (n-1)!
+
 ## Chapter 11:   Simulating Quantum Computers
 
 classically!
@@ -400,7 +402,15 @@ matrix form
 
 algorithm form: bitwise CNOT & bitwise X&Y&Z
 
+​	cubeOffset instead of cubeDepth
+
+​	phase != 0 instead of == 1
+
 qiskit universal gate form
+
+deferred form partitioning
+
+
 
 ## Chapter 12:   Quantum Artificial Intelligence
 
