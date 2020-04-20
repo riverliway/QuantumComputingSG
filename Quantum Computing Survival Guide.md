@@ -420,7 +420,11 @@ physical qubits vs logical qubits
 
 ## Chapter 8:   Quantum Algorithms
 
-QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, 
+General format of a quantum algorithm: classical preprocessing, quantum circuit, classical postprocessing
+
+General goal of a quantum algorithm: Minimize probability of 'wrong answers' & maximize probability of 'right' answers
+
+QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
 
 ## Chapter 9:   Quantum Computer Architecture
 
