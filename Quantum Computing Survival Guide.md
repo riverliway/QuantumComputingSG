@@ -12,21 +12,43 @@
 
 This entire document is used to describe what quantum computing is, but I think it is important to understand why quantum computers are important. What is their history and what can they do for society? 
 
-### 1.1   History of Quantum Computers
+### [1.1](#QCSG)   A Brief History of Quantum Computing
 
-The birth of quantum computing can be attributed to a man named Richard Feynman. Famous for all sorts of accomplishments in physics during the twentieth century, one of his biggest was the discovery of quantum electrodynamics. He was rather interested in simulating many different particles to verify his theory, but he found that classical computing did not have the power to effectively produce the results he was looking for. So, in the early 1980s, he proposed the idea of a quantum computer. As there was not much demand for these types of computation, along with the immense difficulty of constructing one of these types of computers, the field lumbered along.
+The birth of quantum computing can be attributed to a man named Richard Feynman. Famous for all sorts of accomplishments in physics during the twentieth century, one of his biggest was the discovery of quantum electrodynamics. He was interested in simulating many different particles to verify his theory, but found that classical computing did not have the ability to effectively produce the results he was looking for. So, in the early 1980s, he proposed the idea of a quantum computer. Unfortunately, there was not a high demand for this type of computation and constructing a quantum computer is immensely difficult. For the next few decades, the field of quantum computing progressed slowly. 
 
-Then, in 1994, Peter Shor shocked the world with his algorithm to factor integers in polynomial time. This not only revealed to the world that there was some use in quantum computing, but that there were probably many other useful quantum algorithms yet to be invented. Not too long after came Grover's algorithm along with other quantum search algorithms. By the late 1990s, the theoretical field of quantum computing was up and running.
+Then, in 1994, Peter Shor shocked the world with his quantum algorithm to factor integers in polynomial time. This not only revealed there was some use in quantum computing, but that there were probably many other useful quantum algorithms yet to be invented. Not too long after came Grover's algorithm along with other quantum search algorithms. By the late 1990s, the theoretical field of quantum computing was alive with activity.
 
-### 1.2   The New Age of Computing
+#### The Field(s) of Quantum
+
+The field of quantum computing has foundations in quantum physics, but ultimately they have separated. New students looking to study quantum computing don't need previous knowledge from quantum physics similar to how computer scientists don't need knowledge from electrical engineering. 
+
+<img src="resources\1.1_venn.png" width="500px"/>
+
+<center><i>Figure 1.1.1 The Two Parallel Fields</i></center>
+
+Quantum information science is a parallel field of study to quantum computing, and the material often overlaps. Both fields are very new, less than half a century old, and have yet to be thoroughly defined. It is difficult to say if these fields are separate from one another or if these are both subsections of the same field. Typically, quantum information science covers the theory behind combining quantum mechanics with Turing machines, pioneered by Paul Benioff in the early 1980s. Quantum computing covers the implementation of a quantum computer and how it interacts with a classical computer. Both fields cover qubits, quantum circuits, entanglement, and teleportation which are discussed in this document. At this moment, it is unclear if the overlap between the fields is so large that they will be joined or if they will diverge. Only the time will tell.
+
+#### Historic Quantum Computers
+
+Many different types of quantum computers have been designed over the past few decades. A few of the important milestones for the development of physical implementations are listed here:
+
+* 1995 - [First realization of a quantum logic gate](https://tf.nist.gov/general/pdf/140.pdf)
+* 1998 - [First implementation of Grover's Algorithm on a 2 qubit computer](https://pdfs.semanticscholar.org/6c05/5053f4f1605fdc0bd474c7a350dcd01f627d.pdf)
+* 2001 - [First implementation of Shor's Algorithm factoring 15](http://cryptome.org/shor-nature.pdf)
+* 2006 - [First demonstration of teleportation](https://web.archive.org/web/20070207105035/http://www.york.ac.uk/admin/presspr/pressreleases/kirkclone.htm)
+* 2011 - [First commercially available quantum computer (D-Wave One)](https://web.archive.org/web/20110515083848/http://physicsworld.com/cws/article/news/45960)
+* 2016 - [First quantum computer available on the cloud (IBM)](https://arxiv.org/abs/1605.05709)
+* 2019 - [First instance of a claim to quantum supremacy (Google)](https://ai.googleblog.com/2019/10/quantum-supremacy-using-programmable.html)
+
+### [1.2](#QCSG)   The New Age of Computing
 
 Comparing classical computers to quantum. Moore's Law
 
-### 1.3   Modern Applications of Quantum Computers
+### [1.3](#QCSG)   Modern Applications of Quantum Computers
 
 cool stuff
 
-### 1.4   Future Applications of Quantum Computers
+### [1.4](#QCSG)   Future Applications of Quantum Computers
 
 super cool stuff
 

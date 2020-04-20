@@ -1,12 +1,24 @@
 # QCSG Changelog
 
-### Version 0.1.0
+[toc]
+
+
+
+#### Version 0.1.2 - April 20, 2020
+
+* Wrote Section 1.1
+
+#### Version 0.1.1 - April 13, 2020
+
+* Wrote Section 2.4
+
+### Version 0.1.0 - April 10, 2020
 
 * Wrote Section 2.1
 * Wrote Section 2.2
 * Wrote Section 2.3
 
-#### Version 0.0.2
+#### Version 0.0.2 - April 9, 2020
 
 * Created outline of chapters 3-5
 * Table of Contents links to chapters & subchapters
@@ -21,12 +33,12 @@
   * quantum artificial intelligence
   * chemical simulation
 
-#### Version 0.0.1
+#### Version 0.0.1 - April 8, 2020
 
 * Created outline of the first chapter
 * Created outline of the second chapter
 * Wrote the proof for rotation around the X axis in spherical coordinates
 
-### Version 0.0.0
+### Version 0.0.0 - April 8, 2020
 
 * Created a GitHub repository for this project
