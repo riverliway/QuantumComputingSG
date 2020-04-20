@@ -14,7 +14,9 @@ This entire document is used to describe what quantum computing is, but I think 
 
 ### 1.1   History of Quantum Computers
 
-idk what it is lol
+The birth of quantum computing can be attributed to a man named Richard Feynman. Famous for all sorts of accomplishments in physics during the twentieth century, one of his biggest was the discovery of quantum electrodynamics. He was rather interested in simulating many different particles to verify his theory, but he found that classical computing did not have the power to effectively produce the results he was looking for. So, in the early 1980s, he proposed the idea of a quantum computer. As there was not much demand for these types of computation, along with the immense difficulty of constructing one of these types of computers, the field lumbered along.
+
+Then, in 1994, Peter Shor shocked the world with his algorithm to factor integers in polynomial time. This not only revealed to the world that there was some use in quantum computing, but that there were probably many other useful quantum algorithms yet to be invented. Not too long after came Grover's algorithm along with other quantum search algorithms. By the late 1990s, the theoretical field of quantum computing was up and running.
 
 ### 1.2   The New Age of Computing
 
