@@ -6,13 +6,25 @@
 
 [toc]
 
-
-
 ## Chapter 1:   Why Quantum Computing?
 
 This entire document is used to describe what quantum computing is, but I think it is important to understand why quantum computers are important. What is their history and what can they do for society? 
 
-### [1.1](#QCSG)   A Brief History of Quantum Computing
+### [1.1](#QCSG)   The New Age of Computing
+
+Gordon Moore made an observation that the number of transistors in an integrated circuit doubles every 2 years, known as _Moore's Law_. There are only two ways to increase the number of transistors: make them smaller or make the chip larger. So far we have continued to choose the first option, finding new methods to make the transistors smaller and smaller each year to follow this pattern. However, scientists can't continue to make them smaller forever. After all, we are bounded by the limits of physics of our universe. The size of transistors can't breach the atomic barrier, becoming smaller than atoms. It is unclear when our computers will begin to diverge from Moore's Law.
+
+Luckily, the end of Moore's Law does not mean the end of improvement for computers. There are certainly other methods to give computers more memory, make them faster, and improve power consumption. Once such method is the use of specialized hardware. Rather than doing every single operation on the _Central Processing Unit (CPU)_, computers can delegate specific tasks to other hardware which are designed to be efficient at one job. One common example is the _Graphics Processing Unit (GPU)_, which is a separate device used to handle massively parallel programs. The architecture and style of programming for GPUs is different for GPUs than CPUs. There are some problems that run incredibly faster on a GPU, however some problems actually run slower. 
+
+Every algorithm has a _time complexity_, a formula describing how long the algorithm takes to run based off the size of the input. If we built new hardware which could significantly lower the time complexity for certain problems, it would signal a new age for computers. Introducing _quantum computers_: computers which run off of different principals than classical computers, derived from the laws of quantum mechanics. 
+
+<center><i>Do you guys just put the word 'quantum' in front of everything?</i><br />- Scott Lang (2018)</center>
+
+To answer your question: pretty much. Formally, the word _quantum_, and its plural _quanta_, can be used to describe any discrete chunk of something. In science, especially physics and chemistry, quantum is used to describe the study of very small particles: atoms, electrons, quarks, photons, etc. A quantum computer is any machine which uses a series of transformations based off of quantum physics to manipulate data into a desired result. These quantum computers are significantly different from classical computers. The methods of storing, transforming, and reading data is unintuitive from a classical computer's perspective.
+
+Researchers have shown that some problems such as integer factoring and searching unsorted data can be implemented with a lower time complexity on a quantum computer than a classical one. Using a _Quantum Processing Unit (QPU)_, a CPU could send it specific jobs which are solved much faster on a quantum computer. There are many issues plaguing current quantum computers which make them difficult to offer to the general public, but the future of quantum computing looks very bright and there is still much to be discovered. 
+
+### [1.2](#QCSG)   A Brief History of Quantum Computing
 
 The birth of quantum computing can be attributed to a man named Richard Feynman. Famous for all sorts of accomplishments in physics during the twentieth century, one of his biggest was the discovery of quantum electrodynamics. He was interested in simulating many different particles to verify his theory, but found that classical computing did not have the ability to effectively produce the results he was looking for. So, in the early 1980s, he proposed the idea of a quantum computer. Unfortunately, there was not a high demand for this type of computation and constructing a quantum computer is immensely difficult. For the next few decades, the field of quantum computing progressed slowly. 
 
@@ -36,13 +48,9 @@ Many different types of quantum computers have been designed over the past few d
 * 1998 - [First implementation of Grover's Algorithm on a 2 qubit computer](https://pdfs.semanticscholar.org/6c05/5053f4f1605fdc0bd474c7a350dcd01f627d.pdf)
 * 2001 - [First implementation of Shor's Algorithm factoring 15](http://cryptome.org/shor-nature.pdf)
 * 2006 - [First demonstration of teleportation](https://web.archive.org/web/20070207105035/http://www.york.ac.uk/admin/presspr/pressreleases/kirkclone.htm)
-* 2011 - [First commercially available quantum computer (D-Wave One)](https://web.archive.org/web/20110515083848/http://physicsworld.com/cws/article/news/45960)
+* 2011 - [First commercially available quantum annealer (D-Wave One)](https://web.archive.org/web/20110515083848/http://physicsworld.com/cws/article/news/45960)
 * 2016 - [First quantum computer available on the cloud (IBM)](https://arxiv.org/abs/1605.05709)
 * 2019 - [First instance of a claim to quantum supremacy (Google)](https://ai.googleblog.com/2019/10/quantum-supremacy-using-programmable.html)
-
-### [1.2](#QCSG)   The New Age of Computing
-
-Comparing classical computers to quantum. Moore's Law
 
 ### [1.3](#QCSG)   Modern Applications of Quantum Computers
 
@@ -360,6 +368,8 @@ Toffoli, Fredkin, Peres
 
 Universal set of reversible computing
 
+Proving a quantum computer can simulate a classical computer in P time
+
 ## Chapter 4:   Entanglement
 
 swoosh
@@ -446,9 +456,17 @@ physical qubits vs logical qubits
 
 General format of a quantum algorithm: classical preprocessing, quantum circuit, classical postprocessing
 
-General goal of a quantum algorithm: Minimize probability of 'wrong answers' & maximize probability of 'right' answers
+General goal of a quantum algorithm: Minimize probability of 'wrong' answers & maximize probability of 'right' answers
 
 QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
+
+<img src="resources\1.2_comp_class.png" width="400px"/>
+
+<center><i>Figure 1.2.1 Common Complexity Classes</i></center>
+
+The study of _computational complexity classes_ is from the theory side of computer science which describes how long a computer program takes to solve a certain problem based off the size of the input. 
+
+https://www.cs.virginia.edu/~robins/The_Limits_of_Quantum_Computers.pdf
 
 ## Chapter 9:   Quantum Computer Architecture
 
@@ -504,4 +522,4 @@ I know very little right now
 
 ## Chapter 13:   Chemical Simulation
 
-I know **nothing** right now
+I know **nothing** right now, but it seems supa cool

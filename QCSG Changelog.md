@@ -7,6 +7,7 @@
 #### Version 0.1.2 - April 20, 2020
 
 * Wrote Section 1.1
+* Wrote Section 1.2
 
 #### Version 0.1.1 - April 13, 2020
 
