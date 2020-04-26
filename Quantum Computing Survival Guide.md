@@ -24,6 +24,10 @@ To answer your question: pretty much. Formally, the word _quantum_, and its plur
 
 Researchers have shown that some problems such as integer factoring and searching unsorted data can be implemented with a lower time complexity on a quantum computer than a classical one. Using a _Quantum Processing Unit (QPU)_, a CPU could send it specific jobs which are solved much faster on a quantum computer. There are many issues plaguing current quantum computers which make them difficult to offer to the general public, but the future of quantum computing looks very bright and there is still much to be discovered. 
 
+<img src="resources\1.1_device_arch.png" width="500px"/>
+
+<center><i>Figure 1.1.1 A Possible Future Computer Architecture</i></center>
+
 ### [1.2](#QCSG)   A Brief History of Quantum Computing
 
 The birth of quantum computing can be attributed to a man named Richard Feynman. Famous for all sorts of accomplishments in physics during the twentieth century, one of his biggest was the discovery of quantum electrodynamics. He was interested in simulating many different particles to verify his theory, but found that classical computing did not have the ability to effectively produce the results he was looking for. So, in the early 1980s, he proposed the idea of a quantum computer. Unfortunately, there was not a high demand for this type of computation and constructing a quantum computer is immensely difficult. For the next few decades, the field of quantum computing progressed slowly. 
@@ -36,7 +40,7 @@ The field of quantum computing has foundations in quantum physics, but ultimatel
 
 <img src="resources\1.1_venn.png" width="500px"/>
 
-<center><i>Figure 1.1.1 The Two Parallel Fields</i></center>
+<center><i>Figure 1.2.1 The Two Parallel Fields</i></center>
 
 Quantum information science is a parallel field of study to quantum computing, and the material often overlaps. Both fields are very new, less than half a century old, and have yet to be thoroughly defined. It is difficult to say if these fields are separate from one another or if these are both subsections of the same field. Typically, quantum information science covers the theory behind combining quantum mechanics with Turing machines, pioneered by Paul Benioff in the early 1980s. Quantum computing covers the implementation of a quantum computer and how it interacts with a classical computer. Both fields cover qubits, quantum circuits, entanglement, and teleportation which are discussed in this document. At this moment, it is unclear if the overlap between the fields is so large that they will be joined or if they will diverge. Only the time will tell.
 
@@ -352,6 +356,8 @@ Summations
 
 Interact with multiple qubits
 
+CNOT(1,2) = HxH CNOT(2,1) HxH
+
 Swap = 3 cnots
 
 ### 3.7   Controlled-U Gate
@@ -369,6 +375,8 @@ Toffoli, Fredkin, Peres
 Universal set of reversible computing
 
 Proving a quantum computer can simulate a classical computer in P time
+
+Arbitrary num controlled U gate
 
 ## Chapter 4:   Entanglement
 
@@ -398,9 +406,57 @@ Hadamard then CNOT
 
 4 bell states
 
+translate the bell states into each other
+
 read 1 then know the other instantly (Maximally Entangled)
 
 ​	but not always! (Partially Entangled)
+
+### 4.5   Case Study: Google's Quantum Supremacy
+
+In late 2019, Google announced they had achieved _quantum supremacy_ on their 53 qubit quantum processor named Sycamore, published in [Nature](https://www.nature.com/articles/s41586-019-1666-5). Quantum supremacy is the term for when a quantum program can beat a classical program at a task. What kind of task? It doesn't matter. There is no official benchmark, so the task can be any type of algorithm or can simply have a useless objective. As long as the QPU is significantly faster than a classical computer at **any** objective, quantum supremacy is declared.
+
+What task did Google use to have their quantum computer compete in? Simulating a quantum computer. The QPU is a quantum computer, so the simulation is just running a quantum circuit. So as long as the quantum computer can run faster than a classical computer can simulate it, the quantum computer wins. This may appear rather silly since there isn't really any objective to the computation, but that is actually why it is clever. If there was an objective to compute then there would be alternative methods for a classical programmer or patterns to exploit to make the classical program faster. 
+
+Specifically, Google called this task _random circuit sampling_. Every quantum circuit creates a probability distribution, so the objective was to find the probability distribution of a randomly generated circuit. A random circuit does not have any patterns for a classical programmer to use for time or memory exploitations. However, not all quantum circuits take the same amount of time to simulate. The hardest circuits for a classical simulator are random and all the qubits are highly entangled (but not maximally entangled)! 
+
+There are limitations on the quantum computer as well. The Sycamore processor is noisy, every gate applied causes small errors to build up and can lead to the wrong answers if too many gates are applied. So the ideal circuit should have the following properties:
+
+- No observable patterns
+- Highly entangled
+- Small depth
+
+To create circuits that have all three properties, the Google quantum team used a pseudorandom generator which uses a seed to create circuits in this format:
+
+<img src="resources\4.5_circuit.png" width="800px" />
+
+
+
+<center><i>Figure 4.5.1 - Pseudorandom Circuit Architecture</i></center>
+
+The circuit is divided into _m_ cycles in which every cycle has 1 single qubit gate applied per qubit followed a double qubit gate. The single qubit gates are chosen pseudorandomly and can be $\sqrt{X}$, $\sqrt{Y}$, or $\sqrt{W}$. Two gates of the same axis cannot be chosen sequentially. The $\sqrt{W}$ gate is a rotation of $\frac{\pi}{2}$ radians around the axis $(X+Y)/\sqrt2$. Similar to the Hadamard axis, this axis is formed by the line $X=Y$ when $Z=0$. The double qubit gates are chosen from a set sequence: repeat $ABCDCDAB$. The chosen letter represents the gate being applied to every pair of neighbor qubits connected by a colored coupler. 
+
+<img src="resources\4.5_qpu.png" width="500px" />
+
+<center><i>Figure 4.5.2 - Sycamore's QPU Architecture</i></center>
+
+To understand the double qubit gates better, we can look at Sycamore's qubit layout. In figure 4.5.2, the gray crosses represent qubits and the colored boxes are couplers which connect the qubits together. The outlined cross on the top row is a qubit which does not work which is why this QPU is only 53 qubits instead of the original 54. When a double qubit gate is chosen from the set, for example $A$, all of the green couplers activate at the same time. So the double qubit layer in the circuit does not just refer to one pair of qubits; it refers to all pairs of qubits joined by a green coupler. Not every qubit is affected by the $A$ gate however, since the bottom row does not have any green couplers connecting to them.
+
+#### Quantum vs. Classical
+
+Every quantum circuit essentially creates a probability distribution, but the way a quantum computer finds this distribution is different than a classical computer. A quantum computer approximates the distribution by running the circuit many times and recording the result of each measurement. After taking a large number of samples, the sampled distribution is roughly equal to the real distribution. Google's team sampled their largest circuit 30 million times, taking around 100 minutes.
+
+Google's team used a Schrödinger/Feynman hybrid algorithm to simulate a 43 qubit circuit on a classical computer. The Schrödinger algorithm stores all $2^n$ coefficients in memory and the Feynman algorithm calculates each coefficient independently which only requires a polynomial amount of memory, but requires exponentially more time proportional to the depth of the circuit. 
+
+In their paper, the team made the claim that using this hybrid algorithm to simulate the largest 53 qubit circuit would take 10,000 years on the world's best supercomputers, thus proving quantum supremacy. This time estimate was created by assuming the memory was constrained to Random Access Memory (RAM). Other experts did not agree with this assumption.
+
+#### IBM's Rebuttal
+
+The quantum computing team at IBM [responded](https://www.ibm.com/blogs/research/2019/10/on-quantum-supremacy/) to Google's claim to quantum supremacy by using a pure Schrödinger algorithm. They showed that it was possible to rotate the memory for the quantum state out to disk, only keeping the active parts in RAM. Every coefficient is 8 bytes since they are complex numbers, stored as two single precision floating point numbers. The quantum state is $8\times2^{53}$ = 64 petabytes. That size is certainly large, but not unachievable by modern computers. IBM's team used a host of performance enhancing techniques to perform the simulation in 2.5 days. 
+
+By definition, Google's team still technically proved quantum supremacy since the quantum computer ran faster than the classical simulation (100 minutes < 2.5 days), even if it wasn't by their predicted margin of 10,000 years. However, due to the exponential nature of simulating quantum computers, a 100 qubit quantum state would take $8\times2^{100}$ = 9,000,000,000,000,000 (9 quadrillion) petabytes to store. This amount of memory is simply unachievable by modern or near future computers. Even if a 53 qubit processor strikes controversy over if it deserves quantum supremacy or not, 100 qubit processors will be developed in the near future and the outcome will be clear.
+
+One incredibly important point brought up in IBM's response is the entire concept of quantum "supremacy". The nature of quantum  processors are to be devices which coordinate with classical computers, not compete against them. The notion of claiming quantum supremacy is no less ridiculous than claiming "GPU supremacy" because a GPU was shown to be faster at one specific task. The term quantum supremacy was blown out of proportion by the media and broadly misunderstood by the general public. 
 
 ## Chapter 5:   Quantum Networks
 
@@ -466,6 +522,8 @@ QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
 
 The study of _computational complexity classes_ is from the theory side of computer science which describes how long a computer program takes to solve a certain problem based off the size of the input. 
 
+BQP complexity class
+
 https://www.cs.virginia.edu/~robins/The_Limits_of_Quantum_Computers.pdf
 
 ## Chapter 9:   Quantum Computer Architecture
@@ -498,11 +556,15 @@ phase normal form
 
 #of cnots in circuit > (n-1)!
 
+parallelization & race conditions
+
 ## Chapter 11:   Simulating Quantum Computers
 
 classically!
 
 matrix form
+
+simulation in linear memory - each final amplitude separate. Depends on $2^d$ where d is depth 
 
 algorithm form: bitwise CNOT & bitwise X&Y&Z
 
@@ -514,7 +576,9 @@ qiskit universal gate form
 
 deferred form partitioning
 
+simulating classical computers on quantum computers 
 
+Schrödinger & Feynman path integrals / algorithms
 
 ## Chapter 12:   Quantum Artificial Intelligence
 

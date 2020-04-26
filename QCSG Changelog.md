@@ -4,20 +4,24 @@
 
 
 
+#### Version 0.1.3 - April 25, 2020
+
+* Wrote Section - Case Study: Google's Quantum Supremacy
+
 #### Version 0.1.2 - April 20, 2020
 
-* Wrote Section 1.1
-* Wrote Section 1.2
+* Wrote Section - The New Age of Computing
+* Wrote Section - A Brief History of Quantum Computing
 
 #### Version 0.1.1 - April 13, 2020
 
-* Wrote Section 2.4
+* Wrote Section - The Bloch Sphere Model
 
 ### Version 0.1.0 - April 10, 2020
 
-* Wrote Section 2.1
-* Wrote Section 2.2
-* Wrote Section 2.3
+* Wrote Section - Quantum Particles
+* Wrote Section - Modeling Waves with Vectors
+* Wrote Section - Dirac Notation
 
 #### Version 0.0.2 - April 9, 2020
 
