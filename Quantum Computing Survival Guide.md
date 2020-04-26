@@ -6,6 +6,40 @@
 
 [toc]
 
+## Preface
+
+This document is meant to be a modern equivalent to a textbook for quantum computing. Modern equivalent - don't textbooks still exist in today's world? Yes, but it is our belief that the current format of paper textbooks does not translate well to the new generation's style of learning. 
+
+* This document has links to other parts of itself for easy of access as well as links to outside resources. This format is better suited for reading on a computer than using a glossary or series of appendices. 
+* This document uses applets to produce animations and interactive figures. The PDF version does not support these applets, so static images are used as a replacement. Use the Typora markdown application or the web version to interact with the figures.
+* Every question has an answer. With the advent of online answer services, creating a list of exercises for the reader is synonymous with providing homework questions for teachers to use. This does nothing but discriminate against those who cannot afford the paid answer services. Instructors who decide to use this textbook in the setting of a classroom will need to create their own homework or at least modify the existing questions we provide. 
+* This document is free. It will always be free. All future versions of this document will be free. Nearly all textbooks are pirated, scanned, and uploaded to the internet anyways. Why not provide an encouraging environment for students rather than making them feel like criminals for learning?
+* We accept corrections, suggestions, and new ideas from _anyone_. Simply post a new issue on the public [GitHub repository](https://github.com/zackatoo/QuantumComputingSG) for this textbook using the proper format. Having a public GitHub also allows any reader to view all past versions of the document and the authors of those changes.
+* This document is covered by the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning the material may be redistributed, copied, or modified freely, by anyone, so long as proper attribution is given. The code associated with this document is covered by the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), meaning the code may be redistributed, used in private or public projects, or modified freely, by anyone, so long as proper attribution is given. The code can not be patented except by the original author.
+* We expect this document to eventually be adapted into a video lecture series, free and available to everyone, of course. 
+
+#### Quantum? What's that?
+
+_Quantum mechanics_ are the laws which govern _quantum physics_, the study of very small particles such as atoms, electrons, and photons. No previous knowledge of quantum mechanics or quantum physics is assumed or required to understand this document. However we do make some assumptions about the reader's knowledge of mathematics and computer science:
+
+* Precalculus: Complex Numbers, Trigonometry, Polar Coordinates, Radians
+* Linear Algebra: Vectors, Matrices, Matrix Multiplication, 3 Dimensional Math
+* Discrete Mathematics: Boolean Algebra, Turing Machines, Complexity Classes
+* Computer Science: Introductory Programming, Data Structures, Algorithms, Computer Organization
+  * These topics are especially important: Arrays, Big-Oh Notation, Bitwise Manipulation
+
+Some amount of review for these topics is provided, but we are assuming readers will already have been introduced. We expect this document will be completely understandable to a Computer Science undergraduate by the end of their second year. 
+
+#### Outline of the Document
+
+The first chapter is a simple introduction to the history of quantum computing and why it is & will be useful. This chapter is not required, but can be useful for providing a bridge to the real world. The next three chapters form the foundations of quantum computing. After the chapter on entanglement, the document really opens up, allowing instructors to focus on a particular subfield if they so choose.
+
+<img src="resources\img\Preface_chap_dep.svg" width="700px"/>
+
+<center><i>Figure 0.1.1 The Chapter Dependency Graph</i></center>
+
+
+
 ## Chapter 1:   Why Quantum Computing?
 
 This entire document is used to describe what quantum computing is, but I think it is important to understand why quantum computers are important. What is their history and what can they do for society? 
@@ -24,9 +58,11 @@ To answer your question: pretty much. Formally, the word _quantum_, and its plur
 
 Researchers have shown that some problems such as integer factoring and searching unsorted data can be implemented with a lower time complexity on a quantum computer than a classical one. Using a _Quantum Processing Unit (QPU)_, a CPU could send it specific jobs which are solved much faster on a quantum computer. There are many issues plaguing current quantum computers which make them difficult to offer to the general public, but the future of quantum computing looks very bright and there is still much to be discovered. 
 
-<img src="resources\1.1_device_arch.png" width="500px"/>
+<img src="resources\img\1.1_device_arch.png" width="500px"/>
 
 <center><i>Figure 1.1.1 A Possible Future Computer Architecture</i></center>
+
+This figure shows a potential architecture of future computers. The central processing unit would act as the manager for the computer, running a majority of the operating system and delegating specific tasks to the devices suited for them. The role of the GPU is unlikely to change, but having a TPU and QPU to take on tasks suited to them would result in a dramatic leap in computing power.
 
 ### [1.2](#QCSG)   A Brief History of Quantum Computing
 
@@ -38,7 +74,7 @@ Then, in 1994, Peter Shor shocked the world with his quantum algorithm to factor
 
 The field of quantum computing has foundations in quantum physics, but ultimately they have separated. New students looking to study quantum computing don't need previous knowledge from quantum physics similar to how computer scientists don't need knowledge from electrical engineering. 
 
-<img src="resources\1.1_venn.png" width="500px"/>
+<img src="resources\img\1.1_venn.png" width="500px"/>
 
 <center><i>Figure 1.2.1 The Two Parallel Fields</i></center>
 
@@ -72,23 +108,23 @@ The smallest possible unit of data in a classical computer is a _bit_. It stands
 
 ### [2.1](#QCSG)   Quantum Particles
 
-Although this document is focused towards computer scientists, it is important to learn about the nature of quantum particles to understand where qubits come from. This explanation will only scape the surface of the wonderful world of quantum particles, but it will suffice for the purposes of this document.
+Although this document is focused towards computer scientists, it is important to learn about the nature of quantum particles to understand where qubits come from. This explanation will only scrape the surface of the wonderful world of quantum particles, but it will suffice for the purposes of this document.
 
 Before discussing quantum particles, let's talk waves. A _wave_ is any mathematical function which continues to repeat itself, forever. Think about the waves at the beach, how they go up and down as far as you can see. The distance until the wave starts to repeat itself is called the wave's _period_.
 
-<img src="resources\2.1_wave.svg" width="550px"/>
+<img src="resources\img\2.1_wave.svg" width="550px"/>
 
 <center><i>Figure 2.1.1 The Sine Wave</i></center>
 
 Several famous experiments, such as the double slit experiment, have shown that light and matter can have properties of particles and waves. This is known as _wave/particle duality_. When an electron is released from a source, it acts as a wave which propagates through space until contacting a surface. Once the electron collides with a surface, it is only observable in one location. 
 
-<img src="resources\2.1_electron.png" width="650px"/>
+<img src="resources\img\2.1_electron.png" width="650px"/>
 
 <center><i>Figure 2.1.2 - Electron Colliding with a Wall in a Random Location</i></center>
 
 The location where it will be observable is random and cannot be determined ahead of time. However, the likelihood of the electron appearing in a specific location can be calculated using a probability function.  
 
-<img src="resources\2.1_prob_wave.svg" width="550px"/>
+<img src="resources\img\2.1_prob_wave.svg" width="550px"/>
 
 <center><i>Figure 2.1.3 - A Probability Function</i></center>
 
@@ -106,7 +142,7 @@ There is no particular reason why we must make the continuous function binary, w
 
 To extend our example from the previous section, we can convert to binary by drawing a line across our wall to see if the electron is observed above or below the line. The electron has a probability $\alpha^{2}$ of being above the line where $\alpha^{2}$ is $0\leq\alpha^{2}\leq1$. There is also a probability of $\beta^{2} = 1-\alpha^{2}$ that the electron is below the line where $\beta^{2}$ is also $0\leq\beta^{2}\leq1$. 
 
-<img src="resources\2.2_electron_prob.png" width="650px"/>
+<img src="resources\img\2.2_electron_prob.png" width="650px"/>
 
 <center><i>Figure 2.2.1 - Electron Colliding with a Discretely Sectioned Wall</i></center>
 
@@ -114,7 +150,7 @@ What we have just described is known as a _probabilistic bit_, or _pbit_. A pbit
 
 Our goal is to convert a wave equation like the sine function into a pbit. One of the first things a precalculus course teaches is the relationship between trigonometric functions and circles. Taking a look at the unit circle, we can see the X and Y coordinates of the circle with radius 1 are the outputs of the cosine and sine functions.
 
-<img src="resources\2.1_unit_circle.svg" width="400px"/>
+<img src="resources\img\2.1_unit_circle.svg" width="400px"/>
 
 <center><i>Figure 2.2.2 - The Unit Circle</i></center>
 
@@ -216,7 +252,7 @@ row vectors, conjugate-transpose, overlap = scalar (called linear functional/ope
 
 Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have the ability to randomly collapse to a basis state, but they also have another key attribute called _phase_. Finding where phase comes from can be a tricky subject to cover without diving headfirst into quantum mechanics. For the sake of brevity, we will not be covering how phase impacts the quantum wave equation, only how phase impacts the qubit. We need to transform the pbit model to accommodate phase.
 
-<img src="resources\2.3_pbit.png" width="400px"/>
+<img src="resources\img\2.3_pbit.png" width="400px"/>
 
 <center><i>Figure 2.3.1 - The Pbit Model</i></center>
 
@@ -226,7 +262,7 @@ This is the pbit model we found from dividing the wave equation into two discret
 
 * The second transformation is to pull $|1\rangle$ down so it is also vertical. This makes both $|0\rangle$ and $|1\rangle$ vertical and changes the definition of $\theta, \alpha,$ and $\beta$. 
 
-  <img src="resources\2.3_partial_qubit.png" width="500px"/>
+  <img src="resources\img\2.3_partial_qubit.png" width="500px"/>
 
 <center><i>Figure 2.3.2 - The Partial Qubit Model</i></center>
 
@@ -244,7 +280,7 @@ _Polar coordinates_ are a system of coordinates in 2 dimensions which use a dist
 
 _Spherical coordinates_ are a system of coordinates in 3 dimensions which use a distance from the origin, an angle from the positive Z axis, and an angle from the positive X axis to describe every possible point: $(r,\theta,\phi)$. In this model, $\theta$ is the angle from the positive Z axis and is called the _inclination angle_. $\phi$ is the angle  from the positive X axis and is called the _azimuth angle_. 
 
-<img src="resources\bloch_sphere.png" width="250px" />
+<img src="resources\img\bloch_sphere.png" width="250px" />
 
 
 
@@ -428,7 +464,7 @@ There are limitations on the quantum computer as well. The Sycamore processor is
 
 To create circuits that have all three properties, the Google quantum team used a pseudorandom generator which uses a seed to create circuits in this format:
 
-<img src="resources\4.5_circuit.png" width="800px" />
+<img src="resources\img\4.5_circuit.png" width="800px" />
 
 
 
@@ -436,7 +472,7 @@ To create circuits that have all three properties, the Google quantum team used 
 
 The circuit is divided into _m_ cycles in which every cycle has 1 single qubit gate applied per qubit followed a double qubit gate. The single qubit gates are chosen pseudorandomly and can be $\sqrt{X}$, $\sqrt{Y}$, or $\sqrt{W}$. Two gates of the same axis cannot be chosen sequentially. The $\sqrt{W}$ gate is a rotation of $\frac{\pi}{2}$ radians around the axis $(X+Y)/\sqrt2$. Similar to the Hadamard axis, this axis is formed by the line $X=Y$ when $Z=0$. The double qubit gates are chosen from a set sequence: repeat $ABCDCDAB$. The chosen letter represents the gate being applied to every pair of neighbor qubits connected by a colored coupler. 
 
-<img src="resources\4.5_qpu.png" width="500px" />
+<img src="resources\img\4.5_qpu.png" width="500px" />
 
 <center><i>Figure 4.5.2 - Sycamore's QPU Architecture</i></center>
 
@@ -500,6 +536,8 @@ Quantum cryptography vs post-quantum cryptography
 
 ## Chapter 7:   Quantum Error Correction
 
+Up to this point we have been assuming we have 'perfect' qubits
+
 decoherence and fidelity
 
 probability correction
@@ -508,25 +546,7 @@ phase correction
 
 physical qubits vs logical qubits
 
-## Chapter 8:   Quantum Algorithms
-
-General format of a quantum algorithm: classical preprocessing, quantum circuit, classical postprocessing
-
-General goal of a quantum algorithm: Minimize probability of 'wrong' answers & maximize probability of 'right' answers
-
-QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
-
-<img src="resources\1.2_comp_class.png" width="400px"/>
-
-<center><i>Figure 1.2.1 Common Complexity Classes</i></center>
-
-The study of _computational complexity classes_ is from the theory side of computer science which describes how long a computer program takes to solve a certain problem based off the size of the input. 
-
-BQP complexity class
-
-https://www.cs.virginia.edu/~robins/The_Limits_of_Quantum_Computers.pdf
-
-## Chapter 9:   Quantum Computer Architecture
+## Chapter 8:   Quantum Computer Architecture
 
 superconducting qubits (Google, IBM, Rigetti, Intel)
 
@@ -550,7 +570,7 @@ Quantum walks on graphs
 
 ​	wacky
 
-## Chapter 10:   Quantum Compilers
+## Chapter 9:   Quantum Compilers
 
 phase normal form
 
@@ -558,7 +578,7 @@ phase normal form
 
 parallelization & race conditions
 
-## Chapter 11:   Simulating Quantum Computers
+## Chapter 10:   Simulating Quantum Computers
 
 classically!
 
@@ -579,6 +599,24 @@ deferred form partitioning
 simulating classical computers on quantum computers 
 
 Schrödinger & Feynman path integrals / algorithms
+
+## Chapter 11:   Quantum Algorithms
+
+General format of a quantum algorithm: classical preprocessing, quantum circuit, classical postprocessing
+
+General goal of a quantum algorithm: Minimize probability of 'wrong' answers & maximize probability of 'right' answers
+
+QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
+
+<img src="resources\img\1.2_comp_class.png" width="400px"/>
+
+<center><i>Figure 1.2.1 Common Complexity Classes</i></center>
+
+The study of _computational complexity classes_ is from the theory side of computer science which describes how long a computer program takes to solve a certain problem based off the size of the input. 
+
+BQP complexity class
+
+https://www.cs.virginia.edu/~robins/The_Limits_of_Quantum_Computers.pdf
 
 ## Chapter 12:   Quantum Artificial Intelligence
 

@@ -12,7 +12,7 @@ Note that we are using the physics definition of spherical coordinates where:
 * $\theta$ is the inclination angle from the positive Z axis:  $0\leq\theta\leq\pi$
 * $\phi$ is the azimuth angle from the positive X axis: $0\leq\phi<2\pi$
 
-<img src="..\..\resources\bloch_sphere.png" width="250px" />
+<img src="..\..\resources\img\bloch_sphere.png" width="250px" />
 
 To begin, first convert the spherical coordinates to cartesian.
 $$

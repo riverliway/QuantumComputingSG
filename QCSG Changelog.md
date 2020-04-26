@@ -4,6 +4,10 @@
 
 
 
+#### Version 0.1.4 - April 26, 2020
+
+* Wrote Preface
+
 #### Version 0.1.3 - April 25, 2020
 
 * Wrote Section - Case Study: Google's Quantum Supremacy
