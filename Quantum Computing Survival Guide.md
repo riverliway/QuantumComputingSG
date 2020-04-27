@@ -150,7 +150,9 @@ What we have just described is known as a _probabilistic bit_, or _pbit_. A pbit
 
 Our goal is to convert a wave equation like the sine function into a pbit. One of the first things a precalculus course teaches is the relationship between trigonometric functions and circles. Taking a look at the unit circle, we can see the X and Y coordinates of the circle with radius 1 are the outputs of the cosine and sine functions.
 
-<img src="resources\img\2.1_unit_circle.svg" width="400px"/>
+<iframe height='500' scrolling='no' title='Unit Circle Applet' src='resources\applets\unit_circle\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Unit Circle Applet</iframe>
+
+
 
 <center><i>Figure 2.2.2 - The Unit Circle</i></center>
 
@@ -375,6 +377,10 @@ single qubit rotations
 their matrices
 
 half a bit flip (both x and y)
+
+Solovay–Kitaev Theorem says you can produce a rotation gate R(theta) for any theta with precision epsilon using log(1/epsilon) gates to create arbitrary superposition. Kinda like floating point rotations
+
+creating a Y gate from a probability 
 
 ### 3.4   Named Gates
 
