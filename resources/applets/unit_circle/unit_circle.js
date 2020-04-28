@@ -16,10 +16,6 @@ function setup() {
     drawUnitCircle(60 * toRad);
 }
 
-function draw() {
-    
-}
-
 function mouseDragged() {
     let xDiff = mouseX - WIDTH / 2;
     let yDiff = mouseY - HEIGHT / 2;
