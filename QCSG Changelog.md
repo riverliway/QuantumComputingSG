@@ -4,6 +4,14 @@
 
 
 
+#### Version 0.1.6 - April 28, 2020
+
+* Created sine wave applet
+
+#### Version 0.1.5 - April 27, 2020
+
+* Created unit circle applet
+
 #### Version 0.1.4 - April 26, 2020
 
 * Wrote Preface

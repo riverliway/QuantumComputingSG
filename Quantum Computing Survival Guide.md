@@ -112,9 +112,9 @@ Although this document is focused towards computer scientists, it is important t
 
 Before discussing quantum particles, let's talk waves. A _wave_ is any mathematical function which continues to repeat itself, forever. Think about the waves at the beach, how they go up and down as far as you can see. The distance until the wave starts to repeat itself is called the wave's _period_.
 
-<img src="resources\img\2.1_wave.svg" width="550px"/>
+<iframe height='500' scrolling='no' title='Sine Wave Applet' src='resources\applets\sin_wave\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sine Wave Applet</iframe>
 
-<center><i>Figure 2.1.1 The Sine Wave</i></center>
+<center><i><a href="resources/applets/sin_wave/index.html" target="_blank">Applet 2.1.1</a> The Sine Wave</i></center>
 
 Several famous experiments, such as the double slit experiment, have shown that light and matter can have properties of particles and waves. This is known as _wave/particle duality_. When an electron is released from a source, it acts as a wave which propagates through space until contacting a surface. Once the electron collides with a surface, it is only observable in one location. 
 
@@ -152,7 +152,7 @@ Our goal is to convert a wave equation like the sine function into a pbit. One o
 
 <iframe height='500' scrolling='no' title='Unit Circle Applet' src='resources\applets\unit_circle\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Unit Circle Applet</iframe>
 
-<center><i>Applet 2.2.2 - The Unit Circle</i></center>
+<center><i><a href="resources/applets/unit_circle/index.html" target="_blank">Applet 2.2.2</a> The Unit Circle</i></center>
 
 A _vector_ is a mathematical object which has both magnitude and direction. We have a vector here whose magnitude is $1$ and direction is determined by the variable $\theta$, the angle from the positive X axis to the vector. $\theta$ is called a _polar coordinate_ which is the input to the trigonometric functions that produce the cartesian coordinates $x$ and $y$. The vector $\mathbf{v}$ is described as:
 $$

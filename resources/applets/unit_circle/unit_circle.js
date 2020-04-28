@@ -5,22 +5,31 @@ const HEIGHT = 500;
 
 let origin;
 const AXIS_LENGTH = 250;
+const RADIUS = 200;
 const toRad = Math.PI / 180;
 const toDeg = 1 / toRad;
 
 function setup() {
     createCanvas(WIDTH, HEIGHT);
+    cursor(HAND);
 
     origin = createVector(WIDTH / 2, HEIGHT / 2);
 
     drawUnitCircle(60 * toRad);
 }
 
+function mousePressed() {
+    cursor("grab");
+    mouseDragged();
+}
+
+function mouseReleased() {
+    cursor(HAND);
+}
+
 function mouseDragged() {
-    let xDiff = mouseX - WIDTH / 2;
-    let yDiff = mouseY - HEIGHT / 2;
-    let theta = Math.acos(xDiff / Math.sqrt(xDiff * xDiff + yDiff * yDiff));
-    if (mouseY > HEIGHT / 2) theta = 2 * Math.PI - theta;
+    let theta = atan2(-(mouseY - HEIGHT / 2), mouseX - WIDTH / 2);
+    if (theta < 0) theta += Math.PI * 2;
     drawUnitCircle(theta);
 }
 
@@ -39,13 +48,19 @@ function drawUnitCircle(theta) {
     drawArrow(origin, createVector(0, AXIS_LENGTH), 140);
     drawArrow(origin, createVector(0, -AXIS_LENGTH), 140);
 
+    stroke('green');
+    line(x * RADIUS + WIDTH / 2, -y * RADIUS + HEIGHT / 2, WIDTH / 2, -y * RADIUS + HEIGHT / 2);
+    line(x * RADIUS + WIDTH / 2, -y * RADIUS + HEIGHT / 2, x * RADIUS + WIDTH / 2, HEIGHT / 2);
+
+    stroke('black');
     noFill();
-    ellipse(WIDTH / 2, HEIGHT / 2, 400, 400);
-    arc(WIDTH / 2, HEIGHT / 2, 50, 50, -theta, 0);
+    ellipse(WIDTH / 2, HEIGHT / 2, RADIUS * 2, RADIUS * 2);
+    arc(WIDTH / 2, HEIGHT / 2, RADIUS / 4, RADIUS / 4, -theta, 0);
 
     strokeWeight(3);
-    drawArrow(origin, createVector(x * 200, -y * 200), 'blue');
+    drawArrow(origin, createVector(x * RADIUS, -y * RADIUS), 'blue');
 
+    noStroke();
     fill(0);
     textSize(35);
     text("y = " + y.toFixed(2), WIDTH / 2 + 30, 30);
