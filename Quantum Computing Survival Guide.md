@@ -154,7 +154,7 @@ Our goal is to convert a wave equation like the sine function into a pbit. One o
 
 
 
-<center><i>Figure 2.2.2 - The Unit Circle</i></center>
+<center><i>Applet 2.2.2 - The Unit Circle</i></center>
 
 A _vector_ is a mathematical object which has both magnitude and direction. We have a vector here whose magnitude is $1$ and direction is determined by the variable $\theta$, the angle from the positive X axis to the vector. $\theta$ is called a _polar coordinate_ which is the input to the trigonometric functions that produce the cartesian coordinates $x$ and $y$. The vector $\mathbf{v}$ is described as:
 $$
