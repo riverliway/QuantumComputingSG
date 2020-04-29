@@ -110,7 +110,7 @@ The smallest possible unit of data in a classical computer is a _bit_. It stands
 
 Although this document is focused towards computer scientists, it is important to learn about the nature of quantum particles to understand where qubits come from. This explanation will only scrape the surface of the wonderful world of quantum particles, but it will suffice for the purposes of this document.
 
-Before discussing quantum particles, let's talk waves. A _wave_ is any mathematical function which continues to repeat itself, forever. Think about the waves at the beach, how they go up and down as far as you can see. The distance until the wave starts to repeat itself is called the wave's _period_.
+Before discussing quantum particles, lets remember 
 
 <iframe height='500' scrolling='no' title='Sine Wave Applet' src='resources\applets\sin_wave\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sine Wave Applet</iframe>
 
