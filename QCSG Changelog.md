@@ -7,6 +7,7 @@
 #### Version 0.1.6 - April 28, 2020
 
 * Created sine wave applet
+* Created sycamore coupler applet
 
 #### Version 0.1.5 - April 27, 2020
 

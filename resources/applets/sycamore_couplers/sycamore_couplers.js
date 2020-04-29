@@ -38,6 +38,8 @@ function setup() {
     offsetX /= 2;
     row = -1;
     let col = 0;
+    let pattern1 = [0, 2, 1, 3];
+    let pattern2 = [3, 1, 2, 0];
     for (let i = 0; i < 88; i++) {
         if (i % 11 == 0) {
             row++;
@@ -47,21 +49,24 @@ function setup() {
         couplers1[i] = {
             x: beginX + col * offsetX,
             y: beginY + row * offsetY,
-            type: (row % 2) * 2 + col % 2
+            type: (col % 2) * 2 + row % 2
         };
+        if (couplers1[i].type == 3) couplers1[i].type = 1;
+        else if (couplers1[i].type == 1) couplers1[i].type = 3;
         if (i % 2 == 1) {
             couplers1[i].x += 2;
         }
 
         couplers2[i] = Object.assign({}, couplers1[i]);
-        couplers2[i].type = i % 4;
+        let arrOffset = row % 4 > 1 ? 2 : 0;
+        if (row % 2 == 0) {
+            couplers2[i].type = pattern1[(col + arrOffset) % 4];
+        } else {
+            couplers2[i].type = pattern2[(col + arrOffset) % 4];
+        }
 
         col++;
     }
-
-    textSize(18);
-    text("Pattern", 678, 45);
-    toggle = new Toggle(680, 60, 50, false, color(30, 200, 30), updateSycamore);
 
     offsetY = 70;
     let scaleY = 80;
@@ -75,6 +80,20 @@ function setup() {
         buttons[i].hoverColor = createColor(i, true);
         buttons[i].drawButton(buttons[i].color);
     }
+
+    noStroke();
+    fill(0);
+    textSize(18);
+    text("Pattern", 688, 45);
+    text("A", 670, 80);
+    text("E", 748, 80);
+    toggle = new Toggle(690, 60, 50, false, color(30, 200, 30), () => {
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].text = String.fromCharCode(i + (toggle.value ? 69 : 65));
+            buttons[i].drawButton(createColor(i, false));
+        }
+        updateSycamore();
+    });
 
     drawQubits();
     drawCouplers();
@@ -106,12 +125,12 @@ function mouseClicked() {
 }
 
 function createColor(index, active) {
-    let alpha = active ? 255 : 140;
+    let alpha = active ? 255 : 100;
     switch(index) {
         case 0: return color(43, 160, 43, alpha);
-        case 1: return color(32, 119, 181, alpha);
-        case 2: return color(134, 70, 72, alpha);
-        case 3: return color(24, 190, 207, alpha);
+        case 1: return color(24, 190, 197, alpha);
+        case 2: return color(32, 119, 181, alpha);
+        case 3: return color(134, 70, 72, alpha);
     }
 }
 
@@ -125,14 +144,21 @@ function drawCouplers() {
     textSize(12);
     for (let i = 0; i < couplers.length; i++) {
         let c = couplers[i];
-        fill(createColor(c.type, active == c.type));
+        let isActive = active == c.type;
+        fill(createColor(c.type, isActive));
+        if (isActive) {
+            strokeWeight(1);
+            stroke(0);
+        }
         if (i % 2 == 0) {
             quad(c.x, c.y, c.x + LENGTH, c.y + LENGTH, c.x + LENGTH - HEIGHT, c.y + LENGTH + HEIGHT, c.x - HEIGHT, c.y + HEIGHT);
             fill(255);
+            noStroke();
             text(String.fromCharCode(c.type + (toggle.value ? 69 : 65)), c.x - HEIGHT * 0.2, c.y + LENGTH * 1.1);
         } else {
             quad(c.x, c.y, c.x + HEIGHT, c.y + HEIGHT, c.x + HEIGHT - LENGTH, c.y + HEIGHT + LENGTH, c.x - LENGTH, c.y + LENGTH);
             fill(255);
+            noStroke();
             text(String.fromCharCode(c.type + (toggle.value ? 69 : 65)), c.x - HEIGHT * 0.4, c.y + LENGTH * 1.1);
         }
     }
@@ -204,16 +230,20 @@ class Button {
     }
 
     drawButton(fillColor) {
-        noStroke();
         fill(255);
-        rect(this.x0 - 1, this.y0 - 1, this.x1 - this.x0 + 2, this.y1 - this.y0 + 2);
+        noStroke();
+        rect(this.x0 - 2, this.y0 - 2, this.x1 - this.x0 + 4, this.y1 - this.y0 + 4);
+        if (alpha(fillColor) == 255) {
+            strokeWeight(1);
+            stroke(0);
+        }
         fill(fillColor);
         rect(this.x0, this.y0, this.x1 - this.x0, this.y1 - this.y0);
-        fill(0);
+        fill(255);
         strokeWeight(1);
-        stroke(0);
-        textSize(24);
-        text(this.text, this.x0, this.x1);
+        stroke(255);
+        textSize(35);
+        text(this.text, this.x0 + 22, this.y0 + 45);
     }
 }
 
