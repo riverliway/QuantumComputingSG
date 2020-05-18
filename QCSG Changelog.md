@@ -2,7 +2,9 @@
 
 [toc]
 
+#### Version 0.1.7 - May 15, 2020
 
+* TODO: 2.2 - made the claim there is "no reason" for binary, but actually I think 2 quantum state systems are implementations for qubits so that is a reason. idk.
 
 #### Version 0.1.6 - April 28, 2020
 

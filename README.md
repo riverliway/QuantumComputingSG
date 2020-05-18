@@ -19,3 +19,7 @@ Some prerequisite knowledge is assumed:
 This textbook is a living document, any suggestions or errors should be reported by creating an issue on this GitHub repository.
 
 View the [changelog](https://github.com/zackatoo/QuantumComputingSG/blob/master/QCSG%20Changelog.md) to see recent edits.
+
+Cite this book in MLA format:
+
+Schieberl, Zack. _Quantum Computing Survival Guide_. Github, 2020.
