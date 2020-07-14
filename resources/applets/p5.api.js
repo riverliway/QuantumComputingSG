@@ -2,56 +2,27 @@
 
 "use strict";
 
-let mousePressedThunks = [];
-function mousePressed() {
-    for (let i = 0; i < mousePressedThunks.length; i++) {
-        mousePressedThunks[i]();
+let eventArray = [[],[],[],[],[],[],[]];
+
+function extendMouseAPI(sketch) {
+    function eventCall (thunkArray) {
+        for (let i = 0; i < thunkArray.length; i++) {
+            let [instance, thunk] = thunkArray[i];
+            if (instance == undefined) thunk();
+            else thunk.call(instance);
+        }
     }
+
+    sketch.mousePressed  = () => eventCall(eventArray[0]);
+    sketch.mouseReleased = () => eventCall(eventArray[1]);
+    sketch.mouseMoved    = () => eventCall(eventArray[2]);
+    sketch.mouseDragged  = () => eventCall(eventArray[3]);
+    sketch.mouseClicked  = () => eventCall(eventArray[4]);
+    sketch.doubleClicked = () => eventCall(eventArray[5]);
+    sketch.mouseWheel    = () => eventCall(eventArray[6]);
 }
 
-let mouseReleasedThunks = [];
-function mouseReleased() {
-    for (let i = 0; i < mouseReleasedThunks.length; i++) {
-        mouseReleasedThunks[i]();
-    }
-}
-
-let mouseMovedThunks = [];
-function mouseMoved() {
-    for (let i = 0; i < mouseMovedThunks.length; i++) {
-        mouseMovedThunks[i]();
-    }
-}
-
-let mouseDraggedThunks = [];
-function mouseDragged() {
-    for (let i = 0; i < mouseDraggedThunks.length; i++) {
-        mouseDraggedThunks[i]();
-    }
-}
-
-let mouseClickedThunks = [];
-function mouseClicked() {
-    for (let i = 0; i < mouseClickedThunks.length; i++) {
-        mouseClickedThunks[i]();
-    }
-}
-
-let doubleClickedThunks = [];
-function doubleClicked() {
-    for (let i = 0; i < doubleClickedThunks.length; i++) {
-        doubleClickedThunks[i]();
-    }
-}
-
-let mouseWheelThunks = [];
-function mouseWheel() {
-    for (let i = 0; i < mouseWheelThunks.length; i++) {
-        mouseWheelThunks[i]();
-    }
-}
-
-let ThunkType = {
+const ThunkType = {
     MousePressed:  0,
     MouseReleased: 1,
     MouseMoved:    2,
@@ -61,14 +32,7 @@ let ThunkType = {
     MouseWheel:    6
 };
 
-function registerThunk(thunkType, thunk) {
-    switch (thunkType) {
-        case ThunkType.MousePressed:  mousePressedThunks.push(thunk);  break;
-        case ThunkType.MouseReleased: mouseReleasedThunks.push(thunk); break;
-        case ThunkType.MouseMoved:    mouseMovedThunks.push(thunk);    break;
-        case ThunkType.MouseDragged:  mouseDraggedThunks.push(thunk);  break;
-        case ThunkType.MouseClicked:  mouseClickedThunks.push(thunk);  break;
-        case ThunkType.DoubleClicked: doubleClickedThunks.push(thunk); break;
-        case ThunkType.MouseWheel:    mouseWheelThunks.push(thunk);    break;
-    }
+function registerThunk(thunkType, thunk, instance) {
+    if (instance == undefined) eventArray[thunkType].push([undefined, instance]);
+    else eventArray[thunkType].push([instance, thunk]);
 }

@@ -2,18 +2,22 @@
 
 [toc]
 
+#### Version 0.1.8 - June 1, 2020
+
+* Created Bloch Sphere applet
+
 #### Version 0.1.7 - May 15, 2020
 
 * TODO: 2.2 - made the claim there is "no reason" for binary, but actually I think 2 quantum state systems are implementations for qubits so that is a reason. idk.
 
 #### Version 0.1.6 - April 28, 2020
 
-* Created sine wave applet
-* Created sycamore coupler applet
+* Created Sine Wave applet
+* Created Sycamore Coupler applet
 
 #### Version 0.1.5 - April 27, 2020
 
-* Created unit circle applet
+* Created Unit Circle applet
 
 #### Version 0.1.4 - April 26, 2020
 

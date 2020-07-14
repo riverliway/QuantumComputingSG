@@ -120,6 +120,8 @@ $$
 
 <center><i><a href="resources/applets/sin_wave/index.html" target="_blank">Applet 2.1.1</a> The Sine Wave</i></center>
 
+This figure shown above is called an _applet_. It is an interactable program embedded inside the document which allows readers to change values to view the topic in depth. For this applet, you can click and drag on the green sliders which change the 4 values to see their impact on the wave.
+
 Several famous experiments, such as the double slit experiment, have shown that light and matter can have properties of both particles and waves. This is known as _wave/particle duality_. When an electron is released from a source, it acts as a wave which propagates through space until contacting a surface. Once the electron collides with a surface, it is only observable in one location. 
 
 <img src="resources\img\2.1_electron.png" width="650px"/>
@@ -284,11 +286,13 @@ _Polar coordinates_ are a system of coordinates in 2 dimensions which use a dist
 
 _Spherical coordinates_ are a system of coordinates in 3 dimensions which use a distance from the origin, an angle from the positive Z axis, and an angle from the positive X axis to describe every possible point: $(r,\theta,\phi)$. In this model, $\theta$ is the angle from the positive Z axis and is called the _inclination angle_. $\phi$ is the angle  from the positive X axis and is called the _azimuth angle_. 
 
-<img src="resources\img\bloch_sphere.png" width="250px" />
+<iframe height='500' scrolling='no' title='Bloch Sphere Applet' src='resources\applets\bloch_sphere\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Sphere Applet</iframe>
 
 
 
-<center><i>Figure 2.3.3 - The Bloch Sphere</i></center>
+<center><i><a href="resources/applets/bloch_sphere/index.html" target="_blank">Applet 2.3.3</a> The Bloch Sphere</i></center>
+
+This above applet allows not only changing the values of $\theta$ and $\phi$, but also moving the 3D sphere around by clicking and dragging. 
 
 The **Bloch Sphere**, named after Felix Bloch, is the full model of the qubit. It uses spherical coordinates to describe every possible state a quantum particle can occupy. A _pure state_ is any quantum state which lies on the surface of the unit sphere with radius $1$. A quantum state could also be a _mixed state_ which has radius less than $1$, but will not be discussed here. Here are some facts about our new Bloch Sphere model:
 
