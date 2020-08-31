@@ -2,13 +2,15 @@
 
 [toc]
 
-#### Version 0.1.8 - June 1, 2020
+
+
+#### Version 0.1.8 - August 29, 2020
+
+* Revised the notation and word choice in sections 2.1 through 2.4
+
+#### Version 0.1.7 - June 1, 2020
 
 * Created Bloch Sphere applet
-
-#### Version 0.1.7 - May 15, 2020
-
-* TODO: 2.2 - made the claim there is "no reason" for binary, but actually I think 2 quantum state systems are implementations for qubits so that is a reason. idk.
 
 #### Version 0.1.6 - April 28, 2020
 

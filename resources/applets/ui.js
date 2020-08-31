@@ -5,9 +5,9 @@ class QubitSlider {
         this.thetaSlider = new ArcSlider(sketch, x, y, 50, 270, 90);
         this.phiSlider = new ArcSlider(sketch, x, y, 30, 0, 360);
         this.phiSlider.setValue(90);
-        this.thetaSlider.onMove = () => this.phiSlider.draw();
-        this.thetaSlider.onHover = () => this.phiSlider.draw();
-        this.thetaSlider.onUnHover = () => this.phiSlider.draw();
+
+        // Since the theta slider will 'clean' the phi slider, we need to re-draw
+        this.thetaSlider.onPostDraw = () => this.phiSlider.update();
     }
 
     setValues(theta, phi) {
@@ -130,7 +130,7 @@ class Bobble extends Interactable {
     }
 
     doesHover() {
-        return this.radius > Math.hypot(this.x - this.sketch.mouseX, this.y - this.sketch.mouseY);
+        return this.radius > Math.hypot(this.x - this.sketch.mouseX, this.y - this.sketch.mouseY) - 3;
     }
 
     hover() {
@@ -166,6 +166,12 @@ class Bobble extends Interactable {
         this.y = this.sketch.mouseY;
     }
 
+    release() {
+        this.isHover = false;
+        this.sketch.cursor(this.sketch.ARROW);
+        this.draw();
+    }
+
     getColor() {
         if (this.isHover) {
             return this.hoverColor;
@@ -188,9 +194,19 @@ class ArcSlider {
         this.x = x;
         this.y = y;
         this.radius = radius;
+        this.bobbleRadius = 8;
         
         let [bobbleX, bobbleY] = this.getBobblePos();
-        this.bobble = new Bobble(sketch, bobbleX, bobbleY, 8);
+        this.bobble = new Bobble(sketch, bobbleX, bobbleY, this.bobbleRadius);
+
+        // Override bobble methods. We will do cleaning ourselves
+        this.bobble.clean = undefined;
+        this.bobble.move = () => this.move();
+        this.bobble.onPreDraw = () => this.draw();
+
+        // Re-draw everything now that the plumbing is correct
+        this.draw();
+        this.bobble.draw();
     }
 
     move() {
@@ -215,9 +231,13 @@ class ArcSlider {
                 }
             }
         }
+
+        this.updateBobblePosition();
     }
 
     draw() {
+        if (this.onPreDraw != undefined) this.onPreDraw();
+
         this.sketch.angleMode(this.sketch.DEGREES);
         this.sketch.push();
 
@@ -235,12 +255,13 @@ class ArcSlider {
 
         this.sketch.pop();
 
-        if (this.onDraw != undefined) this.onDraw();
+        if (this.onPostDraw != undefined) this.onPostDraw();
     }
 
     updateBobblePosition() {
         this.bobbleX = this.radius * Math.cos(this.sketch.radians(this.value)) + this.x;
         this.bobbleY = this.radius * Math.sin(this.sketch.radians(this.value)) + this.y;
+        this.bobble.setPosition(this.bobbleX, this.bobbleY);
     }
 
     getBobblePos() {
@@ -249,8 +270,14 @@ class ArcSlider {
         return [x, y];
     }
 
+    update() {
+        // Simply refreshes the coordinates and re-draws the slider and bobble
+        this.updateBobblePosition();
+        this.bobble.draw();
+    }
+
     setValue(val) {
         this.value = val;
-        this.resetAfterRelease();
+        this.update();
     }
 }

@@ -12,13 +12,8 @@ let screen = (sketch) => {
         sketch.createCanvas(WIDTH, HEIGHT);
         sketch.angleMode(sketch.DEGREES);
 
-        // qubitSlider = new QubitSlider(sketch, 400, 250);
-        let bobble = new Bobble(sketch, 400, 250, 10);
+        qubitSlider = new QubitSlider(sketch, 400, 250);
     }
-
-    // registerThunk(ThunkType.MouseClicked, this, () => {
-    //     console.log(sketch.mouseX, sketch.mouseY);
-    // });
 
     extendMouseAPI(sketch);
 }
