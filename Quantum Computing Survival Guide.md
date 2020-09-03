@@ -10,9 +10,9 @@
 
 This document is meant to be a modern equivalent to a textbook for quantum computing. Modern equivalent - don't textbooks still exist in today's world? Yes, but it is our belief that the current format of paper textbooks do not translate well to the new generation's style of learning. 
 
-* This document has links to other parts of itself for easy of access as well as links to outside resources. This format is better suited for reading on a computer than using a glossary or series of appendices. 
+* This document has links to other parts of itself for ease of access as well as links to outside resources. This format is better suited for reading on a computer than using a glossary or series of appendices. 
 * This document uses applets to produce animations and interactive figures. The PDF version does not support these applets, so static images are used as a replacement. Use the web version to interact with the figures.
-* Every question has an answer. With the advent of online answer services, creating a list of exercises for the reader is synonymous with providing homework questions for teachers to use. This does nothing but discriminate against those who cannot afford the paid answer services. Instructors who decide to use this textbook in the setting of a classroom will need to create their own homework or at least modify the existing questions we provide. 
+* Every question has an answer. With the advent of online answer services, creating a list of exercises for the reader is synonymous with providing homework questions for teachers to use. This does nothing but discriminate against those who cannot afford the paid answer services. Instructors who decide to use this textbook in the setting of a classroom will need to create their own homework, or at least modify the existing questions we provide. 
 * This document is free. It will always be free. All future versions of this document will be free. Nearly all textbooks are pirated, scanned, and uploaded to the internet. Why not provide an encouraging environment for students rather than making them feel like criminals for learning?
 * We accept corrections, suggestions, and new ideas from _anyone_. Simply post a new issue on the public [GitHub repository](https://github.com/zackatoo/QuantumComputingSG) for this textbook using the proper format. Having a public GitHub also allows any reader to view all past versions of the document and the authors of those changes.
 * This document is covered by the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning the material may be redistributed, copied, or modified freely, by anyone, so long as proper attribution is given. The code associated with this document is covered by the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), meaning the code may be redistributed, used in private or public projects, or modified freely, by anyone, so long as proper attribution is given. The code can not be patented except by the original author.
@@ -32,7 +32,7 @@ Some amount of review for these topics is provided, but we are assuming readers 
 
 #### Outline of the Document
 
-The first chapter is a simple introduction to the history of quantum computing and why it is & will be useful. This chapter is not required, but can be useful for providing a bridge to the real world. The next three chapters form the foundations of quantum computing. After the chapter on entanglement, the document really opens up, allowing instructors to focus on a particular subfield if they so choose.
+The first chapter is a simple introduction to the history of quantum computing and why it is & will be useful. This chapter is not required, but can be useful for providing a bridge to the real world. The next three chapters form the foundations of quantum computing. After the chapter on entanglement, the document opens up, allowing instructors to focus on a particular subfield if they so choose.
 
 <img src="resources\img\Preface_chap_dep.svg" width="700px"/>
 
@@ -258,69 +258,62 @@ row vectors, conjugate-transpose, overlap = scalar (called linear functional/ope
 
 ### [2.4](#QCSG)   Bloch Sphere Model
 
-#### Adjusting the Pbit
+Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have the ability to randomly collapse to a basis state, but they also have another key attribute called _phase_. 
 
-Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have the ability to randomly collapse to a basis state, but they also have another key attribute called _phase_. Finding where phase comes from can be a tricky subject to cover without diving headfirst into quantum mechanics. For the sake of brevity, we will not be covering how phase impacts the quantum wave equation, only how phase impacts the qubit. We need to transform the pbit model to accommodate phase.
-
-<img src="resources\img\2.3_pbit.png" width="400px"/>
-
-<center><i>Figure 2.3.1 - The Pbit Model</i></center>
-
-This is the pbit model we found from dividing the wave equation into two discrete sections using the unit circle. There are two transformations we need to make to our pbit to have it match the physic's model of a qubit. 
-
-* The first is to switch the $|0\rangle$ and $|1\rangle$ axes. This is equivalent to reflecting the model over the line created by  $y=x$. Now $|0\rangle$ represents the vertical axis and and $|1\rangle$ represents the horizonal axis. Notice $\theta$ is still the angle between $|0\rangle$ and $|\psi\rangle$. 
-
-* The second transformation is to pull $|1\rangle$ down so it is also vertical. This makes both $|0\rangle$ and $|1\rangle$ vertical and changes the definition of $\theta, \alpha,$ and $\beta$. 
-
-  <img src="resources\img\2.3_partial_qubit.png" width="500px"/>
-
-<center><i>Figure 2.3.2 - The Partial Qubit Model</i></center>
-
-The above model has some interesting things to note about it. We have changed the definition of $\theta$ so it is bounded above by $\pi$ instead of $\frac{\pi}{2}$. This has also changed how the basis coefficients are defined. Now $\alpha=cos(\frac{\theta}{2})$ and $\beta=sin(\frac{\theta}{2})$. The basis states $|0\rangle$ and $|1\rangle$ are mathematically still orthogonal, even if it doesn't appear that way visually. The horizontal state is now in _equal superposition_, which occurs when the probability of all basis states are the same. 
-$$
-|\psi\rangle=\frac{1}{\sqrt2}(|0\rangle+|1\rangle) = \frac{1}{\sqrt2}|0\rangle+\frac{1}{\sqrt2}|1\rangle \\
-(\frac{1}{\sqrt2})^2+(\frac{1}{\sqrt2})^2=1 \\
-\frac{1}{2}+\frac{1}{2}=1
-$$
-This partial model of the qubit is now ready to introduce phase. 
+Phase is another variable we need to account for in the model for the qubit, which means we will change the system of coordinates we have been using up until now.
 
 #### Spherical Coordinates
 
-_Polar coordinates_ are a system of coordinates in 2 dimensions which use a distance from the origin and an angle to describe every possible point: $(r, \theta)$. Our pbit model used polar coordinates but restricted $r$ to always be equal to $1$. To introduce phase, we need to add another variable to our model and add another dimension. 
+_Polar coordinates_ is a system of coordinates in 2 dimensions which uses a distance from the origin and an angle to describe every possible point: $(r, \theta)$. Our pbit model used polar coordinates but restricted $r$ to always be equal to $1$. To introduce phase, we need to add another variable to our model and add another dimension. 
 
-_Spherical coordinates_ are a system of coordinates in 3 dimensions which use a distance from the origin, an angle from the positive Z axis, and an angle from the positive X axis to describe every possible point: $(r,\theta,\phi)$. In this model, $\theta$ is the angle from the positive Z axis and is called the _inclination angle_. $\phi$ is the angle  from the positive X axis and is called the _azimuth angle_. 
+_Spherical coordinates_ is a system of coordinates in 3 dimensions which uses a distance from the origin, an angle from the positive Z axis, and an angle from the positive X axis to describe every possible point: $(r,\theta,\phi)$. In this model, $\theta$ is the angle from the positive Z axis and is called the _inclination angle_. $\phi$ is the angle from the positive X axis and is called the _azimuth angle_. 
+
+This notation may differ from a multivariable calculus class, where $\theta$ & $\phi$'s roles are switched and $r$ is denoted $\rho$. We will be using the notation commonly used in physics and defined by the [ISO standard](https://www.iso.org/standard/64973.html). 
 
 <iframe height='500' scrolling='no' title='Bloch Sphere Applet' src='resources\applets\bloch_sphere\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Sphere Applet</iframe>
 
 
 
-<center><i><a href="resources/applets/bloch_sphere/index.html" target="_blank">Applet 2.3.3</a> The Bloch Sphere</i></center>
+<center><i><a href="resources/applets/bloch_sphere/index.html" target="_blank">Applet 2.4.1</a> The Bloch Sphere</i></center>
 
 This above applet allows the changing the values of $\theta$ & $\phi$ and moving the 3D sphere around by clicking and dragging. 
 
 The **Bloch Sphere**, named after Felix Bloch, is the full model of the qubit. It uses spherical coordinates to describe every possible state a quantum particle can occupy. A _pure state_ is any quantum state which lies on the surface of the unit sphere with radius $1$. A quantum state could also be a _mixed state_ which has radius less than $1$, but will not be discussed here. Here are some facts about our new Bloch Sphere model:
 
-* The $|0\rangle$ and $|1\rangle$ states are still vertical and orthogonal to each other.
-* The inclination angle, $\theta$, is still bounded as $0\leq\theta\leq\pi$
+* The green point indicates the current quantum state, $|\psi\rangle$.
+* The $|0\rangle$ and $|1\rangle$ states are vertical and orthogonal to each other.
+* The inclination angle, $\theta$, has the bounds: $0\leq\theta\leq\pi$
 * The azimuth angle, $\phi$, has the bounds: $0\leq\phi<2\pi$
 
-What about our basis coefficients? Did $\alpha$ and $\beta$ change?
+The fact that $|0\rangle$ and $|1\rangle$ are orthogonal to each other may be surprising and perhaps confusing. They certainly do not seem to be perpendicular, in fact they look parallel! Let us look at a static image of the Bloch sphere:
+
+<img src="resources\img\bloch_sphere.png" width="300px"/>
+
+<center><i>Figure 2.4.2 - The Static Bloch Sphere</i></center>
+
+A quantum state with radius 1 on the positive Z axis is $|0\rangle$ and one on the negative Z axis is $|1\rangle$. The reason why our orthogonal basis states are allowed to exist on the same axis is because the Bloch sphere technically exists inside _Hilbert space_ instead of the typical _Euclidean space_ we are used to. Don't sweat the details too much since Hilbert space is just a generalization of Euclidean space.
+
+The basis coefficients $\alpha$ and $\beta$ can now be defined in terms of the inclination and azimuth angles:
+$$
+|\psi\rangle=\alpha|0\rangle+\beta|1\rangle=cos(\frac{\theta}{2})|0\rangle+e^{i\phi}sin(\frac{\theta}{2})|1\rangle
+$$
+When describing qubits, $\alpha$ and $\beta$ are complex numbers. Since they are complex, we need to make a minor adjustment to the formula describing the probability of collapse:
+$$
+P(|0\rangle) = |\alpha|^2 \\
+P(|1\rangle) = |\beta|^2 \\
+|\beta|^2 = 1 - |\alpha|^2
+$$
+The absolute value is necessary since we are now dealing with complex numbers. Not using it would mean some values of $\alpha$ and $\beta$ would yield negative probabilities, which are not allowed.
 
 #### Let's Talk Phase
 
-The definitions of $\alpha$ and $\beta$ did change, but before we talk about that, what is up with phase? We were forced to bring our pbit model into another dimension so we could incorporate phase to make a qubit. How does that help? Let's take a look at the probability constraints from before:
+Any description of phase would be incomplete without talking about _global phase_. Technically, the phase we have been working with in this section is formally defined as _relative phase_. When defining the basis coefficients $\alpha$ and $\beta$, we specifically stated that they are both complex numbers. However, looking at their definitions, $\alpha$ appears completely real. This is because the real definition of the basis coefficients is:
 $$
-0\leq\alpha^2\leq1\\
-0\leq\beta^2\leq1\\
-\alpha^2+\beta^2=1
+|\psi\rangle=e^{ia}(e^{ib}cos(\frac{\theta}{2})|0\rangle+e^{ic}sin(\frac{\theta}{2})|1\rangle)
 $$
-These constraints are still true with the Bloch Sphere, even if the definitions of $\alpha$ and $\beta$ changed. Here's the thing though: every possible value of $\alpha^2$ and $\beta^2$ were accessible already in the pbit model. If we think of $\alpha^2$ as a function of $\theta$: $\alpha^2(\theta) = cos^2(\frac{\theta}{2})$, we see it is a 1-1 function since $0\leq\theta\leq\pi$ !  
+ In this definition, $a$ is the global phase. The interesting fact about global phase is that physicists have concluded global phase does not have any impact on the qubit. Not even indirectly. We can arbitrarily set $a=-b$ so the complex part of $\alpha$ cancels out and leaves us with just a real part. Continuing this example, $\phi=c-b$  which is the relative phase. In this document, phase is always talking about relative phase. Global phase will always be explicitly labelled. 
 
-This realization only makes phase even more confusing! Why would we go through all the effort of adding another dimension if we could already access every value?
-
-It is true that $\alpha^2$ is always positive so any value can be accessed by the correct $\theta$ value, but what about $\alpha$? There is no guarantee $\alpha$ needs to be positive, it could be negative 
-
-global phase vs relative phase
+Phase can be somewhat unintuitive at first glance. Why would we introduce phase to our model which does not directly affect the probability? The variable which represents phase, $\phi$, only appears in the $e^{i\phi}$ term in $\beta$. Furthermore, when determining the probability, $|e^{i\phi}|^2$ will always equal $1$ for any value of $\phi$. It seems that $\theta$ is the only variable which can influence the probability of collapse. However, phase can indirectly influence the probability of a qubit through the transformations described in the next section.
 
 ### [2.5](#QCSG)   Transforming a Qubit
 
@@ -374,7 +367,7 @@ reversible
 
 universal set of gates
 
-### 3.2 Quantum Programming
+### 3.2   Quantum Programming
 
 Qiskit, Cirq, Qsharp
 

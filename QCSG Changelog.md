@@ -2,7 +2,9 @@
 
 [toc]
 
+#### Version 0.1.9 - September 3, 2020
 
+* Revised Section - Bloch Sphere Model
 
 #### Version 0.1.8 - August 29, 2020
 
@@ -36,7 +38,7 @@
 
 #### Version 0.1.1 - April 13, 2020
 
-* Wrote Section - The Bloch Sphere Model
+* Wrote Section - Bloch Sphere Model
 
 ### Version 0.1.0 - April 10, 2020
 
