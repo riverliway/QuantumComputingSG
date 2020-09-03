@@ -2,7 +2,11 @@
 
 [toc]
 
-#### Version 0.1.9 - September 3, 2020
+#### Version 0.1.10 - September 3, 2020
+
+* Revised Section - Dirac notation. Updated to include bra notation
+
+#### Version 0.1.9 - September 2, 2020
 
 * Revised Section - Bloch Sphere Model
 

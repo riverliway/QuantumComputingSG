@@ -211,7 +211,7 @@ Paul Dirac invented a notation system for discussing quantum mechanics and it ha
 
 #### Ket Notation
 
-Any vector can be expressed by placing it inside a vertical line ( | ) and right angle bracket ( $\rangle$ ). By placing it inside, $|\mathbf{v}\rangle$, we pronounce it "ket-v". This object conceptually represents a quantum state, however it is still mathematically equivalent to a vector. Specifically, a quantum state is a member of a _complex Hilbert space_, but thinking of them as vectors is acceptable in quantum computing. 
+Any vector can be expressed by placing it inside a vertical line  |  and right angle bracket  $\rangle$ . By placing it inside, $|\mathbf{v}\rangle$, we pronounce it "ket-v". This object conceptually represents a quantum state, however it is still mathematically equivalent to a vector. Specifically, a quantum state is a member of a _complex Hilbert space_, but thinking of them as vectors is acceptable in quantum computing. 
 
 Since a ket represents a quantum state, we can put our own quantum states inside the ket like:|above-line$\rangle$ and |below-line$\rangle$ to represent the electron being observed above or below the line on the wall. Some more examples of kets are:
 
@@ -254,7 +254,32 @@ It is important to note that no cats were harmed in this theoretical scenario.
 
 #### Bra Notation
 
-row vectors, conjugate-transpose, overlap = scalar (called linear functional/operator, calculating probability amplitudes w/ overlap, <psi|psi> = 1, inner/outer products 
+The ket notation is used to describe column vectors; there is also a partner notation to describe row vectors: bra. The vector placed between a left angle bracket $\langle$  and a vertical line | is pronounced "bra-v": $\langle\bold{v}|$ . The bra is just the transpose of ket.
+$$
+\langle\bold{v}| = |\bold{v}\rangle^\top
+$$
+Now that we have defined our mathematical notation for vectors, we can describe common operations seen in linear algebra.
+
+The notation for matrix-vector multiplication is identical to the standard notation:
+$$
+BA|\bold{v}\rangle \\
+|BA\bold{v}\rangle
+$$
+Matrices can be inside or outside of the ket, but the order is right-to-left. $A$ is applied first followed by $B$. 
+
+Dot products, also called _inner products_, between two vectors can be described by a combined bra-ket notation:
+$$
+\langle\bold{u}|\bold{v}\rangle=\bold{u}^\top\bold{v}=\bold{u}\cdot\bold{v}
+$$
+In Dirac notation, this is called the "overlap" between $\bold{u}$ and $\bold{v}$ since the dot product is related to how far one vector can project onto another. A vector will always overlap completely with itself, so $\langle\psi|\psi\rangle=1$. Any two vectors which are mutually orthogonal will have no overlap, so $\langle0|1\rangle = 0$.
+
+_Outer products_, which are not commonly used in this document, can still be described in Dirac notation:
+$$
+|\bold{u}\rangle\langle\bold{v}|=\bold{uv}^\top
+$$
+This product will produce an $m\times n$ matrix when $\bold{u}$ is an $m\times1$ vector and $\bold{v}$ is an $n\times1$ vector.
+
+The _Hermitian transpose_, or _conjugate transpose_, is an operation performed on a vector or matrix. This combines a transpose with taking the complex conjugate of each entry. This document will use the notation $A^\dagger$, although $A^H$ is also commonly used.
 
 ### [2.4](#QCSG)   Bloch Sphere Model
 
@@ -305,6 +330,12 @@ P(|1\rangle) = |\beta|^2 \\
 $$
 The absolute value is necessary since we are now dealing with complex numbers. Not using it would mean some values of $\alpha$ and $\beta$ would yield negative probabilities, which are not allowed.
 
+The basis coefficients can also be described in Dirac notation with overlap:
+$$
+\alpha=\langle0|\psi\rangle \\
+\beta = \langle1|\psi\rangle
+$$
+
 #### Let's Talk Phase
 
 Any description of phase would be incomplete without talking about _global phase_. Technically, the phase we have been working with in this section is formally defined as _relative phase_. When defining the basis coefficients $\alpha$ and $\beta$, we specifically stated that they are both complex numbers. However, looking at their definitions, $\alpha$ appears completely real. This is because the real definition of the basis coefficients is:
@@ -313,7 +344,7 @@ $$
 $$
  In this definition, $a$ is the global phase. The interesting fact about global phase is that physicists have concluded global phase does not have any impact on the qubit. Not even indirectly. We can arbitrarily set $a=-b$ so the complex part of $\alpha$ cancels out and leaves us with just a real part. Continuing this example, $\phi=c-b$  which is the relative phase. In this document, phase is always talking about relative phase. Global phase will always be explicitly labelled. 
 
-Phase can be somewhat unintuitive at first glance. Why would we introduce phase to our model which does not directly affect the probability? The variable which represents phase, $\phi$, only appears in the $e^{i\phi}$ term in $\beta$. Furthermore, when determining the probability, $|e^{i\phi}|^2$ will always equal $1$ for any value of $\phi$. It seems that $\theta$ is the only variable which can influence the probability of collapse. However, phase can indirectly influence the probability of a qubit through the transformations described in the next section.
+Phase can be somewhat unintuitive at first glance. Why would we introduce (relative) phase to our model which does not directly affect the probability? The variable which represents phase, $\phi$, only appears in the $e^{i\phi}$ term in $\beta$. Furthermore, when determining the probability, $|e^{i\phi}|^2$ will always equal $1$ for any value of $\phi$. It seems that $\theta$ is the only variable which can influence the probability of collapse. However, phase can indirectly influence the probability of a qubit through the transformations described in the next section.
 
 ### [2.5](#QCSG)   Transforming a Qubit
 
