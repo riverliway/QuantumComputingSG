@@ -2,6 +2,12 @@
 
 [toc]
 
+
+
+#### Version 0.1.11 - September 8, 2020
+
+* Added "Learning Approaches to Quantum Computing" subsection in Chapter 1
+
 #### Version 0.1.10 - September 3, 2020
 
 * Revised Section - Dirac notation. Updated to include bra notation

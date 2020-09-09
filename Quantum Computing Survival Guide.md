@@ -82,6 +82,16 @@ The field of quantum computing has foundations in quantum physics, but ultimatel
 
 Quantum information science is a parallel field of study to quantum computing, and the material often overlaps. Both fields are very new, less than half a century old, and have yet to be thoroughly defined. It is difficult to say if these fields are separate from one another or if these are both subsections of the same field. Typically, quantum information science covers the theory behind combining quantum mechanics with Turing machines, pioneered by Paul Benioff in the early 1980s. Quantum computing covers the implementation of a quantum computer and how it interacts with a classical computer. Both fields cover qubits, quantum circuits, entanglement, and teleportation which are discussed in this document. At this moment, it is unclear if the overlap between the fields is so large that they will be joined or if they will diverge. Only the time will tell.
 
+#### Learning Approaches to Quantum Computing
+
+Typically, there are three approaches to learning about quantum computing. These depend on which field the student is coming from. With classical computers, the fields in order of increasing abstractness are: electrical engineering, computer engineering, computer science, and mathematics. Electrical engineers deal with the physical implementations of computers, mathematicians deal with the proofs of logic, and the computer engineers & scientists fill in the gaps.
+
+<img src="resources\img\1.2_fields.png" width="500px"/>
+
+<center><i>Figure 1.2.2 The Parent Fields</i></center>
+
+Quantum computing also has a similar structure of parent fields. The physical implementations involving working with quantum particles are done by physicists, the proofs for computation are handled by mathematicians, and the computer scientists bridge that gap. This document will primarily be focused on the computer scientist's perspective, although we will be exploring a little bit into the other sides. In the future we expect numerous subfields to appear, dealing with various aspects of quantum computing.
+
 #### Historic Quantum Computers
 
 Many different types of quantum computers have been designed over the past few decades. A few of the important milestones for the development of physical implementations are listed here:
@@ -347,6 +357,8 @@ $$
 Phase can be somewhat unintuitive at first glance. Why would we introduce (relative) phase to our model which does not directly affect the probability? The variable which represents phase, $\phi$, only appears in the $e^{i\phi}$ term in $\beta$. Furthermore, when determining the probability, $|e^{i\phi}|^2$ will always equal $1$ for any value of $\phi$. It seems that $\theta$ is the only variable which can influence the probability of collapse. However, phase can indirectly influence the probability of a qubit through the transformations described in the next section.
 
 ### [2.5](#QCSG)   Transforming a Qubit
+
+
 
 Rotation around axis -> new angles
 
@@ -636,7 +648,7 @@ qiskit universal gate form
 
 deferred form partitioning
 
-simulating classical computers on quantum computers 
+simulating classical computers on quantum computers - Maybe already covered in chap 3
 
 Schrödinger & Feynman path integrals / algorithms
 
