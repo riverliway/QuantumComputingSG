@@ -4,7 +4,7 @@ Quantum Computing Survival Guide: A free online textbook explaining quantum comp
 
 We look at quantum computers from the perspective of a computer scientist, often making comparisons between classical and quantum computers. No knowledge in physics is required. 
 
-This document is written in [Typora](https://typora.io/), using Markdown with Latex.
+This document is written in [Typora](https://typora.io/), using Markdown with Latex. The interactive web applets were written in Javascript using the [p5.js](https://p5js.org/) library.
 
 Some prerequisite knowledge is assumed:
 
