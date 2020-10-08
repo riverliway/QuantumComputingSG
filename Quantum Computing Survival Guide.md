@@ -348,7 +348,7 @@ $$
 
 #### Let's Talk Phase
 
-Any description of phase would be incomplete without talking about _global phase_. Technically, the phase we have been working with in this section is formally defined as _relative phase_. When defining the basis coefficients $\alpha$ and $\beta$, we specifically stated that they are both complex numbers. However, looking at their definitions, $\alpha$ appears completely real. This is because the real definition of the basis coefficients is:
+Any description of phase would be incomplete without talking about _global phase_. Technically, the phase we have been working with in this section is formally defined as _relative phase_. When defining the basis coefficients $\alpha$ and $\beta$, we specifically stated that they are both complex numbers. However, looking at their definitions, $\alpha$ appears completely real. This is because the actual definition of the basis coefficients is:
 $$
 |\psi\rangle=e^{ia}(e^{ib}cos(\frac{\theta}{2})|0\rangle+e^{ic}sin(\frac{\theta}{2})|1\rangle)
 $$
@@ -357,6 +357,24 @@ $$
 Phase can be somewhat unintuitive at first glance. Why would we introduce (relative) phase to our model which does not directly affect the probability? The variable which represents phase, $\phi$, only appears in the $e^{i\phi}$ term in $\beta$. Furthermore, when determining the probability, $|e^{i\phi}|^2$ will always equal $1$ for any value of $\phi$. It seems that $\theta$ is the only variable which can influence the probability of collapse. However, phase can indirectly influence the probability of a qubit through the transformations described in the next section.
 
 ### [2.5](#QCSG)   Transforming a Qubit
+
+Using qubits as data is only useful if we can edit their state. We used the Bloch sphere to geometrically describe the state of a single qubit, however we can't edit the angles $\theta$ and $\phi$ directly. There are three transformations which can change the qubit: rotating around the X, Y, or Z axis. 
+
+There are many different systems of notation used for describing rotations of the Bloch sphere. The one we will use is exponentiation: $X^\Delta$.  This says rotate counterclockwise around the X axis by $\pi\Delta$ radians. The $\Delta$ describes how many half-revolutions to rotate. If $\Delta$ is negative then rotate clockwise instead. Replace X with Y or Z to rotate around another axis.
+$$
+X^0=0=0^\circ \\
+X^{0.25}=\frac{\pi}{4}=45^\circ \\
+X^{0.5} = \frac{\pi}{2}=90^\circ \\
+X^{1} = \pi=180^\circ \\
+X^{2} = 2\pi=360^\circ 
+$$
+Just like any angle, $\Delta$ is a cyclic number. For any number $n$ there exists a $0\leq\Delta\leq2$ which performs the same rotation.
+$$
+\Delta=\left|\frac{n}{2}\right|
+$$
+It is also common to replace $X^{0.5}$ with $\sqrt{X}$. Do not change $X^{-0.7}$ into $\frac{1}{X^{0.7}}$.
+
+{rotation applet}
 
 
 
@@ -381,6 +399,8 @@ You can also swap the order XZ -> ZX by editing the rotations
 ### [2.7](#QCSG)   Beam Splitter
 
 half mirror, mach zehnder interferometer for quantum optics
+
+
 
 ### [2.8](#QCSG)   Qubit Implementations
 
@@ -488,6 +508,8 @@ EPR pair
 
 information instantly
 
+due to entanglement, 2 quantum computers with 50 qubits is FAR less powerful than 1 computer with 100 qubits
+
 ### 4.4   Bell States
 
 Hadamard then CNOT
@@ -542,7 +564,7 @@ In their paper, the team made the claim that using this hybrid algorithm to simu
 
 The quantum computing team at IBM [responded](https://www.ibm.com/blogs/research/2019/10/on-quantum-supremacy/) to Google's claim to quantum supremacy by using a pure Schrödinger algorithm. They showed that it was possible to rotate the memory for the quantum state out to disk, only keeping the active parts in RAM. Every coefficient is 8 bytes since they are complex numbers, stored as two single precision floating point numbers. The quantum state is $8\times2^{53}$ = 64 petabytes. That size is certainly large, but not unachievable by modern computers. IBM's team used a host of performance enhancing techniques to perform the simulation in 2.5 days. 
 
-By definition, Google's team still technically proved quantum supremacy since the quantum computer ran faster than the classical simulation (100 minutes < 2.5 days), even if it wasn't by their predicted margin of 10,000 years. However, due to the exponential nature of simulating quantum computers, a 100 qubit quantum state would take $8\times2^{100}$ = 9,000,000,000,000,000 (9 quadrillion) petabytes to store. This amount of memory is simply unachievable by modern or near future computers. Even if a 53 qubit processor strikes controversy over if it deserves quantum supremacy or not, 100 qubit processors will be developed in the near future and the outcome will be clear.
+By definition, Google's team still technically proved quantum supremacy since the quantum computer ran faster than the classical simulation (100 minutes < 2.5 days), even if it wasn't by their predicted margin of 10,000 years. However, due to the exponential nature of simulating quantum computers, a 100 qubit quantum state would take $8\times2^{100}\approx$ 9,000,000,000,000,000 (9 quadrillion) petabytes to store. This amount of memory is simply unachievable by modern or near future computers. Even if a 53 qubit processor strikes controversy over if it deserves quantum supremacy or not, 100 qubit processors will be developed in the near future and the outcome will be clear.
 
 One incredibly important point brought up in IBM's response is the entire concept of quantum "supremacy". The nature of quantum  processors are to be devices which coordinate with classical computers, not compete against them. The notion of claiming quantum supremacy is no less ridiculous than claiming "GPU supremacy" because a GPU was shown to be faster at one specific task. The term quantum supremacy was blown out of proportion by the media and broadly misunderstood by the general public. 
 

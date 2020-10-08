@@ -15,8 +15,8 @@ const topCanvas = (sketch) => {
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle
-        let moveX = SENSITIVITY * 60 / HEIGHT;
-        let moveY = SENSITIVITY * 120 / HEIGHT;
+        let moveX = SENSITIVITY * 50 / HEIGHT;
+        let moveY = SENSITIVITY * 70 / HEIGHT;
         p5Object._curCamera._orbit(moveX, moveY, 0);
     }
 

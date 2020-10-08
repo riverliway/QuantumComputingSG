@@ -6,7 +6,7 @@ let screen = (sketch) => {
     const WIDTH = 800;
     const HEIGHT = 500;
 
-    let arcSlider;
+    let qubitSlider;
 
     sketch.setup = () => {
         sketch.createCanvas(WIDTH, HEIGHT);
