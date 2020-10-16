@@ -1,11 +1,25 @@
 "use strict";
 
 let theta = Math.PI / 4;
-let phi = Math.PI / 3;
+let phi = Math.PI / 6;
 let delta = 0;
 let axis = "X";
+let newAngles = getPostRotatedCoords(theta, phi, delta, axis);
 
-let RADIAL_SECTORS = 50
+let THETA_COLOR = rgb(161, 10, 242);
+let THETA_DARK = rgb(99, 7, 148);
+let PHI_COLOR = rgb(242, 107, 10);
+let PHI_DARK = rgb(209, 72, 4);
+let X_COLOR = rgb(255, 117, 117);
+let X_DARK = rgb(224, 22, 22);
+let Y_COLOR = rgb(102, 222, 130);
+let Y_DARK = rgb(4, 207, 51);
+let Z_COLOR = rgb(108, 175, 230);
+let Z_DARK = rgb(39, 152, 245);
+let POINT_COLOR = rgb(5, 240, 224);
+let POINT_DARK = rgb(5, 150, 129);
+
+let RADIAL_SECTORS = 50;
 
 const topCanvas = (sketch) => {
     const WIDTH = 800;
@@ -45,8 +59,7 @@ const topCanvas = (sketch) => {
         }
         drawRotation(theta, phi, delta, axis);
 
-        // TODO: cache the newAngles so we don't need to re-calculate them every time
-        let newAngles = getPostRotatedCoords(theta, phi, delta, axis);
+        
 
         drawBlochSphere(newAngles.theta, newAngles.phi);
     }
@@ -92,19 +105,25 @@ const topCanvas = (sketch) => {
         linedash(-xPos, yPos, 0, -xPos, yPos, zPos, 10);
 
         // Draw angles
-        sketch.fill(sketch.color(219, 2, 20));
+        sketch.fill(PHI_COLOR);
         if (phi > 0.001 && phi < 2 * Math.PI - 0.001) sketch.arc(0, 0, RADIUS / 2, RADIUS / 2, 180 - sketch.degrees(phi), 180);
         sketch.rotateX(90);
         sketch.rotateY(-sketch.degrees(phi));
-        sketch.fill(sketch.color(66, 126, 255));
+        sketch.fill(THETA_COLOR);
         if (theta > 0.001) sketch.arc(0, 0, RADIUS / 2, RADIUS / 2, 90, 90 + sketch.degrees(theta));
 
         // Draw point
         sketch.noStroke();
         if (delta > 0.001 && delta < 2 * Math.PI - 0.001) {
-            sketch.fill(151, 39, 163);
+            if (axis == "X") {
+                sketch.fill(X_DARK);
+            } else if (axis == "Y") {
+                sketch.fill(Y_DARK);
+            } else {
+                sketch.fill(Z_DARK);
+            }
         } else {
-            sketch.fill(13, 176, 0);
+            sketch.fill(POINT_DARK);
         }
         sketch.rotateY(sketch.degrees(phi));
         sketch.rotateX(-90);
@@ -114,7 +133,7 @@ const topCanvas = (sketch) => {
         sketch.pop();
 
         let camera = getCameraPos();
-        drawOrthoCircle(camera.x, camera.y, camera.z);
+        // drawOrthoCircle(camera.x, camera.y, camera.z);
     }
 
     function drawOrthoCircle(x, y, z) {
@@ -138,14 +157,6 @@ const topCanvas = (sketch) => {
         if (x < 0) y_angle = -y_angle;
         if (Math.abs(x) < 0.001 && Math.abs(z) < 0.001) y_angle = 0;
         sketch.rotateY(sketch.degrees(y_angle));
-        // console.log(sketch.degrees(y_angle));
-        // console.log(z);
-
-        // let d = Math.sqrt(x * x * x + y * x * x + z * x * x);
-        // sketch.applyMatrix(d, 0, 0, 0,
-        //                    0, d, 0, 0,
-        //                    0, 0, d, 0,
-        //                    0, 0, 0, 1);
 
         sketch.ellipse(0, 0, 2 * RADIUS, 2 * RADIUS, RADIAL_SECTORS);
 
@@ -160,7 +171,7 @@ const topCanvas = (sketch) => {
         // Draw ring of rotation
         sketch.push()
         sketch.noFill();
-        sketch.stroke(sketch.color(0, 230, 226));
+        sketch.stroke(POINT_COLOR);
 
         switch (axis) {
             case "X": sketch.translate(0, 0, RADIUS * axisPoint.x); break;
@@ -172,7 +183,7 @@ const topCanvas = (sketch) => {
         sketch.ellipse(0, 0, diameter, diameter, RADIAL_SECTORS);
 
         // Draw arc of rotation
-        sketch.stroke(sketch.color(0, 176, 173));
+        sketch.stroke(POINT_DARK);
         sketch.strokeWeight(3);
         if (delta > 0.001 && delta < 2 * Math.PI - 0.001) {
             let angle = getAxisAngle(qubitPoint, axis);
@@ -191,7 +202,7 @@ const topCanvas = (sketch) => {
 
             // Draw rotation point
             sketch.noStroke();
-            sketch.fill(13, 176, 0);
+            sketch.fill(POINT_DARK);
             sketch.translate(RADIUS * qubitPoint.y, RADIUS * -qubitPoint.z, RADIUS * qubitPoint.x);
             sketch.sphere(3);
         }
@@ -235,20 +246,6 @@ const topCanvas = (sketch) => {
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
-    function getPostRotatedCoords(theta, phi, delta, axis) {
-        let state = new QuantumState(1);
-        state.setAngles({theta:theta, phi:phi});
-        
-        switch (axis) {
-            case "X": state.x(0, delta); break;
-            case "Y": state.y(0, delta); break;
-            case "Z": state.z(0, delta); break;
-            default: console.log("Error: invalid axis passed into getPostRotatedCoords(): " + axis);
-        }
-
-        return state.getAngles();
-    }
-
     function linedash(x1, y1, z1, x2, y2, z2, segments) {
         let xDiff = x2 - x1; let yDiff = y2 - y1; let zDiff = z2 - z1;
         let distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
@@ -278,6 +275,9 @@ let bottomCanvas = (sketch) => {
     let buttonY;
     let buttonZ;
     let radioSet;
+    let thetaLabel;
+    let phiLabel;
+    let deltaLabel;
 
     sketch.setup = () => {
         sketch.createCanvas(WIDTH, HEIGHT);
@@ -290,6 +290,7 @@ let bottomCanvas = (sketch) => {
         buttonX = new Button(sketch, 330, 100, 50, 50, "X");
         buttonY = new Button(sketch, 400, 100, 50, 50, "Y");
         buttonZ = new Button(sketch, 470, 100, 50, 50, "Z");
+        colorAxisButtons();
         
         radioSet = new RadioButtonSet([buttonX, buttonY, buttonZ]);
         radioSet.onSelect = () => {
@@ -298,6 +299,10 @@ let bottomCanvas = (sketch) => {
             rotationSlider.setValue(270);
         }
 
+        thetaLabel = new Label(sketch, 330, 20, "theta", 16);
+        phiLabel = new Label(sketch, 330, 40, "phi", 16);
+        deltaLabel = new Label(sketch, 470, 20, "delta", 16);
+
         qubitSlider.setValues(sketch.degrees(theta), sketch.degrees(phi));
         qubitSlider.onMove = () => {
             let values = qubitSlider.getValues();
@@ -305,18 +310,72 @@ let bottomCanvas = (sketch) => {
             phi = sketch.radians(values.phi);
             delta = 0;
             rotationSlider.setValue(270);
+
+            newAngles = getPostRotatedCoords(theta, phi, delta, axis);
+
+            thetaLabel.setText("θ = " + values.theta.toFixed(2) + "°");
+            phiLabel.setText("ϕ = " + values.phi.toFixed(2) + "°");
         }
-        qubitSlider.thetaSlider.setColors(sketch.color(66, 126, 255), sketch.color(38, 87, 191));
-        qubitSlider.phiSlider.setColors(sketch.color(219, 2, 20), sketch.color(125, 4, 40));
+        qubitSlider.onMove();
+        qubitSlider.thetaSlider.setColors(THETA_COLOR, THETA_DARK);
+        qubitSlider.phiSlider.setColors(PHI_COLOR, PHI_DARK);
 
         rotationSlider.onMove = () => {
             delta = rotationSlider.getValue() - 270;
-            if (delta < 0) delta += 360;
-            delta = sketch.radians(360 - delta);
+            let deltaDeg = 360 - delta;
+            if (deltaDeg < 0) deltaDeg += 360;
+            if (deltaDeg >= 360) deltaDeg -= 360;
+            delta = sketch.radians(deltaDeg);
+
+            newAngles = getPostRotatedCoords(theta, phi, delta, axis);
+            let phiDeg = sketch.degrees(newAngles.phi);
+            if (phiDeg < 0) phiDeg += 360;
+            if (phiDeg >= 360) phiDeg -= 360;
+
+            deltaLabel.setText("Δ = " + deltaDeg.toFixed(2) + "°");
+            thetaLabel.setText("θ = " + sketch.degrees(newAngles.theta).toFixed(2) + "°");
+            phiLabel.setText("ϕ = " + phiDeg.toFixed(2) + "°");
         }
+        rotationSlider.onMove();
+
+        rotationSlider.setColors(POINT_COLOR, POINT_DARK);
+    }
+
+    function colorAxisButtons() {
+        buttonX.normalColor = X_COLOR;
+        buttonX.hoverColor = X_DARK;
+        buttonX.textColor = sketch.color(0, 0, 0);
+        buttonX.borderColor = sketch.color(0, 0, 0);
+        buttonX.update();
+
+        buttonY.normalColor = Y_COLOR;
+        buttonY.hoverColor = Y_DARK;
+        buttonY.textColor = sketch.color(0, 0, 0);
+        buttonY.borderColor = sketch.color(0, 0, 0);
+        buttonY.update();
+
+        buttonZ.normalColor = Z_COLOR;
+        buttonZ.hoverColor = Z_DARK;
+        buttonZ.textColor = sketch.color(0, 0, 0);
+        buttonZ.borderColor = sketch.color(0, 0, 0);
+        buttonZ.update();
     }
 
     extendMouseAPI(sketch);
 }
 
 let bottomP5 = new p5(bottomCanvas);
+
+function getPostRotatedCoords(theta, phi, delta, axis) {
+    let state = new QuantumState(1);
+    state.setAngles({theta:theta, phi:phi});
+    
+    switch (axis) {
+        case "X": state.x(0, delta); break;
+        case "Y": state.y(0, delta); break;
+        case "Z": state.z(0, delta); break;
+        default: console.log("Error: invalid axis passed into getPostRotatedCoords(): " + axis);
+    }
+
+    return state.getAngles();
+}

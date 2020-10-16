@@ -36,3 +36,7 @@ function registerThunk(thunkType, thunk, instance) {
     if (instance == undefined) eventArray[thunkType].push([undefined, instance]);
     else eventArray[thunkType].push([instance, thunk]);
 }
+
+function rgb(_r, _g, _b) {
+    return [_r, _g, _b];
+}

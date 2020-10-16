@@ -366,7 +366,7 @@ class ArcSlider {
 class Button extends Interactable{
   
     constructor(sketch, x, y, width, height, text) {
-        super(sketch)
+        super(sketch);
         this.sketch = sketch;
         this.x = x;
         this.y = y;
@@ -398,6 +398,16 @@ class Button extends Interactable{
         this.sketch.fill(this.textColor);
         this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
         this.sketch.text(this.text, this.x, this.y);
+    }
+
+    clean() {
+        this.sketch.push();
+
+        this.sketch.fill(this.sketch.color(255, 255, 255));
+        this.sketch.noStroke();
+        this.sketch.rect(this.bbox.x1 - 1, this.bbox.y1 - 1, this.width + 2, this.height + 2);
+
+        this.sketch.pop();
     }
 
     doesHover() {
@@ -449,6 +459,78 @@ class Button extends Interactable{
 
     setIsSelected(isSelected) {
         this.isSelected = isSelected;
+        this.update();
+    }
+}
+
+class Label extends Interactable {
+  
+    constructor(sketch, x, y, text, fontSize) {
+        super(sketch);
+        this.sketch = sketch;
+        this.x = x;
+        this.y = y;
+        this.text = text;
+        this.width = 0;
+        this.height = 0;
+        this.updateBoundingBox();
+
+        this.textColor = sketch.color(0, 0, 0);
+        this.normalStroke = 0;
+        this.fontSize = (fontSize == undefined) ? 14 : fontSize;
+
+        super.setChild(this);
+    }
+
+    _doDraw() {
+        this.sketch.strokeWeight(this.normalStroke);
+        this.sketch.stroke(this.textColor);
+        this.sketch.fill(this.textColor);
+        this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
+        this.sketch.textSize(this.fontSize);
+        this.sketch.text(this.text, this.x, this.y);
+    }
+
+    clean() {
+        this.sketch.push();
+
+        this.sketch.fill(this.sketch.color(255, 255, 255));
+        this.sketch.noStroke();
+        this.sketch.rect(this.bbox.x1 - 1, this.bbox.y1 - 1, this.width + 2, this.height + 2);
+
+        this.sketch.pop();
+    }
+
+    doesHover() {
+        // if mouse inside the box, it is hovering
+        let ret = this.sketch.mouseX > this.bbox.x1 && this.sketch.mouseX < this.bbox.x2 && this.sketch.mouseY > this.bbox.y1 && this.sketch.mouseY < this.bbox.y2;
+        return ret;
+    }
+
+    updateBoundingBox() {
+        this.width = this.text.length * this.fontSize;
+        this.height = this.fontSize; 
+        this.bbox = {x1: this.x - this.width / 2, x2: this.x + this.width / 2, y1: this.y - this.height / 2, y2: this.y + this.height / 2};
+    }
+
+    update() {
+        this.updateBoundingBox();
+        this.draw();
+    }
+
+    setFontSize(fontSize) {
+        this.fontSize = fontSize;
+        this.update();
+    }
+
+    setLocation(x, y) {
+        this.x = x;
+        this.y = y;
+        this.update();
+    }
+
+    setText(text) {
+        this.text = text;
         this.update();
     }
 }

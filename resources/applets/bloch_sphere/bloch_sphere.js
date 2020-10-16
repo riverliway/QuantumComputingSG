@@ -61,10 +61,11 @@ const topCanvas = (sketch) => {
         linedash(-xPos, yPos, 0, -xPos, yPos, zPos, 10);
 
         // Draw angles
-        sketch.fill(255);
+        sketch.fill(sketch.color(219, 2, 20));
         if (phi > 0.001) sketch.arc(0, 0, RADIUS / 2, RADIUS / 2, 180 - sketch.degrees(phi), 180);
         sketch.rotateX(90);
         sketch.rotateY(-sketch.degrees(phi));
+        sketch.fill(sketch.color(66, 126, 255));
         if (theta > 0.001) sketch.arc(0, 0, RADIUS / 2, RADIUS / 2, 90, 90 + sketch.degrees(theta));
 
         // Draw point
@@ -105,6 +106,9 @@ let bottomCanvas = (sketch) => {
 
         sliders[0] = new Slider(crd(210, 50), crd(595, 50), 0, 180, 45, 20);
         sliders[1] = new Slider(crd(210, 100), crd(595, 100),  0, 360, 60, 20);
+
+        sliders[0].color = sketch.color(66, 126, 255);
+        sliders[1].color = sketch.color(219, 2, 20);
 
         for (let i = 0; i < sliders.length; i++) {
             sliders[i].drawSlider();
@@ -180,6 +184,7 @@ let bottomCanvas = (sketch) => {
             this.higherBound = higherBound;
             this.value = initialValue;
             this.radius = radius;
+            this.color = sketch.color("green")
 
             this.xScale = (pos2.x - pos1.x) / (higherBound - lowerBound);
             this.yScale = (pos2.y - pos1.y) / (higherBound - lowerBound);
@@ -225,7 +230,7 @@ let bottomCanvas = (sketch) => {
             sketch.strokeWeight(1);
             sketch.stroke(0);
             sketch.line(this.pos1.x, this.pos1.y, this.pos2.x, this.pos2.y);
-            sketch.fill("green");
+            sketch.fill(this.color);
             sketch.ellipse(x, y, this.radius, this.radius);
         }
 
