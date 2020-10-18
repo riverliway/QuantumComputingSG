@@ -1,7 +1,7 @@
 "use strict";
 
-let theta = Math.PI / 4;
-let phi = Math.PI / 6;
+let theta = 75 * Math.PI / 180;
+let phi = 25 * Math.PI / 180;
 let delta = 0;
 let axis = "X";
 let newAngles = getPostRotatedCoords(theta, phi, delta, axis);
@@ -35,8 +35,8 @@ const topCanvas = (sketch) => {
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle
-        let moveX = SENSITIVITY * 50 / HEIGHT;
-        let moveY = SENSITIVITY * 70 / HEIGHT;
+        let moveX = SENSITIVITY * 100 / HEIGHT;
+        let moveY = SENSITIVITY * 50 / HEIGHT;
         p5Object._curCamera._orbit(moveX, moveY, 0);
 
         createCoordinateLabels();

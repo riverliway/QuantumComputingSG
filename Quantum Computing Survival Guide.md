@@ -38,7 +38,11 @@ The first chapter is a simple introduction to the history of quantum computing a
 
 <center><i>Figure 0.1.1 The Chapter Dependency Graph</i></center>
 
+#### Citations
 
+**MLA8**
+
+Schieberl, Zack. “Quantum Computing Survival Guide.” *Zachary Schieberl's Projects*, 18 Oct. 2020, https://zacharyschieberl.com/qcsg. 
 
 ## Chapter 1:   Why Quantum Computing?
 
@@ -311,7 +315,7 @@ This notation may differ from a multivariable calculus class, where $\theta$ & $
 
 <center><i><a href="resources/applets/bloch_sphere/index.html" target="_blank">Applet 2.4.1</a> The Bloch Sphere</i></center>
 
-This above applet allows the changing the values of $\theta$ & $\phi$ and moving the 3D sphere around by clicking and dragging. 
+This above applet allows the changing the values of $\theta$ and $\phi$ & moving the 3D sphere around by clicking and dragging. 
 
 The **Bloch Sphere**, named after Felix Bloch, is the full model of the qubit. It uses spherical coordinates to describe every possible state a quantum particle can occupy. A _pure state_ is any quantum state which lies on the surface of the unit sphere with radius $1$. A quantum state could also be a _mixed state_ which has radius less than $1$, but will not be discussed here. Here are some facts about our new Bloch Sphere model:
 
@@ -358,7 +362,7 @@ Phase can be somewhat unintuitive at first glance. Why would we introduce (relat
 
 ### [2.5](#QCSG)   Transforming a Qubit
 
-Using qubits as data is only useful if we can edit their state. We used the Bloch sphere to geometrically describe the state of a single qubit, however we can't edit the angles $\theta$ and $\phi$ directly. There are three transformations which can change the qubit: rotating around the X, Y, or Z axis. 
+Using qubits as data is only useful if we can edit their state. We used the Bloch sphere to geometrically describe the state of a single qubit, however we can't edit the angles $\theta$ and $\phi$ directly. The way we transform a quantum state is to rotate around the X, Y, or Z axis. 
 
 There are many different systems of notation used for describing rotations of the Bloch sphere. The one we will use is exponentiation: $X^\Delta$.  This says rotate counterclockwise around the X axis by $\pi\Delta$ radians. The $\Delta$ describes how many half-revolutions to rotate. If $\Delta$ is negative then rotate clockwise instead. Replace X with Y or Z to rotate around another axis.
 $$
@@ -370,7 +374,7 @@ X^{2} = 2\pi=360^\circ
 $$
 Just like any angle, $\Delta$ is a cyclic number. For any number $n$ there exists a $0\leq\Delta<2$ which performs the same rotation.
 $$
-\Delta=\left|\frac{n}{2}\right|
+\Delta=n\ mod\ 2
 $$
 It is also common to replace $X^{0.5}$ with $\sqrt{X}$. Do not change $X^{-0.7}$ into $\frac{1}{X^{0.7}}$.
 
@@ -378,19 +382,52 @@ It is also common to replace $X^{0.5}$ with $\sqrt{X}$. Do not change $X^{-0.7}$
 
 <center><i><a href="resources/applets/bloch_rotations/index.html" target="_blank">Applet 2.5.1</a> Rotations on the Bloch Sphere</i></center>
 
-Rotation around axis -> new angles
+The above applet shows how rotations impact the current state of the qubit on the Bloch sphere. The sliders on the left directly change $\theta$ and $\phi$ and the slider on the right changes $\Delta$. The buttons at the bottom change which axis the rotation is being applied to. Since $\Delta$ controls how far to rotate around the selected axis, it also changes $\theta$ and $\phi$. 
 
-new angles -> rotations around axis(es)
+There is also a blue ring around the sphere which moves as the qubit state changes. It shows every location the qubit could be at after a rotation around the selected axis. This ring is the intersection of the surface of the Bloch sphere with a plane which is parallel to the other two axes. For example, when rotating around the X axis, the blue slice is parallel to the YZ plane and the X coordinate of the ring is the same as the qubit state. 
 
-state space, accessible state space, complete state space
+Looking at the blue ring introduces us to the concept of _state space_. Formally, state space is a set of states a qubit is allowed to occupy. We are currently talking about pure states, so the _pure state space_ of a qubit is the surface of the Bloch sphere. The _accessible state space_ of a rotation is the blue ring and the accessible state space of a rotation changes as the state being rotated changes. The accessible state space of a rotation is a subset of the pure state space. 
 
-Clifford Groups/Modern Algebra
+#### Collapse as a Transformation
 
-"destroying" a qubit/quantum state - phase collapse vs probability collapse
+Rotations are just one way of transforming a qubit's state. We previously talked about the process of measuring the qubit which collapses the superposition of the quantum state into a basis state. This operation is a transformation on the qubit because it manipulates the state. 
 
-### [2.6](#QCSG)   Sequential Transformations
+When thinking about the theory of quantum computation it can be helpful to separate the process of collapsing the quantum state into two halves: the _phase collapse_ and the _probability collapse_. The phase collapse, as the name implies, destroys the phase of the qubit and turns it into a probability. The probability collapse destroys the probability and turns it into a basis state. 
+$$
+\begin{equation}\begin{aligned}
 
-Any transformation from one coord to another can be accomplished in 2 rotations
+& \text{phase_collapse}(|\psi\rangle): \\
+&\qquad \text{return }|\alpha|^2 \\
+\\
+& \text{probability_collapse}(p): \\
+&\qquad \text{if }(\text{random}()>p): \\
+&\qquad\qquad \text{return }|1\rangle \\
+&\qquad \text{else}: \\
+&\qquad\qquad \text{return }|0\rangle
+
+\end{aligned}\end{equation}
+$$
+When working with qubits in the real world, the two processes of collapse happen sequentially and instantaneously. There is no way to stop the collapse halfway through and observe the internal workings. One reason why it can be helpful to think about the phase and probability collapsing as separate processes is the task of state reconstruction. Consider a black box which can produce an unknown quantum state; once we observe the state, it collapses. Find the quantum state.
+
+We are given an infinite number of identical quantum states, but they are hidden to us so we need to glean information about what the unknown state is. Finding the probability of the qubit is easy, just measure $n$ of them and count how many times it collapsed to $|0\rangle$:
+$$
+P(|\psi\rangle=|0\rangle)\approx\frac{\text{count}(|0\rangle)}{n}
+$$
+However finding the phase of this unknown state takes more effort. Every value of $\phi$ maps to the same probability during the phase collapse, so just looking at the probability we acquired does not directly find phase. The good news is that the probability does narrow down the number of states it could be considerably.
+
+When we didn't know anything about the black box's quantum state, the state space of what it could have been was the entire Bloch sphere. Now that we know what the probability is, it narrows down the state space to a ring around the Z axis. Sound familiar? The set of possible states our box produces is the very same set of states produced by the accessible state space of a Z rotation. As we know from the above applet, the accessible state space changes when we apply rotations to the quantum state.
+
+The key to finding the phase for our unknown state is to apply our own rotations and find the new probability after the rotation has been applied. Finding the new probability uses the same method of measuring $n$ qubits. When we apply a $X^{0.5}$ rotation and observe the new probability, we can narrow down the set of possible states to just two. This is because every value of $\phi$ will produce a different probability after a rotation around the X axis. The only phase which maps to the same probability after a rotation is the opposite side of the ring, at $\phi + \pi$. Since there are only two possible states that our black box can produce, we can apply a $Y^{0.5}$ rotation to our unknown state. This will produce different probabilities for the two different possible points which narrows it down to our unknown state.
+
+We have successfully found our unknown state using $3n$ qubits produced from our black box! The variable $n$ controls how good the approximation is compared to the real state since $\lim_{n\to \infin}$ would be required to get a perfect representation. This process grows more complicated when there is more qubits involved, but it gives a nice introduction to the concepts of state space and phase vs probability collapse. 
+
+When does this idea of a black box producing an infinite number of qubits occur in reality? Exceedingly often! When we run quantum programs on a quantum computer, we are asking the computer to perform a sequence of operations and then it produces a quantum state. We don't know what this state is; if we did, why would we need to run the quantum program? However, simply running the program once and then measuring the outcome isn't useful because of the randomness involved with collapsing superposition. To see the result of our computation, we need to run the program many times and use a similar method to the one outlined above to find the quantum state. Using the above method requires running the program $3n$ times.
+
+Thinking about the process of measurement and collapse in theoretical terms is straightforward, but the actual physics concerning collapse is not well understood and is called the _measurement problem_. Since we are unable to directly observe the collapse process, it is difficult to study. Perhaps one day physicists will have a better understanding of how and why superposition collapses which will allow us to avoid using approximations to find unknown states. 
+
+### [2.6](#QCSG)   Sequential Rotations
+
+Any transformation from one coord to another can be accomplished in 3 rotations
 
 You only need 2 axes to rotate to any position: XZ, YZ, or XY
 

@@ -2,7 +2,9 @@
 
 [toc]
 
+#### Version 0.1.12 - October 18, 2020
 
+* Added Section - Transforming a Qubit
 
 #### Version 0.1.11 - September 8, 2020
 
