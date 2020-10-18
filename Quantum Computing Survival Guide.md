@@ -368,15 +368,15 @@ X^{0.5} = \frac{\pi}{2}=90^\circ \\
 X^{1} = \pi=180^\circ \\
 X^{2} = 2\pi=360^\circ 
 $$
-Just like any angle, $\Delta$ is a cyclic number. For any number $n$ there exists a $0\leq\Delta\leq2$ which performs the same rotation.
+Just like any angle, $\Delta$ is a cyclic number. For any number $n$ there exists a $0\leq\Delta<2$ which performs the same rotation.
 $$
 \Delta=\left|\frac{n}{2}\right|
 $$
 It is also common to replace $X^{0.5}$ with $\sqrt{X}$. Do not change $X^{-0.7}$ into $\frac{1}{X^{0.7}}$.
 
-{rotation applet}
+<iframe height='500' scrolling='no' title='Bloch Sphere Applet' src='resources\applets\bloch_rotations\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Rotation Applet</iframe>
 
-
+<center><i><a href="resources/applets/bloch_rotations/index.html" target="_blank">Applet 2.5.1</a> Rotations on the Bloch Sphere</i></center>
 
 Rotation around axis -> new angles
 

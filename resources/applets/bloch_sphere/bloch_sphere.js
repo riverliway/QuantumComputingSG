@@ -3,6 +3,12 @@
 let theta = Math.PI / 4;
 let phi = Math.PI / 3;
 
+let THETA_COLOR = rgb(161, 10, 242);
+let THETA_DARK = rgb(99, 7, 148);
+let PHI_COLOR = rgb(242, 107, 10);
+let PHI_DARK = rgb(209, 72, 4);
+let POINT_DARK = rgb(5, 150, 129);
+
 const topCanvas = (sketch) => {
     const WIDTH = 800;
     const HEIGHT = 350;
@@ -61,16 +67,16 @@ const topCanvas = (sketch) => {
         linedash(-xPos, yPos, 0, -xPos, yPos, zPos, 10);
 
         // Draw angles
-        sketch.fill(sketch.color(219, 2, 20));
+        sketch.fill(PHI_COLOR);
         if (phi > 0.001) sketch.arc(0, 0, RADIUS / 2, RADIUS / 2, 180 - sketch.degrees(phi), 180);
         sketch.rotateX(90);
         sketch.rotateY(-sketch.degrees(phi));
-        sketch.fill(sketch.color(66, 126, 255));
+        sketch.fill(THETA_COLOR);
         if (theta > 0.001) sketch.arc(0, 0, RADIUS / 2, RADIUS / 2, 90, 90 + sketch.degrees(theta));
 
         // Draw point
         sketch.noStroke();
-        sketch.fill(13, 176, 0);
+        sketch.fill(POINT_DARK);
         sketch.rotateY(sketch.degrees(phi));
         sketch.rotateX(-90);
         sketch.translate(-xPos, yPos, zPos);
@@ -107,8 +113,8 @@ let bottomCanvas = (sketch) => {
         sliders[0] = new Slider(crd(210, 50), crd(595, 50), 0, 180, 45, 20);
         sliders[1] = new Slider(crd(210, 100), crd(595, 100),  0, 360, 60, 20);
 
-        sliders[0].color = sketch.color(66, 126, 255);
-        sliders[1].color = sketch.color(219, 2, 20);
+        sliders[0].color = THETA_COLOR;
+        sliders[1].color = PHI_COLOR;
 
         for (let i = 0; i < sliders.length; i++) {
             sliders[i].drawSlider();
@@ -249,3 +255,7 @@ let bottomCanvas = (sketch) => {
 }
 
 let bottomP5 = new p5(bottomCanvas);
+
+function rgb(r, g, b) {
+    return [r, g, b];
+}

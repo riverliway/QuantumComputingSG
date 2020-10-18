@@ -39,29 +39,67 @@ const topCanvas = (sketch) => {
         let moveY = SENSITIVITY * 70 / HEIGHT;
         p5Object._curCamera._orbit(moveX, moveY, 0);
 
-        console.log(p5Object._curCamera);
+        createCoordinateLabels();
+    }
+
+    let COORDINATE_LABEL_SIZE = 120;
+    let coordinateLables = [];
+
+    function createCoordinateLabels() {
+        // WEBGL does not like drawing text, so we draw it onto textures first
+        // The coordinateLabels array is a lambda which will return a graphic
+        // Pass in the transparancy to the lambda as a parameter
+        // For efficency reasons, we are just wiping and re-drawing the graphics rather than re-creating them
+
+        sketch.push();
+
+        let labels = ["X", "Y", "Z"];
+        let colors = [X_DARK, Y_DARK, Z_DARK];
+        let graphics = [];
+        let alphas = [];
+
+        for (let i = 0; i <= 2; i++) {
+            alphas[i] = 0;
+            graphics[i] = sketch.createGraphics(COORDINATE_LABEL_SIZE, COORDINATE_LABEL_SIZE);
+            coordinateLables[i] = (alpha) => {
+                // If the alpha is the same, don't bother re-drawing, just return the already drawn graphic
+                if (alphas[i] == alpha) return graphics[i];
+
+                // Wipe the previous drawing
+                graphics[i].erase();
+                graphics[i].rect(0, 0, COORDINATE_LABEL_SIZE, COORDINATE_LABEL_SIZE);
+                graphics[i].noErase();
+
+                // Draw the text with the alpha provided
+                graphics[i].textFont("Helvitica");
+                graphics[i].noStroke();
+                graphics[i].fill(colors[i][0], colors[i][1], colors[i][2], alpha);
+                graphics[i].textAlign(sketch.CENTER, sketch.CENTER);
+                graphics[i].textSize(COORDINATE_LABEL_SIZE / 3);
+                graphics[i].text(labels[i], COORDINATE_LABEL_SIZE / 2, COORDINATE_LABEL_SIZE / 2);
+
+                return graphics[i];
+            }
+        }
+
+        sketch.pop();
     }
 
     let isDrag = false;
 
     sketch.draw = () => {
-        if (sketch.mouseX > 0 && sketch.mouseY > 0 && sketch.mouseX < WIDTH && sketch.mouseY < HEIGHT) {
-            if (sketch.mouseIsPressed) {
-                sketch.cursor("grab");
-            } else {
-                sketch.cursor(sketch.HAND);
-            }
-        }
-
         sketch.background(255);
         if (isDrag) {
             sketch.orbitControl(SENSITIVITY, SENSITIVITY, 0.3);
+            sketch.cursor("grab");
+        } else {
+            sketch.cursor(sketch.HAND);
         }
         drawRotation(theta, phi, delta, axis);
 
-        
-
         drawBlochSphere(newAngles.theta, newAngles.phi);
+
+        drawCoordinateLabels();
     }
 
     sketch.mousePressed = () => {
@@ -136,31 +174,63 @@ const topCanvas = (sketch) => {
         // drawOrthoCircle(camera.x, camera.y, camera.z);
     }
 
-    function drawOrthoCircle(x, y, z) {
-        // Draws a circle on the sphere which is orthogonal to the given coordiantes
-        sketch.push();
+    function drawCoordinateLabels() {
+        let camera = getCameraPos();
+        let r = Math.sqrt(camera.x * camera.x + camera.y * camera.y + camera.z * camera.z);
+        let DISTANCE = 1.7 * RADIUS;
 
-        // sketch.stroke(120);
+        function transparency(camera, position) {
+            let x = camera.x - position.x / DISTANCE * r;
+            let y = camera.y - position.y / DISTANCE * r;
+            let z = camera.z - position.z  /DISTANCE * r;
+            let dist = Math.sqrt(x * x + y * y + z * z);
+            dist = Math.round(dist * dist * 0.02);
+            if (dist > 255) dist = 255;
+            return dist;
+        }
+
         sketch.noStroke();
-        sketch.fill(sketch.color(0, 0, 0, 10));
 
-        // Project the camera onto the YZ plane to find the X rotation
-        let radius = Math.sqrt(y * y + z * z);
-        let x_angle = Math.acos(z / radius);
-        if (y > 0) x_angle = -x_angle;
-        sketch.rotateX(sketch.degrees(x_angle));
-        
+        let xPos = {x:0, y:0, z:DISTANCE};
+        let yPos = {x:DISTANCE, y:0, z:0};
+        let zPos = {x:0, y:-DISTANCE, z:0};
 
-        // Project the camera onto the XZ plane to find the Y rotation
-        radius = Math.sqrt(x * x + z * z);
-        let y_angle = Math.acos(z / radius);
-        if (x < 0) y_angle = -y_angle;
-        if (Math.abs(x) < 0.001 && Math.abs(z) < 0.001) y_angle = 0;
-        sketch.rotateY(sketch.degrees(y_angle));
+        function drawLabel(lambda, pos) {
+            sketch.push();
+            sketch.texture(lambda(transparency(camera, pos)));
+            sketch.translate(pos.x, pos.y, pos.z);
+            rotateBillboard(camera, pos);
+            sketch.plane(COORDINATE_LABEL_SIZE / 2, COORDINATE_LABEL_SIZE / 2);
+            sketch.pop();
+        }
 
-        sketch.ellipse(0, 0, 2 * RADIUS, 2 * RADIUS, RADIAL_SECTORS);
+        drawLabel(coordinateLables[0], xPos);
+        drawLabel(coordinateLables[1], yPos);
+        drawLabel(coordinateLables[2], zPos);
+    }
 
-        sketch.pop();
+    function rotateBillboard(camera, position) {
+        let x = camera.x - position.x;
+        let y = camera.y - position.y;
+        let z = camera.z - position.z;
+
+        let previousAngleMode = sketch._angleMode;
+        sketch.angleMode(sketch.RADIANS);
+
+        let r = Math.sqrt(x * x + z * z);
+        let theta = Math.asin(x / r);
+        if (z < 0) {
+            theta = 2 * Math.PI - theta;
+            theta += Math.PI;
+        }
+        sketch.rotateY(theta);
+
+        let rho = Math.sqrt(x * x + y * y + z * z);
+        theta = Math.acos(r / rho);
+        if (y > 0) theta = 2 * Math.PI - theta;
+        sketch.rotateX(theta);
+
+        sketch.angleMode(previousAngleMode);
     }
 
     function drawRotation(theta, phi, delta, axis) {
@@ -297,6 +367,8 @@ let bottomCanvas = (sketch) => {
             axis = String.fromCharCode("X".charCodeAt(0) + radioSet.getSelectedIndex());
             delta = 0;
             rotationSlider.setValue(270);
+            newAngles.theta = theta;
+            newAngles.phi = phi;
         }
 
         thetaLabel = new Label(sketch, 330, 20, "theta", 16);
@@ -315,6 +387,7 @@ let bottomCanvas = (sketch) => {
 
             thetaLabel.setText("θ = " + values.theta.toFixed(2) + "°");
             phiLabel.setText("ϕ = " + values.phi.toFixed(2) + "°");
+            deltaLabel.setText("Δ = 0.00°");
         }
         qubitSlider.onMove();
         qubitSlider.thetaSlider.setColors(THETA_COLOR, THETA_DARK);
