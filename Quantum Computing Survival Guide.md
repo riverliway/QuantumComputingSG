@@ -42,7 +42,7 @@ The first chapter is a simple introduction to the history of quantum computing a
 
 **MLA8**
 
-Schieberl, Zack. “Quantum Computing Survival Guide.” *Zachary Schieberl's Projects*, 18 Oct. 2020, https://zacharyschieberl.com/qcsg. 
+Schieberl, Zack. *Quantum Computing Survival Guide*. Github, 2020.
 
 ## Chapter 1:   Why Quantum Computing?
 
@@ -415,9 +415,9 @@ P(|\psi\rangle=|0\rangle)\approx\frac{\text{count}(|0\rangle)}{n}
 $$
 However finding the phase of this unknown state takes more effort. Every value of $\phi$ maps to the same probability during the phase collapse, so just looking at the probability we acquired does not directly find phase. The good news is that the probability does narrow down the number of states it could be considerably.
 
-When we didn't know anything about the black box's quantum state, the state space of what it could have been was the entire Bloch sphere. Now that we know what the probability is, it narrows down the state space to a ring around the Z axis. Sound familiar? The set of possible states our box produces is the very same set of states produced by the accessible state space of a Z rotation. As we know from the above applet, the accessible state space changes when we apply rotations to the quantum state.
+When we didn't know anything about the black box's quantum state, the state space of what it could have been was the entire Bloch sphere. Now that we know what the probability is, it narrows down the state space to a ring around the Z axis. Sound familiar? The set of possible states our box produces is the very same set of states produced by the accessible state space of a Z rotation. As we know from the above applet, the accessible state space changes when we move the quantum state.
 
-The key to finding the phase for our unknown state is to apply our own rotations and find the new probability after the rotation has been applied. Finding the new probability uses the same method of measuring $n$ qubits. When we apply a $X^{0.5}$ rotation and observe the new probability, we can narrow down the set of possible states to just two. This is because every value of $\phi$ will produce a different probability after a rotation around the X axis. The only phase which maps to the same probability after a rotation is the opposite side of the ring, at $\phi + \pi$. Since there are only two possible states that our black box can produce, we can apply a $Y^{0.5}$ rotation to our unknown state. This will produce different probabilities for the two different possible points which narrows it down to our unknown state.
+The key to finding the phase for our unknown state is to apply our own rotations and find the new probability after the rotation has been applied. When we apply a $X^{0.5}$ rotation, we are rotating the entire ring of possible states around the X axis. Now, the possible state space after the rotation is a ring around the Y axis. Once we observe the new probability, we can narrow down the set of possible states to just two. This is because every value of $\phi$ will produce a different probability after a rotation around the X axis. The only phase which maps to the same probability after a rotation is the opposite side of the ring. Since there are only two possible states that our black box can produce, we can apply a $Y^{0.5}$ rotation to our unknown state. This will produce different probabilities for the two different possible points which narrows it down to our unknown state.
 
 We have successfully found our unknown state using $3n$ qubits produced from our black box! The variable $n$ controls how good the approximation is compared to the real state since $\lim_{n\to \infin}$ would be required to get a perfect representation. This process grows more complicated when there is more qubits involved, but it gives a nice introduction to the concepts of state space and phase vs probability collapse. 
 
@@ -433,13 +433,7 @@ You only need 2 axes to rotate to any position: XZ, YZ, or XY
 
 You can also swap the order XZ -> ZX by editing the rotations
 
-### [2.7](#QCSG)   Beam Splitter
-
-half mirror, mach zehnder interferometer for quantum optics
-
-
-
-### [2.8](#QCSG)   Qubit Implementations
+### [2.7](#QCSG)   Qubit Implementations
 
 superconductors
 
