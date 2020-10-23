@@ -1,5 +1,106 @@
 "use strict";
 
+class BobbleBox {
+    constructor(sketch, x, y, width, height) {
+        this.VEC_OFFSET = 20;
+
+        this.sketch = sketch;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
+        this.backgroundColor = sketch.color(255);
+        this.outlineColor = sketch.color(0);
+
+        this.drawAxes = true;
+        this.xAxisName = "X";
+        this.yAxisName = "Y";
+        this.xAxisColor = sketch.color(0);
+        this.yAxisColor = sketch.color(0);
+
+        this.bobble = new Bobble(sketch, this.x, this.y, 10);
+        this.bobble.clean = undefined; // We will do our own cleaning
+        this.bobble.onPreDraw = () => this.draw();
+        this.bobble.move = () => this.move();
+    }
+
+    clean() {
+        const OFFSET = this.bobble.radius + 1;
+        this.sketch.erase();
+        this.sketch.rect(this.x - OFFSET, this.y - OFFSET - this.VEC_OFFSET * 2, this.width + (OFFSET + this.VEC_OFFSET * 2) * 2, this.height + (OFFSET + this.VEC_OFFSET * 2) * 2);
+        this.sketch.noErase();
+    }
+
+    draw() {
+        // Only draws the box and axes, doesn't draw bobble. Call update to draw everything
+        this.clean();
+        this.sketch.strokeWeight(1);
+        this.sketch.stroke(this.outlineColor);
+        this.sketch.fill(this.backgroundColor);
+        this.sketch.rect(this.x, this.y, this.width, this.height);
+
+        if (this.drawAxes) {
+            this.sketch.strokeWeight(2);
+            let base = this.sketch.createVector(this.x, this.y + this.height);
+            Drawing.arrow(this.sketch, base, this.sketch.createVector(0, -this.VEC_OFFSET - this.height), this.yAxisColor, 7);
+            Drawing.arrow(this.sketch, base, this.sketch.createVector(this.width + this.VEC_OFFSET, 0), this.xAxisColor, 7);
+            this.sketch.stroke(this.xAxisColor);
+            this.sketch.fill(this.xAxisColor);
+            this.sketch.textSize(15);
+            this.sketch.strokeWeight(0);
+            this.sketch.text(this.xAxisName, this.x + this.width + this.VEC_OFFSET * 1.2, this.y + this.height);
+            this.sketch.stroke(this.yAxisColor);
+            this.sketch.fill(this.yAxisColor);
+            this.sketch.text(this.yAxisName, this.x, this.y - this.VEC_OFFSET * 1.2);
+        }
+    }
+
+    move() {
+        let x = this.sketch.mouseX;
+        if (x < this.x) x = this.x;
+        if (x > this.x + this.width) x = this.x + this.width;
+        let y = this.sketch.mouseY;
+        if (y < this.y) y = this.y;
+        if (y > this.y + this.height) y = this.y + this.height;
+        this.bobble.setPosition(x, y);
+
+        if (this.onMove != undefined) this.onMove();
+    }
+
+    update() {
+        this.bobble.draw();
+    }
+
+    getValues() {
+        let vals = this.bobble.getPosition();
+        vals.x -= this.x;
+        vals.y = this.y + this.height - vals.y;
+        return vals;
+    }
+
+    setValues(x, y) {
+        this.bobble.setPosition(x + this.x, this.height - y + this.y);
+        this.update();
+    }
+
+    setColors(background, outline, bobble, hover) {
+        this.backgroundColor = background;
+        this.outlineColor = outline;
+        this.bobble.setColors(bobble, hover, outline);
+        this.update();
+    }
+
+    setAxes(drawAxes, xAxisName, yAxisName, xAxisColor, yAxisColor) {
+        this.drawAxes = drawAxes;
+        this.xAxisName = xAxisName;
+        this.yAxisName = yAxisName;
+        this.xAxisColor = xAxisColor;
+        this.yAxisColor = yAxisColor;
+        this.update();
+    }
+}
+
 class QubitSlider {
     /* Interface function onMove() may be implemented by calling function */
 
@@ -181,6 +282,7 @@ class Bobble extends Interactable {
 
         this.normalColor = this.sketch.color(0, 230, 226);
         this.hoverColor = this.sketch.color(0, 176, 173);
+        this.strokeColor = this.sketch.color(0);
 
         super.setChild(this);
     }
@@ -207,7 +309,7 @@ class Bobble extends Interactable {
     }
 
     _doDraw() {
-        this.sketch.stroke(0);
+        this.sketch.stroke(this.strokeColor);
         this.sketch.strokeWeight(1);
         this.sketch.fill(this.getColor());
         this.sketch.circle(this.x, this.y, 2 * this.radius);
@@ -234,14 +336,19 @@ class Bobble extends Interactable {
         return this.normalColor;
     }
 
-    setColors(normalColor, hoverColor) {
+    setColors(normalColor, hoverColor, outlineColor) {
         this.normalColor = normalColor;
         this.hoverColor = hoverColor;
+        this.strokeColor = (outlineColor == undefined) ? 0 : outlineColor;
     }
 
     setPosition(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    getPosition() {
+        return {x:this.x, y:this.y};
     }
 }
 
