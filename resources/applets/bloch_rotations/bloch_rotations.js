@@ -364,7 +364,7 @@ let bottomCanvas = (sketch) => {
         
         radioSet = new RadioButtonSet([buttonX, buttonY, buttonZ]);
         radioSet.onSelect = () => {
-            axis = String.fromCharCode("X".charCodeAt(0) + radioSet.getSelectedIndex());
+            axis = radioSet.getSelectedText();
             delta = 0;
             rotationSlider.setValue(270);
             newAngles.theta = theta;

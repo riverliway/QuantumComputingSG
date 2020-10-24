@@ -1,6 +1,10 @@
 "use strict";
 
 class BobbleBox {
+    /* Interface function onMove() may be implemented by calling function */
+    /* Interface function onPreDraw() may be implemented by calling function */
+    /* Interface function onPostDraw() may be implemented by calling function */
+
     constructor(sketch, x, y, width, height) {
         this.VEC_OFFSET = 20;
 
@@ -18,6 +22,8 @@ class BobbleBox {
         this.yAxisName = "Y";
         this.xAxisColor = sketch.color(0);
         this.yAxisColor = sketch.color(0);
+        this.xAxisOrientation = 1;
+        this.yAxisOrientation = 1;
 
         this.bobble = new Bobble(sketch, this.x, this.y, 10);
         this.bobble.clean = undefined; // We will do our own cleaning
@@ -26,15 +32,18 @@ class BobbleBox {
     }
 
     clean() {
-        const OFFSET = this.bobble.radius + 1;
+        const OFFSET = this.bobble.radius + this.VEC_OFFSET + 10;
+        const WIDTH_OFFSET = 70;
         this.sketch.erase();
-        this.sketch.rect(this.x - OFFSET, this.y - OFFSET - this.VEC_OFFSET * 2, this.width + (OFFSET + this.VEC_OFFSET * 2) * 2, this.height + (OFFSET + this.VEC_OFFSET * 2) * 2);
+        this.sketch.rect(this.x - OFFSET, this.y - OFFSET, this.width + OFFSET * 2 + WIDTH_OFFSET, this.height + OFFSET * 2);
         this.sketch.noErase();
     }
 
     draw() {
         // Only draws the box and axes, doesn't draw bobble. Call update to draw everything
         this.clean();
+        if (this.onPreDraw != undefined) this.onPreDraw();
+
         this.sketch.strokeWeight(1);
         this.sketch.stroke(this.outlineColor);
         this.sketch.fill(this.backgroundColor);
@@ -42,18 +51,41 @@ class BobbleBox {
 
         if (this.drawAxes) {
             this.sketch.strokeWeight(2);
-            let base = this.sketch.createVector(this.x, this.y + this.height);
-            Drawing.arrow(this.sketch, base, this.sketch.createVector(0, -this.VEC_OFFSET - this.height), this.yAxisColor, 7);
-            Drawing.arrow(this.sketch, base, this.sketch.createVector(this.width + this.VEC_OFFSET, 0), this.xAxisColor, 7);
+            let base = this.sketch.createVector(this.Xorient(this.x), this.Yorient(this.y));
+            let yArrow = this.sketch.createVector(0, (this.VEC_OFFSET + this.height) * -this.yAxisOrientation);
+            let xArrow = this.sketch.createVector((this.VEC_OFFSET + this.width) * this.xAxisOrientation, 0);
+            Drawing.arrow(this.sketch, base, yArrow, this.yAxisColor, 7);
+            Drawing.arrow(this.sketch, base, xArrow, this.xAxisColor, 7);
+
             this.sketch.stroke(this.xAxisColor);
             this.sketch.fill(this.xAxisColor);
             this.sketch.textSize(15);
             this.sketch.strokeWeight(0);
-            this.sketch.text(this.xAxisName, this.x + this.width + this.VEC_OFFSET * 1.2, this.y + this.height);
+            let textOffset = (this.yAxisOrientation < 0) ? 10 : 0;
+            let textMove = 1.05;
+            this.sketch.text(this.xAxisName, base.x + xArrow.x * textMove, base.y + textOffset);
             this.sketch.stroke(this.yAxisColor);
             this.sketch.fill(this.yAxisColor);
-            this.sketch.text(this.yAxisName, this.x, this.y - this.VEC_OFFSET * 1.2);
+            this.sketch.text(this.yAxisName, base.x, base.y + yArrow.y * textMove + textOffset);
         }
+
+        if (this.onPostDraw != undefined) this.onPostDraw();
+    }
+
+    Xorient(value) {
+        return (this.xAxisOrientation < 0) ? value + this.width : value;
+    }
+
+    NXorient(value) {
+        return (this.xAxisOrientation >= 0) ? value + this.width : value;
+    }
+
+    Yorient(value) {
+        return (this.yAxisOrientation >= 0) ? value + this.height : value;
+    }
+
+    NYorient(value) {
+        return (this.yAxisOrientation < 0) ? value + this.height : value;
     }
 
     move() {
@@ -74,19 +106,21 @@ class BobbleBox {
 
     getValues() {
         let vals = this.bobble.getPosition();
-        vals.x -= this.x;
-        vals.y = this.y + this.height - vals.y;
+        vals.x = (this.xAxisOrientation >= 0) ? vals.x - this.x : this.width - vals.x + this.x;
+        vals.y = (this.yAxisOrientation < 0) ? vals.y - this.y : this.height - vals.y + this.y;
         return vals;
     }
 
     setValues(x, y) {
-        this.bobble.setPosition(x + this.x, this.height - y + this.y);
+        let _x = (this.xAxisOrientation >= 0) ? x + this.x : this.width + this.x - x;
+        let _y = (this.yAxisOrientation < 0) ? y + this.y : this.height + this.y - y;
+        this.bobble.setPosition(_x, _y);
         this.update();
     }
 
     setColors(background, outline, bobble, hover) {
-        this.backgroundColor = background;
-        this.outlineColor = outline;
+        if (background != undefined) this.backgroundColor = background;
+        if (outline != undefined) this.outlineColor = outline;
         this.bobble.setColors(bobble, hover, outline);
         this.update();
     }
@@ -97,6 +131,13 @@ class BobbleBox {
         this.yAxisName = yAxisName;
         this.xAxisColor = xAxisColor;
         this.yAxisColor = yAxisColor;
+        this.update();
+    }
+
+    setOrientation(xAxis, yAxis) {
+        // Set the orientation of the box, negative values mean it gets flipped
+        if (xAxis != undefined) this.xAxisOrientation = xAxis;
+        if (yAxis != undefined) this.yAxisOrientation = yAxis;
         this.update();
     }
 }
@@ -158,6 +199,11 @@ class RadioButtonSet {
 
     getSelectedIndex() {
         return this.selectedIndex;
+    }
+
+    getSelectedText() {
+        // Returns the text in the selected button
+        return this.buttons[this.selectedIndex].text;
     }
 
     setSelectedIndex(selectedIndex) {
@@ -337,9 +383,9 @@ class Bobble extends Interactable {
     }
 
     setColors(normalColor, hoverColor, outlineColor) {
-        this.normalColor = normalColor;
-        this.hoverColor = hoverColor;
-        this.strokeColor = (outlineColor == undefined) ? 0 : outlineColor;
+        if (normalColor != undefined) this.normalColor = normalColor;
+        if (hoverColor != undefined) this.hoverColor = hoverColor;
+        if (outlineColor != undefined) this.strokeColor = outlineColor;
     }
 
     setPosition(x, y) {
