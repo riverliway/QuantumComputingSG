@@ -494,6 +494,8 @@ It is pleasant to visualize state space using part of the Bloch sphere, but unfo
 
 ### [2.7](#QCSG)   Qubit Implementations
 
+
+
 superconductors
 
 ion trap
@@ -501,8 +503,6 @@ ion trap
 photon
 
 more about this in quantum architecture
-
-
 
 ## Chapter 3:   Quantum Circuits
 

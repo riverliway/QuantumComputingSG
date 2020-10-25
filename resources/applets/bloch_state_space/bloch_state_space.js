@@ -21,50 +21,6 @@ let debug = true;   // The debug variable is only true for the first run of the 
 
 const RADIAL_SECTORS = 50;
 
-let curves = [];
-function createStateSpace(beginTheta, endTheta) {
-    const RADIUS = 98;
-    const THETA_STEP = 0.1;
-    const PHI_STEP = 20;
-
-    function createRing(theta) {
-        // Creates a ring of all phis at a specified theta
-        let curve = [];
-        for (let j = 0; j <= RADIAL_SECTORS; j++) {
-            let phi = 2 * Math.PI * j / RADIAL_SECTORS;
-            let x = RADIUS * Math.sin(theta) * Math.cos(phi);
-            let y = RADIUS * Math.sin(theta) * Math.sin(phi);
-            let z = RADIUS * Math.cos(theta);
-            curve.push({x:x, y:y, z:z});
-        }
-        curves.push(curve);
-    }
-
-    function createArc(phi) {
-        // Creates an arc of all thetas at a specified phi
-        let curve = [];
-        for (let j = 0; j <= RADIAL_SECTORS; j++) {
-            let theta = (endTheta - beginTheta) * j / RADIAL_SECTORS + beginTheta;
-            let x = RADIUS * Math.sin(theta) * Math.cos(phi);
-            let y = RADIUS * Math.sin(theta) * Math.sin(phi);
-            let z = RADIUS * Math.cos(theta);
-            curve.push({x:x, y:y, z:z});
-        }
-        curves.push(curve);
-    }
-
-    for (let theta = beginTheta; theta < endTheta; theta += THETA_STEP) {
-        createRing(theta);
-    }
-    createRing(endTheta);
-
-
-    for (let i = 0; i <= PHI_STEP; i++) {
-        let phi = 2 * Math.PI * i / PHI_STEP;
-        createArc(phi);
-    }
-}
-
 const topCanvas = (sketch) => {
     const WIDTH = 800;
     const HEIGHT = 350;
@@ -78,6 +34,7 @@ const topCanvas = (sketch) => {
 
     sketch.setup = () => {
         p5Object = sketch.createCanvas(WIDTH, HEIGHT, sketch.WEBGL);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - 500 / 2);
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle
@@ -86,7 +43,6 @@ const topCanvas = (sketch) => {
         p5Object._curCamera._orbit(moveX, moveY, 0);
 
         createCoordinateLabels();
-        createStateSpace(Math.PI * 0.25, Math.PI * 0.75);
     }
 
     let COORDINATE_LABEL_SIZE = 120;
@@ -385,7 +341,8 @@ let bottomCanvas = (sketch) => {
     let radioButtons;
 
     sketch.setup = () => {
-        sketch.createCanvas(WIDTH, HEIGHT);
+        let p5Object = sketch.createCanvas(WIDTH, HEIGHT);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - 500 / 2 + 350);
         
         bobbleBox = new BobbleBox(sketch, 100, 10, 200, 100);
 

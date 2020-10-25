@@ -11,7 +11,8 @@ let activeSlider = -1;
 let hoveredSlider = -1;
 
 function setup() {
-    createCanvas(WIDTH, HEIGHT);
+    let sketch = createCanvas(WIDTH, HEIGHT);
+    sketch.position(windowWidth / 2 - WIDTH / 2, windowHeight / 2 - HEIGHT / 2);
     textSize(18);
 
     sliders[0] = new Slider(crd(260, 350), crd(645, 350), -4, 4, 2, 20);

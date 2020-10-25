@@ -9,7 +9,8 @@ let screen = (sketch) => {
     let qubitSlider;
 
     sketch.setup = () => {
-        sketch.createCanvas(WIDTH, HEIGHT);
+        let p5Object = sketch.createCanvas(WIDTH, HEIGHT);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - HEIGHT / 2);
         sketch.angleMode(sketch.DEGREES);
 
         qubitSlider = new QubitSlider(sketch, 400, 250);

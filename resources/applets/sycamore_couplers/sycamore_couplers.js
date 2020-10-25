@@ -14,7 +14,8 @@ let toggle;
 let buttons = [];
 
 function setup() {
-    createCanvas(WIDTH, HEIGHT);
+    let p5Object = createCanvas(WIDTH, HEIGHT);
+    p5Object.position(windowWidth / 2 - WIDTH / 2, windowHeight / 2 - HEIGHT / 2);
 
     let beginX = 30;
     let beginY = 30;

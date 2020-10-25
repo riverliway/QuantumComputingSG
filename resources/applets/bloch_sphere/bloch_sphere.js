@@ -18,6 +18,7 @@ const topCanvas = (sketch) => {
 
     sketch.setup = () => {
         let p5Object = sketch.createCanvas(WIDTH, HEIGHT, sketch.WEBGL);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - 500 / 2);
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle
@@ -107,8 +108,9 @@ let bottomCanvas = (sketch) => {
     let hoveredSlider = -1;
 
     sketch.setup = () => {
-        sketch.createCanvas(WIDTH, HEIGHT);
+        let p5Object = sketch.createCanvas(WIDTH, HEIGHT);
         sketch.textSize(18);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - 500 / 2 + 350);
 
         sliders[0] = new Slider(crd(210, 50), crd(595, 50), 0, 180, 45, 20);
         sliders[1] = new Slider(crd(210, 100), crd(595, 100),  0, 360, 60, 20);

@@ -14,6 +14,7 @@ const topCanvas = (sketch) => {
 
     sketch.setup = () => {
         p5Object = sketch.createCanvas(WIDTH, HEIGHT, sketch.WEBGL);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - HEIGHT / 2);
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle

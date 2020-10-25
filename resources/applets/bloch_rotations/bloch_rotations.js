@@ -32,6 +32,7 @@ const topCanvas = (sketch) => {
 
     sketch.setup = () => {
         p5Object = sketch.createCanvas(WIDTH, HEIGHT, sketch.WEBGL);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - 500 / 2);
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle
@@ -350,7 +351,8 @@ let bottomCanvas = (sketch) => {
     let deltaLabel;
 
     sketch.setup = () => {
-        sketch.createCanvas(WIDTH, HEIGHT);
+        let p5Object = sketch.createCanvas(WIDTH, HEIGHT);
+        p5Object.position(sketch.windowWidth / 2 - WIDTH / 2, sketch.windowHeight / 2 - 500 / 2 + 350);
         sketch.textSize(18);
 
         qubitSlider = new QubitSlider(sketch, 200, 70);
