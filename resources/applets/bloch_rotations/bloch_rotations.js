@@ -387,7 +387,7 @@ let bottomCanvas = (sketch) => {
 
             thetaLabel.setText("θ = " + values.theta.toFixed(2) + "°");
             phiLabel.setText("ϕ = " + values.phi.toFixed(2) + "°");
-            deltaLabel.setText("Δ = 0.00°");
+            deltaLabel.setText("Δ = 0");
         }
         qubitSlider.onMove();
         qubitSlider.thetaSlider.setColors(THETA_COLOR, THETA_DARK);
@@ -405,7 +405,7 @@ let bottomCanvas = (sketch) => {
             if (phiDeg < 0) phiDeg += 360;
             if (phiDeg >= 360) phiDeg -= 360;
 
-            deltaLabel.setText("Δ = " + deltaDeg.toFixed(2) + "°");
+            deltaLabel.setText("Δ = " + (deltaDeg / 180).toFixed(2));
             thetaLabel.setText("θ = " + sketch.degrees(newAngles.theta).toFixed(2) + "°");
             phiLabel.setText("ϕ = " + phiDeg.toFixed(2) + "°");
         }

@@ -224,7 +224,7 @@ const topCanvas = (sketch) => {
             Drawing.ring(sketch, 0, 0, RHO * Math.cos(theta), 2 * RHO * Math.sin(theta), sketch.createVector(0, 0, 1));
         }
         // Draw the ends more prominently
-        sketch.stroke(sketch.color(0, 230, 226, 180));
+        sketch.stroke(sketch.color(0, 230, 226));
         Drawing.ring(sketch, 0, 0, RHO * Math.cos(beginTheta), 2 * RHO * Math.sin(beginTheta), sketch.createVector(0, 0, 1));
         Drawing.ring(sketch, 0, 0, RHO * Math.cos(endTheta), 2 * RHO * Math.sin(endTheta), sketch.createVector(0, 0, 1));
 
