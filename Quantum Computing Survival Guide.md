@@ -488,21 +488,33 @@ The space of rotations around any three major axes is complete if there aren't t
 $$
 X^{\Delta_2}X^{\Delta_1}|\psi\rangle=X^{\Delta_1+\Delta_2}|\psi\rangle
 $$
-Note that the concept of 3 degrees of freedom only applies to the major axes. Consider an axis $\widetilde{Z}$ which is nearby, but not equal to the axis $Z$. The state space $\text{span}(Z\widetilde{Z}X)$ has 3 degrees of freedom, but is not complete. To confirm this, think about the state $|0\rangle$. Rotating $|0\rangle$ around the $Z$ axis doesn't do anything because the state is already on the $Z$ axis. The state space $\text{span}(\widetilde{Z})$ when the state is $|0\rangle$ is a small ring near the top of the sphere. Then the state space $\text{span}(\widetilde{Z}X)$ is a small band on the surface of the sphere around the $X$ axis, which is not complete.
+Note that the concept of 3 degrees of freedom only applies to mutually orthogonal axes. Consider an axis $\widetilde{Z}$ which is nearby, but not equal to the axis $Z$. The state space $\text{span}(Z\widetilde{Z}X)$ has 3 degrees of freedom, but is not complete. To confirm this, think about the state $|0\rangle$. Rotating $|0\rangle$ around the $Z$ axis doesn't do anything because the state is already on the $Z$ axis. The state space $\text{span}(\widetilde{Z})$ when the state is $|0\rangle$ is a small ring near the top of the sphere. Then the state space $\text{span}(\widetilde{Z}X)$ is a small band on the surface of the sphere around the $X$ axis, which is not complete.
 
 It is pleasant to visualize state space using part of the Bloch sphere, but unfortunately when we increase the number of qubits, the space can no longer be described using geometric interpretations because there are not enough dimensions to work with. Luckily, math continues to work no matter the number of dimensions we are working in!
 
 ### [2.7](#QCSG)   Qubit Implementations
 
+The math we have talked about in this chapter involves quantum states, superposition, the Bloch sphere, and rotations, but what are the connections to the real world? We have used the term _qubit_ which refers to a quantum system that has 2 basis states: 0 and 1. This qubit is an abstract concept and can by implemented in the real world by using any two level quantum object.
 
+##### Superconductors
 
-superconductors
+Currently, many American companies involved with quantum computers are using superconductors to implement their qubits. Google, IBM, and Rigetti are some of the larger companies working with them. IBM has even enabled users to send quantum programs to one of their quantum computers via the cloud. 
 
-ion trap
+Although there is a lot of excitement about superconducting qubits, they are unstable and must be kept very cold. The basis states of a superconducting qubit are the directions of current flow in the superconducting loops: clockwise and counter-clockwise. The current direction can be put into superposition and measured when the wires are cooled to near absolute zero. Any disturbance to the computer causes errors in the output.
 
-photon
+##### Ion Traps
 
-more about this in quantum architecture
+Another favorite of corporate and research groups alike is the ion trap. IonQ is a company working on building trapped ion qubits in America.
+
+Trapped ions are atomic particles which have been confined using electromagnetic fields. The basis states are the grounded and excited levels of the ion. These qubits are very stable, but since they use lasers to manipulate the quantum state, they are also slow. 
+
+##### Photons
+
+The basis states of a photon are a pair of orthogonal linear polarizations. Photons can be used to transmit quantum states over long distances. A research group successfully sent a quantum state from China to Austria.
+
+##### Others
+
+There are many different methods of implementing qubits, and each of them come with their own advantages and disadvantages. There are even some theoretical methods of quantum computing which have yet to be realized in our world. 
 
 ## Chapter 3:   Quantum Circuits
 
