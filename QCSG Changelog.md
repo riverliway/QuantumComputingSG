@@ -2,6 +2,10 @@
 
 [toc]
 
+### Version 0.2.0 - October 26, 2020
+
+* Chapters 1and 2 have been completed
+
 #### Version 0.1.13 - October 25, 2020
 
 * Added Section - Multiple Rotations

@@ -20,15 +20,15 @@ This document is meant to be a modern equivalent to a textbook for quantum compu
 
 #### Quantum? What's that?
 
-_Quantum mechanics_ are the laws which govern _quantum physics_, the study of very small particles such as atoms, electrons, and photons. No previous knowledge of quantum mechanics or quantum physics is assumed or required to understand this document. However we do make some assumptions about the reader's knowledge of mathematics and computer science:
+_Quantum mechanics_ are the laws which govern _quantum physics_, the study of very small particles such as atoms, electrons, and photons. No previous knowledge of quantum mechanics or quantum physics is assumed or required to understand this document. However, we do make some assumptions about the reader's knowledge of mathematics and computer science:
 
 * Precalculus: Complex Numbers, Trigonometry, Polar Coordinates, Radians
 * Linear Algebra: Vectors, Matrices, Matrix Multiplication, 3 Dimensional Math
-* Discrete Mathematics: Boolean Algebra, Turing Machines, Complexity Classes
+* Discrete Mathematics: Boolean Algebra, Sets, Turing Machines, Complexity Classes
 * Computer Science: Introductory Programming, Data Structures, Algorithms, Computer Organization
   * These topics are especially important: Arrays, Big-Oh Notation, Bitwise Manipulation
 
-Some amount of review for these topics is provided, but we are assuming readers will already have been introduced. We expect this document will be completely understandable to a Computer Science undergraduate by the end of their second year. 
+Some amount of review for these topics is provided, but we are assuming readers will already have been introduced. We expect this document will be understandable to a Computer Science undergraduate by the end of their second year. 
 
 #### Outline of the Document
 
@@ -50,15 +50,15 @@ The entire document is used to describe what quantum computing is, but I think i
 
 ### [1.1](#QCSG)   The New Age of Computing
 
-Gordon Moore made an observation that the number of transistors in an integrated circuit doubles every 2 years, known as _Moore's Law_. There are only two ways to increase the number of transistors: make them smaller, or make the chip larger. So far we have continued to choose the first option, finding new methods to make the transistors smaller and smaller each year to follow this pattern. However, scientists can't continue to make them smaller forever. After all, we are bounded by the limits of physics of our universe. The size of transistors can't breach the atomic barrier, becoming smaller than atoms. It is unclear when our computers will begin to diverge from Moore's Law.
+Gordon Moore made an observation that the number of transistors in an integrated circuit doubles every 2 years, known as _Moore's Law_. There are only two ways to increase the number of transistors: make them smaller, or make the chip larger. So far we have continued to choose the first option, finding new methods to make the transistors smaller and smaller each year to follow this pattern. However, scientists can't continue to make them smaller forever. After all, we are bounded by the physical limits of our universe. The size of transistors can't breach the atomic barrier, becoming smaller than atoms. It is unclear when our computers will begin to diverge from Moore's Law.
 
-Luckily, the end of Moore's Law does not mean the end of improvement for computers. There are certainly other methods to give computers more memory, make them faster, and improve power consumption. Once such method is the use of specialized hardware. Rather than doing every single operation on the _Central Processing Unit (CPU)_, computers can delegate specific tasks to other hardware which are designed to be efficient at one job. One common example is the _Graphics Processing Unit (GPU)_, which is a separate device used to handle massively parallel programs. The architecture and style of programming for GPUs is different for GPUs than CPUs. There are some problems that run incredibly fast on a GPU, however some problems actually run slower. 
+Luckily, the end of Moore's Law does not mean the end of improvement for computers. There are certainly other methods to give computers more memory, make them faster, and improve power consumption. Once such method is the use of specialized hardware. Rather than doing every single operation on the _Central Processing Unit (CPU)_, computers can delegate specific tasks to other hardware which are designed to be efficient at certain types of jobs. One common example is the _Graphics Processing Unit (GPU)_, which is a separate device used to handle massively parallel programs. The architecture and style of programming for GPUs is different than CPUs. There are some problems that run incredibly fast on a GPU, however some problems actually run slower. 
 
-Every algorithm has a _time complexity_, a formula describing how long the algorithm takes to run based off the size of the input. If we built new hardware which could significantly lower the time complexity for certain problems, it would signal a new age for computers. Introducing _quantum computers_: computers which run off of different principals than classical computers, derived from the laws of quantum mechanics. 
+Every algorithm has a _time complexity_, a formula describing how long the algorithm takes to run based on the size of the input. If we built new hardware which could significantly lower the time complexity for certain problems, it would signal a new age for computers. Introducing _quantum computers_: computers which run off of different principals than classical computers, derived from the laws of quantum mechanics. 
 
 <center><i>Do scientists just put the word 'quantum' in front of everything?</i></center>
 
-To answer your question: pretty much. Formally, the word _quantum_, and its plural _quanta_, can be used to describe any discrete chunk of something. In science, especially physics and chemistry, quantum is used to describe the study of very small particles: atoms, electrons, quarks, photons, etc. A quantum computer is any machine which uses a series of transformations, based off of quantum physics, to manipulate data into a desired result. These quantum computers are significantly different from classical computers. The methods of storing, transforming, and reading quantum data is unintuitive from a classical computer's perspective.
+To answer your question: pretty much. Formally, the word _quantum_, and its plural _quanta_, can be used to describe any discrete chunk of something. In science, especially physics and chemistry, quantum is used to describe the study of very small particles: atoms, electrons, quarks, photons, etc. A quantum computer is any machine which uses a series of transformations, based off of quantum physics, to manipulate data into a desired result. These quantum computers are significantly different than classical computers. The methods of storing, transforming, and reading quantum data is unintuitive from a classical computer's perspective.
 
 Researchers have shown that some problems such as integer factoring and searching unsorted data can be implemented more efficiently on a quantum computer than a classical one. Using a _Quantum Processing Unit (QPU)_, a CPU could send it specific jobs which are solved much faster on a quantum computer. There are many issues plaguing current quantum computers which make them difficult to offer to the general public, but the future of quantum computing looks very bright and there is still much to be discovered. 
 
@@ -100,13 +100,13 @@ Quantum computing also has a similar structure of parent fields. The physical im
 
 Many different types of quantum computers have been designed over the past few decades. A few of the important milestones for the development of physical implementations are listed here:
 
-* 1995 - [First realization of a quantum logic gate](https://tf.nist.gov/general/pdf/140.pdf)
-* 1998 - [First implementation of Grover's Algorithm on a 2 qubit computer](https://pdfs.semanticscholar.org/6c05/5053f4f1605fdc0bd474c7a350dcd01f627d.pdf)
-* 2001 - [First implementation of Shor's Algorithm factoring 15](http://cryptome.org/shor-nature.pdf)
-* 2006 - [First demonstration of teleportation](https://web.archive.org/web/20070207105035/http://www.york.ac.uk/admin/presspr/pressreleases/kirkclone.htm)
-* 2011 - [First commercially available quantum annealer (D-Wave One)](https://web.archive.org/web/20110515083848/http://physicsworld.com/cws/article/news/45960)
-* 2016 - [First quantum computer available on the cloud (IBM)](https://arxiv.org/abs/1605.05709)
-* 2019 - [First instance of a claim to quantum supremacy (Google)](https://ai.googleblog.com/2019/10/quantum-supremacy-using-programmable.html)
+* 1995 - <a href="https://tf.nist.gov/general/pdf/140.pdf" target="_blank">First realization of a quantum logic gate</a>
+* 1998 - <a href="https://pdfs.semanticscholar.org/6c05/5053f4f1605fdc0bd474c7a350dcd01f627d.pdf" target="_blank">First implementation of Grover's Algorithm on a 2 qubit computer</a>
+* 2001 - <a href="http://cryptome.org/shor-nature.pdf" target="_blank">First implementation of Shor's Algorithm factoring 15</a>
+* 2006 - <a href="https://web.archive.org/web/20070207105035/http://www.york.ac.uk/admin/presspr/pressreleases/kirkclone.htm" target="_blank">First demonstration of teleportation</a>
+* 2011 - <a href="https://web.archive.org/web/20110515083848/http://physicsworld.com/cws/article/news/45960" target="_blank">First commercially available quantum annealer (D-Wave One)</a>
+* 2016 - <a href="https://arxiv.org/abs/1605.05709" target="_blank">First quantum computer available on the cloud (IBM)</a>
+* 2019 - <a href="https://ai.googleblog.com/2019/10/quantum-supremacy-using-programmable.html" target="_blank">First instance of a claim to quantum supremacy (Google)</a>
 
 ### [1.3](#QCSG)   Modern Applications of Quantum Computers
 
@@ -150,8 +150,6 @@ The location where it will be observable is random and cannot be determined ahea
 <center><i>Figure 2.1.3 - A Probability Function</i></center>
 
 The function shown above contains information on how likely the electron is to be observed at a specified location. In this graph, the X axis is the location and the Y axis is how likely it is to appear at that location. The electron is very likely to appear somewhere in the middle and it is very unlikely to appear near the edges. In the bottom left corner of this graph, when $x=0$ it shows that $y=0$ as well. This means the electron can __never__ appear at location 0. The same logic applies at the bottom right corner.
-
-The wave equation is a model for how waves move through space. It is a function of two variables, location and time: $F(x, t)$. At the moment the electron is observed, time is no longer a variable and is held constant since it does not change. In quantum computing, how the wave moves is not a concern of ours, so we do not use time as a variable. 
 
 The rest of this document is dedicated towards explaining the rules governing qubits and their interactions, this is the only section which makes an attempt at showing where the rules are derived from. An inquiring mind may ask "why do qubits follow these rules specifically?" and the only answer is because they follow from the laws of quantum mechanics.
 
@@ -229,7 +227,7 @@ Any vector can be expressed by placing it inside a vertical line  |  and right a
 Since a ket represents a quantum state, we can put our own quantum states inside the ket like:|above-line$\rangle$ and |below-line$\rangle$ to represent the electron being observed above or below the line on the wall. Some more examples of kets are:
 
 * |spin-up$\rangle$ and |spin-down$\rangle$ to represent the spin of a photon
-* |ground$\rangle$ and |excited$\rangle$ to represent how close an electron is to its nucleus
+* |ground$\rangle$ and |excited$\rangle$ to represent the energy level of an electron
 * |/$\rangle$ and |\\$\rangle$ to represent diagonal and anti-diagonal polarization of light
 * |clockwise$\rangle$ and |counterclockwise$\rangle$ to represent direction of current flow in a circuit
 
@@ -267,9 +265,9 @@ It is important to note that no cats were harmed in this theoretical scenario.
 
 #### Bra Notation
 
-The ket notation is used to describe column vectors; there is also a partner notation to describe row vectors: bra. The vector placed between a left angle bracket $\langle$  and a vertical line | is pronounced "bra-v": $\langle\bold{v}|$ . The bra is just the transpose of ket.
+The ket notation is used to describe column vectors; there is also a partner notation to describe row vectors: bra. The vector placed between a left angle bracket $\langle$  and a vertical line | is pronounced "bra-v": $\langle\bold{v}|$ . The bra is just the _conjugate transpose_ of ket, also called the _Hermitian transpose_.
 $$
-\langle\bold{v}| = |\bold{v}\rangle^\top
+\langle\bold{v}| = |\bold{v}\rangle^\dagger
 $$
 Now that we have defined our mathematical notation for vectors, we can describe common operations seen in linear algebra.
 
@@ -292,8 +290,6 @@ $$
 $$
 This product will produce an $m\times n$ matrix when $\bold{u}$ is an $m\times1$ vector and $\bold{v}$ is an $n\times1$ vector.
 
-The _Hermitian transpose_, or _conjugate transpose_, is an operation performed on a vector or matrix. This combines a transpose with taking the complex conjugate of each entry. This document will use the notation $A^\dagger$, although $A^H$ is also commonly used.
-
 ### [2.4](#QCSG)   Bloch Sphere Model
 
 Now that we have a proper system of notation to discuss quantum states, we will extend our model of a pbit to the full model of a quantum bit, also called a _qubit_. Quantum particles have the ability to randomly collapse to a basis state, but they also have another key attribute called _phase_. 
@@ -306,7 +302,7 @@ _Polar coordinates_ is a system of coordinates in 2 dimensions which uses a dist
 
 _Spherical coordinates_ is a system of coordinates in 3 dimensions which uses a distance from the origin, an angle from the positive Z axis, and an angle from the positive X axis to describe every possible point: $(r,\theta,\phi)$. In this model, $\theta$ is the angle from the positive Z axis and is called the _inclination angle_. $\phi$ is the angle from the positive X axis and is called the _azimuth angle_. 
 
-This notation may differ from a multivariable calculus class, where $\theta$ & $\phi$'s roles are switched and $r$ is denoted $\rho$. We will be using the notation commonly used in physics and defined by the [ISO standard](https://www.iso.org/standard/64973.html). 
+This notation may differ from a multivariable calculus class, where $\theta$ & $\phi$'s roles are switched and $r$ is denoted $\rho$. We will be using the notation commonly used in physics and defined by the <a href="https://www.iso.org/standard/64973.html" target="_blank">ISO standard</a>.
 
 <iframe height='500' scrolling='no' title='Bloch Sphere Applet' src='resources\applets\bloch_sphere\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Sphere Applet</iframe>
 
@@ -318,7 +314,7 @@ This above applet allows the changing the values of $\theta$ and $\phi$ & moving
 
 The **Bloch sphere**, named after Felix Bloch, is the full model of the qubit. It uses spherical coordinates to describe every possible state a quantum particle can occupy. A _pure state_ is any quantum state which lies on the surface of the unit sphere with radius $1$. A quantum state could also be a _mixed state_ which has radius less than $1$, but will not be discussed here. Here are some facts about our new Bloch sphere model:
 
-* The green point indicates the current quantum state, $|\psi\rangle$.
+* The aquamarine point indicates the current quantum state, $|\psi\rangle$.
 * The $|0\rangle$ and $|1\rangle$ states are vertical and orthogonal to each other.
 * The inclination angle, $\theta$, has the bounds: $0\leq\theta\leq\pi$
 * The azimuth angle, $\phi$, has the bounds: $0\leq\phi<2\pi$
@@ -327,7 +323,7 @@ The fact that $|0\rangle$ and $|1\rangle$ are orthogonal to each other may be su
 
 <img src="resources\img\bloch_sphere.png" width="300px"/>
 
-<center><i>Figure 2.4.2 - The Static Bloch Sphere</i></center>
+<center><i>Figure 2.4.2 - A Static Bloch Sphere</i></center>
 
 A quantum state with radius 1 on the positive Z axis is $|0\rangle$ and one on the negative Z axis is $|1\rangle$. The reason why our orthogonal basis states are allowed to exist on the same axis is because the Bloch sphere technically exists inside _Hilbert space_ instead of the typical _Euclidean space_ we are used to. Don't sweat the details too much since Hilbert space is just a generalization of Euclidean space.
 
@@ -337,8 +333,8 @@ $$
 $$
 When describing qubits, $\alpha$ and $\beta$ are complex numbers. Since they are complex, we need to make a minor adjustment to the formula describing the probability of collapse:
 $$
-P(|0\rangle) = |\alpha|^2 \\
-P(|1\rangle) = |\beta|^2 \\
+P(|\psi\rangle=|0\rangle) = |\alpha|^2 \\
+P(|\psi\rangle=|1\rangle) = |\beta|^2 \\
 |\beta|^2 = 1 - |\alpha|^2
 $$
 The absolute value is necessary since we are now dealing with complex numbers. Not using it would mean some values of $\alpha$ and $\beta$ would yield negative probabilities, which are not allowed.
@@ -355,7 +351,7 @@ Any description of phase would be incomplete without talking about _global phase
 $$
 |\psi\rangle=e^{ia}(e^{ib}cos(\frac{\theta}{2})|0\rangle+e^{ic}sin(\frac{\theta}{2})|1\rangle)
 $$
- In this definition, $a$ is the global phase. The interesting fact about global phase is that physicists have concluded global phase does not have any impact on the qubit. Not even indirectly. We can arbitrarily set $a=-b$ so the complex part of $\alpha$ cancels out and leaves us with just a real part. Continuing this example, $\phi=c-b$  which is the relative phase. In this document, phase is always talking about relative phase. Global phase will always be explicitly labelled. 
+In this definition, $a$ is the global phase. The interesting fact about global phase is that physicists have concluded global phase does not have any impact on the qubit. Not even indirectly. We can arbitrarily set $a=-b$ so the complex part of $\alpha$ cancels out and leaves us with just a real part. Continuing this example, $\phi=c-b$  which is the relative phase. In this document, phase is always talking about relative phase. Global phase will always be explicitly labelled. 
 
 Phase can be somewhat unintuitive at first glance. Why would we introduce (relative) phase to our model which does not directly affect the probability? The variable which represents phase, $\phi$, only appears in the $e^{i\phi}$ term in $\beta$. Furthermore, when determining the probability, $|e^{i\phi}|^2$ will always equal $1$ for any value of $\phi$. It seems that $\theta$ is the only variable which can influence the probability of collapse. However, phase can indirectly influence the probability of a qubit through the transformations described in the next section.
 
@@ -363,7 +359,7 @@ Phase can be somewhat unintuitive at first glance. Why would we introduce (relat
 
 Using qubits as data is only useful if we can edit their state. We used the Bloch sphere to geometrically describe the state of a single qubit, however we can't edit the angles $\theta$ and $\phi$ directly. The way we transform a quantum state is to rotate around the X, Y, or Z axis. 
 
-There are many different systems of notation used for describing rotations of the Bloch sphere. The one we will use is exponentiation: $X^\Delta$.  This says rotate counterclockwise around the X axis by $\pi\Delta$ radians. The $\Delta$ describes how many half-revolutions to rotate. If $\Delta$ is negative then rotate clockwise instead. Replace X with Y or Z to rotate around another axis.
+There are many different systems of notation used for describing rotations around the Bloch sphere. The one we will use is exponentiation: $X^\Delta$.  This says rotate counterclockwise around the X axis by $\pi\Delta$ radians. The $\Delta$ describes how many half-revolutions to rotate. If $\Delta$ is negative then rotate clockwise instead. Replace X with Y or Z to rotate around another axis.
 $$
 X^0=0=0^\circ \\
 X^{0.25}=\frac{\pi}{4}=45^\circ \\
@@ -385,7 +381,7 @@ The above applet shows how rotations impact the current state of the qubit on th
 
 There is also a blue ring around the sphere which moves as the qubit state changes. It shows every location the qubit could be at after a rotation around the selected axis. This ring is the intersection of the surface of the Bloch sphere with a plane which is parallel to the other two axes. For example, when rotating around the X axis, the blue slice is parallel to the YZ plane and the X coordinate of the ring is the same as the qubit state. 
 
-Looking at the blue ring introduces us to the concept of _state space_. Formally, state space is a set of states a qubit is allowed to occupy. We are currently talking about pure states, so the _pure state space_ of a qubit is the surface of the Bloch sphere. The _accessible state space_ of a rotation is the blue ring and the accessible state space of a rotation changes as the state being rotated changes. The accessible state space of a rotation is a subset of the pure state space. 
+Looking at the blue ring introduces us to the concept of _state space_. Formally, state space is a set of states a qubit is allowed to occupy. We are currently talking about pure states, so the _pure state space_ of a qubit is the surface of the Bloch sphere. The _accessible state space_ of a rotation is the blue ring and it changes as the state being rotated changes. The accessible state space of a rotation is a proper subset of the pure state space. 
 
 #### Collapse as a Transformation
 
@@ -408,7 +404,7 @@ $$
 $$
 When working with qubits in the real world, the two processes of collapse happen sequentially and instantaneously. There is no way to stop the collapse halfway through and observe the internal workings. One reason why it can be helpful to think about the phase and probability collapsing as separate processes is the task of state reconstruction. Consider a black box which can produce an unknown quantum state; once we observe the state, it collapses. Find the quantum state.
 
-We are given an infinite number of identical quantum states, but they are hidden to us so we need to glean information about what the unknown state is. Finding the probability of the qubit is easy, just measure $n$ of them and count how many times it collapsed to $|0\rangle$:
+We are given an infinite number of identical quantum states, but they are hidden to us, so we need to glean information about what the unknown state is. Finding the probability of the qubit is easy, just measure $n$ of them and count how many times it collapsed to $|0\rangle$:
 $$
 P(|\psi\rangle=|0\rangle)\approx\frac{\text{count}(|0\rangle)}{n}
 $$
@@ -418,7 +414,7 @@ When we didn't know anything about the black box's quantum state, the state spac
 
 The key to finding the phase for our unknown state is to apply our own rotations and find the new probability after the rotation has been applied. When we apply a $X^{0.5}$ rotation, we are rotating the entire ring of possible states around the X axis. Now, the possible state space after the rotation is a ring around the Y axis. Once we observe the new probability, we can narrow down the set of possible states to just two. This is because every value of $\phi$ will produce a different probability after a rotation around the X axis. The only phase which maps to the same probability after a rotation is the opposite side of the ring. Since there are only two possible states that our black box can produce, we can apply a $Y^{0.5}$ rotation to our unknown state. This will produce different probabilities for the two different possible points which narrows it down to our unknown state.
 
-We have successfully found our unknown state using $3n$ qubits produced from our black box! The variable $n$ controls how good the approximation is compared to the real state since $\lim_{n\to \infin}$ would be required to get a perfect representation. This process grows more complicated when there is more qubits involved, but it gives a nice introduction to the concepts of state space and phase vs probability collapse. 
+We have successfully found our unknown state using $3n$ qubits produced from our black box! The variable $n$ controls how good the approximation is compared to the real state since $\lim_{n\to \infin}$ would be required to get a perfect representation. This process grows more complicated when there is more qubits involved, but it gives a nice introduction to the concepts of state space and phase versus probability collapse. 
 
 When does this idea of a black box producing an infinite number of qubits occur in reality? Exceedingly often! When we run quantum programs on a quantum computer, we are asking the computer to perform a sequence of operations and then it produces a quantum state. We don't know what this state is; if we did, why would we need to run the quantum program? However, simply running the program once and then measuring the outcome isn't useful because of the randomness involved with collapsing superposition. To see the result of our computation, we need to run the program many times and use a similar method to the one outlined above to find the quantum state. Using the above method requires running the program $3n$ times.
 
@@ -436,7 +432,7 @@ As we saw when discussing collapse as a transformation, state space can be rotat
 $$
 \{|\psi\rangle\in\text{span}(Z):X^{0.5}|\psi\rangle\}
 $$
-The next logical step is to consider multiple rotations. What happens when we are allowed to rotate around 1 axis, but it can be any of the three? The set describing this operation is $\text{span}(X)\cup\text{span}(Y)\cup\text{span}(Z)$. Geometrically, this describes three separate rings around each of the axes. 
+The next logical step is to consider multiple rotations. What happens when we are allowed to rotate around 1 axis, but it can be any of the three? The set describing this operation is $\text{span}(X)\cup\text{span}(Y)\cup\text{span}(Z)$. Geometrically, this describes the overlay of three separate rings around each of the axes. 
 
 #### Sequential Rotations
 
@@ -444,13 +440,13 @@ What happens when we are allowed to rotate around 2 axes sequentially? Consider 
 $$
 \text{span}(XZ)=\{\Delta_1,\Delta_2:Z^{\Delta_2} X^{\Delta_1}|\psi\rangle \}
 $$
-The above set-builder describes the state space of every accessible state by rotating some amount around X and then rotating some amount around Z. Notice how the direction of application is different inside the span versus inside the set-builder. Recall that our ket object $|\psi\rangle$ is simply a vector representing the quantum state. The $X^{\Delta_1}$ rotation is actually a matrix acting on the state, which is why the notation is right-to-left instead of left-to-right like how the axes are ordered. The definitive rules for notation will be solidified in the next chapter.
+The above set-builder describes the state space of every accessible state by rotating some amount around X and then rotating some amount around Z. Notice how the direction of application is different inside the span versus inside the set-builder. Recall that our ket object $|\psi\rangle$ is simply a vector representing the quantum state. The $X^{\Delta_1}$ rotation is actually a matrix acting on the state, which is why the notation is right-to-left instead of left-to-right like how the axes are ordered.
 
-We have described the accessible state space for a $XZ$ sequential rotation using set-builder notation, but what does it look like geometrically? There is another method of describing the state space which is easier to visualize:
+We have described the accessible state space for an $XZ$ sequential rotation using set-builder notation, but what does it look like geometrically? There is another method of describing the state space which is easier to visualize:
 $$
-\text{span}(XZ)=\bigcup_{\text{span}(X)}\text{span(Z)}
+\text{span}(XZ)=\bigcup_{|\psi\rangle\in\text{span}(X)}\text{span(Z)}
 $$
-In English, this says to first create the set $\text{span}(X)$ of our state, and then union the set $\text{span}(Z)$ for every state inside of $\text{span}(X)$. Geometrically, this describes stacking an infinite number of rings on top of each other, one for every point on the ring created by $\text{span}(X)$. This creates a section of the Bloch sphere with the ends of the sphere chopped off. 
+In English, this says to first create the set $\text{span}(X)$ of our state, and then union the set $\text{span}(Z)$ for every state inside of $\text{span}(X)$. Geometrically, this describes stacking an infinite number of rings on top of each other, one for every point on the ring created by $\text{span}(X)$. This creates a band around the Bloch sphere.
 
 <iframe height='530' scrolling='no' title='Bloch State Space Applet' src='resources\applets\bloch_state_space\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch State Space Applet</iframe>
 
@@ -466,7 +462,7 @@ Z^{\Delta_2}X^{\Delta_1}|\psi\rangle\neq X^{\Delta_1}Z^{\Delta_2}|\psi\rangle
 $$
 Since we are able to see the accessible state space of XZ, we can actually take this one step further. Suppose there exists some function $f$ which is able to switch the axes and change the amount of each rotation:
 $$
-f:Z^{\Delta_2}X^{\Delta_1}|\psi\rangle \rightarrow X^{\Delta_{\Large{a}}}Z^{\Delta_{\Large{b}}}|\psi\rangle
+f:Z^{\Delta_2}X^{\Delta_1}|\psi\rangle \rightarrow X^{\Delta_{\Large a}}Z^{\Delta_{\Large b}}|\psi\rangle
 \\ f \text{ cannot exist}
 $$
 However, we are able to deduce that the function $f$ cannot exist because there are some states in $\text{span}(XZ)$ which do not exist inside $\text{span}(ZX)$, that is to say $\text{span}(XZ)\nsubseteq \text{span}(ZX)$. So the function $f$ may be able to work for limited values of $\Delta_1$ and $\Delta_2$, but not for every rotation amount. To generalize this idea, we see:
@@ -480,17 +476,17 @@ If the accessible state space of some transformation $U_1$ is is a subset of the
 
  Some set of states $S$ is said to be complete with respect to $P$ if $S=P$. Since we are currently talking about the surface of the Bloch sphere, all sets are complete if they are equal to $P^1$. For example, $\text{span}(XYZ)$ is complete because it is possible to go from any point to any other point through a sequence of X, Y, and then Z rotations. 
 
-Interestingly enough, $\text{span}(XZ)\cup\text{span}(ZX)$ is also complete, which means we could completely remove the ability to do $Y$ rotations and still access every state. This is true for any axis. We don't do this in practice for perform reasons. 
+Interestingly enough, $\text{span}(XZ)\cup\text{span}(ZX)$ is also complete, which means we could completely remove the ability to do $Y$ rotations and still access every state. This is true for any axis. We don't do this in practice for performance reasons. 
 
 When we are discussing transformations being complete with respect to $P^1$, a transformation is complete if it has at least 3 degrees of freedom. So $\text{span}(XYZ)$ has three degrees of freedom, thus it is complete. The ability to rotate around a given axis by any amount counts as one degree of freedom. The space $\text{span}(XZ)\cup\text{span}(ZX)$ is also complete because the ability to switch the order of the axes counts as one degree of freedom.
 
-The space of rotations around any three major axes is complete if there aren't two of the same axis sequentially. So $\text{span}(ZYZ)$ is complete, but $\text{span}(ZZY)$ is not complete. This is because sequential rotations around the same axis can be reduced to one rotation:
+The span of any three major axes is complete if there aren't two of the same axis sequentially. So $\text{span}(ZYZ)$ is complete, but $\text{span}(ZZY)$ is not complete. This is because sequential rotations around the same axis can be reduced to one rotation:
 $$
 X^{\Delta_2}X^{\Delta_1}|\psi\rangle=X^{\Delta_1+\Delta_2}|\psi\rangle
 $$
 Note that the concept of 3 degrees of freedom only applies to mutually orthogonal axes. Consider an axis $\widetilde{Z}$ which is nearby, but not equal to the axis $Z$. The state space $\text{span}(Z\widetilde{Z}X)$ has 3 degrees of freedom, but is not complete. To confirm this, think about the state $|0\rangle$. Rotating $|0\rangle$ around the $Z$ axis doesn't do anything because the state is already on the $Z$ axis. The state space $\text{span}(\widetilde{Z})$ when the state is $|0\rangle$ is a small ring near the top of the sphere. Then the state space $\text{span}(\widetilde{Z}X)$ is a small band on the surface of the sphere around the $X$ axis, which is not complete.
 
-It is pleasant to visualize state space using part of the Bloch sphere, but unfortunately when we increase the number of qubits, the space can no longer be described using geometric interpretations because there are not enough dimensions to work with. Luckily, math continues to work no matter the number of dimensions we are working in!
+It is pleasant to visualize state space using parts of the Bloch sphere, but unfortunately when we increase the number of qubits, the space can no longer be described using geometric interpretations because there are not enough dimensions to work with. Luckily, math continues to work no matter the number of dimensions we are using!
 
 ### [2.7](#QCSG)   Qubit Implementations
 
