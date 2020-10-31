@@ -175,20 +175,20 @@ Our goal is to convert a wave equation like the sine function into a pbit. One o
 
 A _vector_ is a mathematical object which has both magnitude and direction. We have a vector here whose magnitude is $1$ and direction is determined by the variable $\theta$, the angle from the positive X axis to the vector. $\theta$ is called a _polar coordinate_ which is the input to the trigonometric functions that produce the cartesian coordinates $x$ and $y$. The vector $\mathbf{v}$ is described as:
 $$
-\mathbf{v}=\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}cos\ \theta \\ sin\ \theta\end{bmatrix}
+\mathbf{v}=\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}\cos\theta \\ \sin\theta\end{bmatrix}
 $$
 This can be used to fit our description of a pbit by remembering the Pythagorean trigonometric identity:
 $$
 \begin{aligned}
 x^2+y^2&=1 \\
-cos^2\theta+sin^2\theta &= 1 \\
+\cos^2\theta+\sin^2\theta &= 1 \\
 p + q &= 1
 \end{aligned}
 $$
 From this we can see our probabilistic bit relate to the quantum wave functions as:
 $$
-p = cos^2\theta \\
-q = sin^2\theta
+p = \cos^2\theta \\
+q = \sin^2\theta
 $$
 Since $p$ and $q$ are always positive, we can apply the constraint $0\leq\theta\leq\frac{\pi}{2}$. 
 
@@ -236,8 +236,8 @@ However by far the most common kets used in this document and in the quantum com
 The quantum state representing an entire system is denoted by the special Greek letter $\psi$, written "Psi", and pronounced "Sai". Using all of this information, we can rewrite our pbit model using Dirac notation:
 $$
 \begin{aligned}
-Vector\ Notation&\quad\mathbf{v} = \sqrt p\hat{i} + \sqrt q\hat{j} \\
-Dirac\ Notation&\quad|\psi\rangle = \alpha|0\rangle + \beta|1\rangle
+\text{Vector Notation}&\quad\mathbf{v} = \sqrt p\hat{i} + \sqrt q\hat{j} \\
+\text{Dirac Notation}&\quad|\psi\rangle = \alpha|0\rangle + \beta|1\rangle
 \end{aligned}
 $$
 Even though we have not extended the pbit to the full qubit model, the above equation still holds for qubits. This equation is called **The General Form of the Qubit** and is one of the most important concepts in all of quantum computing. 
@@ -329,7 +329,7 @@ A quantum state with radius 1 on the positive Z axis is $|0\rangle$ and one on t
 
 The basis coefficients $\alpha$ and $\beta$ can now be defined in terms of the inclination and azimuth angles:
 $$
-|\psi\rangle=\alpha|0\rangle+\beta|1\rangle=cos(\frac{\theta}{2})|0\rangle+e^{i\phi}sin(\frac{\theta}{2})|1\rangle
+|\psi\rangle=\alpha|0\rangle+\beta|1\rangle=\cos(\frac{\theta}{2})|0\rangle+e^{i\phi}\sin(\frac{\theta}{2})|1\rangle
 $$
 When describing qubits, $\alpha$ and $\beta$ are complex numbers. Since they are complex, we need to make a minor adjustment to the formula describing the probability of collapse:
 $$
@@ -349,7 +349,7 @@ $$
 
 Any description of phase would be incomplete without talking about _global phase_. Technically, the phase we have been working with in this section is formally defined as _relative phase_. When defining the basis coefficients $\alpha$ and $\beta$, we specifically stated that they are both complex numbers. However, looking at their definitions, $\alpha$ appears completely real. This is because the actual definition of the basis coefficients is:
 $$
-|\psi\rangle=e^{ia}(e^{ib}cos(\frac{\theta}{2})|0\rangle+e^{ic}sin(\frac{\theta}{2})|1\rangle)
+|\psi\rangle=e^{ia}(e^{ib}\cos(\frac{\theta}{2})|0\rangle+e^{ic}\sin(\frac{\theta}{2})|1\rangle)
 $$
 In this definition, $a$ is the global phase. The interesting fact about global phase is that physicists have concluded global phase does not have any impact on the qubit. Not even indirectly. We can arbitrarily set $a=-b$ so the complex part of $\alpha$ cancels out and leaves us with just a real part. Continuing this example, $\phi=c-b$  which is the relative phase. In this document, phase is always talking about relative phase. Global phase will always be explicitly labelled. 
 
@@ -426,7 +426,7 @@ A _quantum state_ describes the current state of our system. A _state space_ is 
 $$
 \text{span}(X)=\{\Delta:X^\Delta|\psi\rangle\}
 $$
-Since we've defined $\Delta$ to exist $0\leq\Delta<2$, this set-builder creates a set of every accessible state by rotating around the X axis. Geometrically, this set describes the blue ring around the X axis, and the set changes as $|\psi\rangle$ changes. If $|\psi\rangle \in P^1$ then $\text{span}(X)\subset P^1$; this is true for any axis.  
+Since we've defined $\Delta$ to exist $0\leq\Delta<2$, this set-builder creates a set of every accessible state by rotating around the X axis. Geometrically, this set describes the blue ring around the X axis, and the set changes as $|\psi\rangle$ changes. If $|\psi\rangle \in P^1$ then $\text{span}(X)\subset P^1$; this is true for any axis. The $\text{span}$ function takes in an axis to rotate around and a state to act on and returns the set of all states which can be produced by rotating around the given axis.
 
 As we saw when discussing collapse as a transformation, state space can be rotated too. We saw a rotation of $X^{0.5}$ being applied to $\text{span}(Z)$, which rotated the entire circle around the X axis. This is because it rotated every state inside of $\text{span}(Z)$ and produced the set:
 $$
@@ -474,9 +474,9 @@ If the accessible state space of some transformation $U_1$ is is a subset of the
 
 #### Complete State Space
 
- Some set of states $S$ is said to be complete with respect to $P$ if $S=P$. Since we are currently talking about the surface of the Bloch sphere, all sets are complete if they are equal to $P^1$. For example, $\text{span}(XYZ)$ is complete because it is possible to go from any point to any other point through a sequence of X, Y, and then Z rotations. 
+ Some set of states $S$ is said to be complete with respect to another set of states $P$ if $S=P$. Since we are currently talking about the surface of the Bloch sphere, all sets are complete if they are equal to $P^1$. For example, $\text{span}(XYZ)$ is complete because it is possible to go from any point to any other point through a sequence of X, Y, and then Z rotations. 
 
-Interestingly enough, $\text{span}(XZ)\cup\text{span}(ZX)$ is also complete, which means we could completely remove the ability to do $Y$ rotations and still access every state. This is true for any axis. We don't do this in practice for performance reasons. 
+Interestingly enough, $\text{span}(XZ)\cup\text{span}(ZX)$ is also complete, which means we could completely remove the ability to do $Y$ rotations and still access every state. This is true for any axis. This approach may or may not be used in practice depending on the physical implementation of the qubit.
 
 When we are discussing transformations being complete with respect to $P^1$, a transformation is complete if it has at least 3 degrees of freedom. So $\text{span}(XYZ)$ has three degrees of freedom, thus it is complete. The ability to rotate around a given axis by any amount counts as one degree of freedom. The space $\text{span}(XZ)\cup\text{span}(ZX)$ is also complete because the ability to switch the order of the axes counts as one degree of freedom.
 
@@ -514,31 +514,100 @@ There are many different methods of implementing qubits, and each of them come w
 
 ## Chapter 3:   Quantum Circuits
 
-yum nice
+We have begun discussing the process of transforming a qubit, but we do not have a concise notation to describe many sequential transformations. This chapter will introduce the concept of _quantum circuits_, a quantum analogue to _classical circuits_. Quantum circuits are a widely used system of notation used to describe operations on the quantum state.
 
-### 3.1   Definition of a Gate
+### [3.1](#QCSG)   Definition of a Gate
 
-boolean function
+Classical computers perform all of their operations through logic _gates_. What are gates? An in abstract sense, a gate is simply a boolean function which maps $n$ input boolean variables to $m$ output boolean variables $f:\{0,1\}^n\rightarrow\{0,1\}^m$. 
 
-classical gates
+In computer science, we can represent any boolean function with a _truth table_ which contains $2^n$ rows, one for each possible combination of inputs.
+$$
+\begin{matrix}
+\begin{array}{cc|c}
+x_1 & x_2 & x_1\and x_2 \\
+\hline 
+0 & 0 & 0 \\
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+1 & 1 & 1
+\end{array} \\ \\ \text{AND gate}
+\end{matrix}
 
-matrix
+\qquad\qquad
 
-reversible
+\begin{matrix}
+\begin{array}{cc|c}
+x_1 & x_2 & x_1\or x_2 \\
+\hline 
+0 & 0 & 0 \\
+0 & 1 & 1 \\
+1 & 0 & 1 \\
+1 & 1 & 1
+\end{array} \\ \\ \text{OR gate}
+\end{matrix}
 
-universal set of gates
+\qquad\qquad
 
-### 3.2   Quantum Programming
+\begin{matrix}
+\begin{array}{cc|c}
+x_1 & x_2 & x_1\oplus x_2 \\
+\hline 
+0 & 0 & 0 \\
+0 & 1 & 1 \\
+1 & 0 & 1 \\
+1 & 1 & 0
+\end{array} \\ \\ \text{XOR gate}
+\end{matrix}
 
-Qiskit, Cirq, Qsharp
+\qquad\qquad
 
-Simulators vs quantum assembly
+\begin{matrix}
+\begin{array}{c|c}
+x_1 & \neg x_1\\
+\hline 
+0 & 1 \\
+1 & 0 \\
+\end{array}  \\ \\ \\ \\ \text{NOT gate}
+\end{matrix}
+$$
+The above truth tables describe four common classical logic gates seen in computer science. A set of gates is said to be _universal_ if every boolean function can be implemented using a sequence of gates only inside the set. One such set of universal gates is {AND, OR, NOT}, but there are many universal sets. The set {NAND} is a universal set which only contains one gate inside, which is the AND gate followed immediately by the NOT gate. 
 
-### 3.3   Pauli Gates
+#### Quantum Gates
+
+Gates are some operation which acts on the input to produce an output. Quantum gates follow that same definition by operating on a quantum state to produce a different quantum state. However there are some characteristics which are required for a quantum gate to be valid. First, recall our notation to describe a quantum state of 1 qubit:
+$$
+|\psi\rangle=\alpha|0\rangle+\beta|1\rangle=\cos(\frac{\theta}{2})|0\rangle+e^{i\phi}\sin(\frac{\theta}{2})|1\rangle=
+\begin{bmatrix}
+\cos(\frac{\theta}{2}) \\
+e^{i\phi}\sin(\frac{\theta}{2})
+\end{bmatrix}
+$$
+Since our quantum state is just a vector, a quantum gate is a matrix which acts on our quantum state through matrix-vector multiplication. Specifically, the gate is a square matrix whose size is equal to the quantum state. A gate acting on our 1 qubit system is a 2x2 matrix with complex entries. Another requirement for quantum gates is that their matrix needs to be _unitary_. A unitary matrix has the property that its adjoint (conjugate-transpose) is the same as its inverse.
+$$
+U^\dagger=U^{-1} \\
+UU^\dagger=U^\dagger U=I \\
+|\text{det}(U)|=1
+$$
+The conjugate transpose was introduced as a method of converting between kets and bras in Dirac notation. Another property of these gate matrices is that all of the columns and rows are orthonormal. This means the absolute value of the determinant is 1. 
+
+Since every quantum gate is unitary, that means it is also _reversible_. Consider some sequence of quantum gates $U_1,U_2,...,U_n$. The result of applying the sequence can be converted back into the original state by applying the adjoint of each in reverse order:
+$$
+U_n \cdots U_2U_1|\psi\rangle=|\psi'\rangle \\
+U_1^\dagger U_2^\dagger\cdots U_n^\dagger|\psi'\rangle=|\psi\rangle
+$$
+The transformations to the Bloch sphere discussed in the previous chapter can be described with quantum gates, except for collapse. The process of measuring a qubit cannot be expressed as a 2x2 unitary matrix since it collapses the quantum state into classical data. Since collapse is not reversible, we need to measure an infinite number of qubits to perfectly reconstruct the quantum state. 
+
+### [3.2](#QCSG)   Rotation Gates
+
+
+
+
 
 single qubit rotations
 
 their matrices
+
+S and T gates related to Z
 
 half a bit flip (both x and y)
 
@@ -546,19 +615,23 @@ Solovay–Kitaev Theorem says you can produce a rotation gate R(theta) for any t
 
 creating a Y gate from a probability 
 
-### 3.4   Named Gates
+### [3.3](#QCSG)   Alternate Axes
 
-Hadamard, S, T
+Hadamard, W
 
 Hadamard can either be ZY.5 or Y.5X
 
-### 3.5   Quantum Registers
+Rotate an arbitrary amount around H and W axes
 
-Significant Bits, tensors (ket version) , distributing states
+Rotate around arbitrary axes
+
+### [3.4](#QCSG)   Quantum Registers
+
+Significant Bits, tensors (ket and vector versions) , distributing states
 
 Summations
 
-### 3.6   CNOT Gate
+### [3.5](#QCSG)   CNOT Gate
 
 Interact with multiple qubits
 
@@ -566,7 +639,7 @@ CNOT(1,2) = HxH CNOT(2,1) HxH
 
 Swap = 3 cnots
 
-### 3.7   Controlled-U Gate
+### [3.6](#QCSG)   Controlled-U Gate
 
 Any controlled gate!
 
@@ -574,7 +647,7 @@ CZ gate and it's applications
 
 Controlled anything into pauli + CNOT
 
-### 3.8   Reversible Computing
+### [3.7](#QCSG)   Reversible Computing
 
 Toffoli, Fredkin, Peres
 
@@ -583,6 +656,12 @@ Universal set of reversible computing
 Proving a quantum computer can simulate a classical computer in P time
 
 Arbitrary num controlled U gate
+
+### [3.8](#QCSG)   Quantum Programming
+
+Qiskit, Cirq, Qsharp
+
+Simulators vs quantum assembly
 
 ## Chapter 4:   Entanglement
 
@@ -642,7 +721,7 @@ To create circuits that have all three properties, the Google quantum team used 
 
 <center><i>Figure 4.5.1 - Pseudorandom Circuit Architecture</i></center>
 
-The circuit is divided into _m_ cycles in which every cycle has 1 single qubit gate applied per qubit followed a double qubit gate. The single qubit gates are chosen pseudorandomly and can be $\sqrt{X}$, $\sqrt{Y}$, or $\sqrt{W}$. Two gates of the same axis cannot be chosen sequentially. The $\sqrt{W}$ gate is a rotation of $\frac{\pi}{2}$ radians around the axis $(X+Y)/\sqrt2$. Similar to the Hadamard axis, this axis is formed by the line $X=Y$ when $Z=0$. The double qubit gates are chosen from a set sequence: repeat $ABCDCDAB$. The chosen letter represents the gate being applied to every pair of neighbor qubits connected by a colored coupler. 
+The circuit is divided into _m_ cycles in which every cycle has 1 single qubit gate applied per qubit followed a double qubit gate. The single qubit gates are chosen pseudo randomly and can be $\sqrt{X}$, $\sqrt{Y}$, or $\sqrt{W}$. Two gates of the same axis cannot be chosen sequentially. The $\sqrt{W}$ gate is a rotation of $\frac{\pi}{2}$ radians around the axis $(X+Y)/\sqrt2$. Similar to the Hadamard axis, this axis is formed by the line $X=Y$ when $Z=0$. The double qubit gates are chosen from a set sequence: repeat $ABCDCDAB$. The chosen letter represents the gate being applied to every pair of neighbor qubits connected by a colored coupler. 
 
 <iframe height='500' scrolling='no' title='Sycamore Coupler Applet' src='resources\applets\sycamore_couplers\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sycanmore Couplet Applet</iframe>
 

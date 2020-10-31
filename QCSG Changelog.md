@@ -2,6 +2,10 @@
 
 [toc]
 
+#### Version 0.2.1 - October 31, 2020
+
+* Added Section - Definition of a Gate
+
 ### Version 0.2.0 - October 26, 2020
 
 * Chapters 1and 2 have been completed
