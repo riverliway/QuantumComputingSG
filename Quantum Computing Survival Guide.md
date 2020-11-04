@@ -597,9 +597,48 @@ U_1^\dagger U_2^\dagger\cdots U_n^\dagger|\psi'\rangle=|\psi\rangle
 $$
 The transformations to the Bloch sphere discussed in the previous chapter can be described with quantum gates, except for collapse. The process of measuring a qubit cannot be expressed as a 2x2 unitary matrix since it collapses the quantum state into classical data. Since collapse is not reversible, we need to measure an infinite number of qubits to perfectly reconstruct the quantum state. 
 
+#### Recovering Angles from Vector Representation
+
+In the following sections, we will be discussing quantum states in their vector forms since the ket forms are notationally verbose. Converting between the coordinates of the Bloch sphere and the vector representation of the qubit is common when working with computer programs. It can valuable to learn the different data types used for containing a qubit's data and how to convert between them. Starting with complex numbers, they can either be stored in Euclidean or polar form:
+$$
+a+bi=re^{i\varphi} \\
+re^{i\varphi}\rightarrow r(\cos\varphi+i\sin\varphi) \\
+a+bi\rightarrow \sqrt{a^2+b^2}e^{i\text{atan2}(a,b)}
+$$
+The function $\text{atan2}(x,y)$ is a perfect inverse trigonometric function which returns the angle from the position X axis to the point defined by $x$ and $y$. Traditional inverse trigonometric functions have domain restrictions which make them difficult to use in programs. Our function $\text{atan2}$ can be defined a number of ways, but we will use:
+$$
+\text{atan2}(x,y)=\begin{cases}
+\text{acos}(\frac{x}{\sqrt{x^2+y^2}}) &  y\geq0 \\
+-\text{acos}(\frac{x}{\sqrt{x^2+y^2}}) & y<0
+\end{cases}
+$$
+The denominator inside the $\text{acos}$ function can be disregarded if it is assumed that $x$ and $y$ are distance $1$ away from the origin.
+
+Typically our quantum state vector will hold Euclidean complex numbers since they are the easiest to work with in programs. Our first step to convert the vector contents to polar complex numbers:
+$$
+\begin{bmatrix}
+a_1+b_1i \\ a_2+b_2i
+\end{bmatrix}
+\rightarrow
+\begin{bmatrix}
+r_1e^{i\varphi_1} \\ r_2e^{i\varphi_2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos(\frac{\theta}{2}) \\
+e^{i\phi}\sin(\frac{\theta}{2})
+\end{bmatrix}
+$$
+Now we can easily calculate our spherical coordinates using our polar complex numbers:
+$$
+\theta=2\ \text{atan2}(r_1,r_2) \\
+\phi=\varphi_2-\varphi_1
+$$
+The phase needs to be calculated as the difference between the polar angles because of the qubit's global phase. Recall that every amplitude of a quantum state can be multiplied by $e^{ia}$ and there will be no observable changes. We choose to set $a=-\varphi_1$ so the first amplitude is real. Many quantum gates change a quantum state's global phase, so we cannot assume $|0\rangle$ will always stay real without manually setting it.
+
 ### [3.2](#QCSG)   Rotation Gates
 
-
+Quantum gates can be described by unitary matrices acting on our vector representation of a quantum state. The 
 
 
 
@@ -627,7 +666,7 @@ Rotate around arbitrary axes
 
 ### [3.4](#QCSG)   Quantum Registers
 
-Significant Bits, tensors (ket and vector versions) , distributing states
+Significant Bits, tensors (ket and vector versions) , distributing states, matrix tensors
 
 Summations
 
