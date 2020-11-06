@@ -665,7 +665,7 @@ class Label extends Interactable {
     }
 
     updateBoundingBox() {
-        this.width = this.text.length * this.fontSize * 0.5;
+        this.width = this.text.length * this.fontSize * 0.5 + 20;
         this.height = this.fontSize; 
         this.bbox = {x1: this.x - this.width / 2, x2: this.x + this.width / 2, y1: this.y - this.height / 2, y2: this.y + this.height / 2};
     }

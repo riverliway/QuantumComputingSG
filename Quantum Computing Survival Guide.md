@@ -738,6 +738,10 @@ This theorem is very important because it allows us to create arbitrary rotation
 
 ### [3.3](#QCSG)   Alternate Axes
 
+
+
+
+
 Hadamard, W
 
 Hadamard can either be ZY.5 or Y.5X

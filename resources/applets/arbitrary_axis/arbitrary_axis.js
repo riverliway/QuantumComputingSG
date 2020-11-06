@@ -1,7 +1,7 @@
 "use strict";
 
-let theta = 75 * Math.PI / 180;
-let phi = 25 * Math.PI / 180;
+let theta = 58 * Math.PI / 180;
+let phi = 35 * Math.PI / 180;
 let axis = {theta:Math.PI / 4, phi:0};
 
 let THETA_COLOR = rgb(161, 10, 242);
@@ -34,7 +34,7 @@ const topCanvas = (sketch) => {
         sketch.angleMode(sketch.DEGREES);
 
         // Change the original camera angle
-        let moveX = SENSITIVITY * 100 / HEIGHT;
+        let moveX = SENSITIVITY * 360 / HEIGHT;
         let moveY = SENSITIVITY * 50 / HEIGHT;
         p5Object._curCamera._orbit(moveX, moveY, 0);
 
@@ -229,20 +229,31 @@ const topCanvas = (sketch) => {
         sketch.rotateX(90);
         sketch.scale(1, -1, 1);
 
-        // draw the axis as a dotted line
+        // Create a vector for the axis
         const DIST = 1.5 * RADIUS;
         let n_x = DIST * Math.sin(axis.theta) * Math.cos(axis.phi);
         let n_y = DIST * Math.sin(axis.theta) * Math.sin(axis.phi);
         let n_z = DIST * Math.cos(axis.theta);
+        let axisVector = sketch.createVector(n_x, n_y, n_z);
+
+        // draw the axis as a dotted line
         sketch.stroke(100);
         sketch.strokeWeight(1);
-        linedash(n_x, n_y, n_z, -n_x, -n_y, -n_z, 10);
+        linedash(n_x, n_y, n_z, -n_x, -n_y, -n_z, 25);
 
-        let 
+        // Create the vector representing the state
+        let s_x = RADIUS * Math.sin(theta) * Math.cos(phi);
+        let s_y = RADIUS * Math.sin(theta) * Math.sin(phi);
+        let s_z = RADIUS * Math.cos(theta);
+        let stateVector = sketch.createVector(s_x, s_y, s_z);
+
+        // Create the project and rejections of the vectors
+        let projection = axisVector.mult(stateVector.dot(axisVector) / axisVector.dot(axisVector));
+        let rejection = stateVector.sub(projection);
 
         sketch.noFill();
         sketch.stroke(sketch.color(0, 230, 226));
-        Drawing.ring(sketch, 0, 0, 0, 100, sketch.createVector(x, y, z));
+        Drawing.ring(sketch, projection.x, projection.y, projection.z, 2 * rejection.mag(), axisVector);
 
         sketch.pop();
     }
