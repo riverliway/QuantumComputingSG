@@ -638,17 +638,95 @@ The phase needs to be calculated as the difference between the polar angles beca
 
 ### [3.2](#QCSG)   Rotation Gates
 
-Quantum gates can be described by unitary matrices acting on our vector representation of a quantum state. The 
+Quantum gates can be described by unitary matrices acting on our vector representation of a quantum state. The rotations around the Bloch sphere also have matrix forms, as shown below.
+$$
+\begin{equation}\begin{aligned}
+X^\Delta&=\begin{bmatrix}
+\cos(\frac{\Delta\pi}{2}) & -i\sin(\frac{\Delta\pi}{2}) \\ -i\sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})
+\end{bmatrix} \\ 
+Y^\Delta&=\begin{bmatrix}
+\cos(\frac{\Delta\pi}{2}) & -\sin(\frac{\Delta\pi}{2}) \\ \sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})
+\end{bmatrix} \\ 
+Z^\Delta&=\begin{bmatrix}
+1 & 0 \\ 0 & e^{i\Delta\pi}
+\end{bmatrix}
+\end{aligned}\end{equation}
+$$
+These gates are known as the **Rotation Operators** and form the foundation for all single qubit transformations. Every other single qubit gate can be expressed as a combination of these three gates. Technically, only 2 of the 3 are necessary because one can be expressed from the other two. For example, an X rotation can be decomposed into:
+$$
+\begin{equation}\begin{aligned}
+X^\Delta&=Z^{-0.5}Y^\Delta Z^{0.5}\\ &=
+\begin{bmatrix}
+1 & 0 \\ 0 & e^{-i0.5\pi}
+\end{bmatrix}
+\begin{bmatrix}
+\cos(\frac{\Delta\pi}{2}) & -\sin(\frac{\Delta\pi}{2}) \\ \sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 \\ 0 & e^{i0.5\pi}
+\end{bmatrix}
+\\ &=
+\begin{bmatrix}
+\cos(\frac{\Delta\pi}{2}) & -e^{i0.5\pi}\sin(\frac{\Delta\pi}{2}) \\ e^{-i0.5\pi}\sin(\frac{\Delta\pi}{2}) & e^{i0.5\pi}e^{-i0.5\pi}\cos(\frac{\Delta\pi}{2})
+\end{bmatrix}
+\\ &=
+\begin{bmatrix}
+\cos(\frac{\Delta\pi}{2}) & -i\sin(\frac{\Delta\pi}{2}) \\ -i\sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})
+\end{bmatrix}
+\end{aligned}\end{equation}
+$$
+The special case when $\Delta=1$ produces the set of **Pauli Gates** shown below. Another common system of notation for the Pauli gates is $\sigma_x, \sigma_y, \sigma_z$. 
+$$
+\begin{equation}\begin{aligned}
+X&=\begin{bmatrix}
+0 & 1 \\ 1 & 0
+\end{bmatrix} \\ 
+Y&=\begin{bmatrix}
+0 & -i \\ i & 0
+\end{bmatrix} \\ 
+Z&=\begin{bmatrix}
+1 & 0 \\ 0 & -1
+\end{bmatrix}
+\end{aligned}\end{equation}
+$$
+Note that the Pauli X and Y gate differ from what the rotation gate produces when $\Delta=1$. This is because global phase of the gate is different:
+$$
+X^1=\begin{bmatrix}
+\cos(\frac{\pi}{2}) & -i\sin(\frac{\pi}{2}) \\ -i\sin(\frac{\pi}{2}) & \cos(\frac{\pi}{2})
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & -i \\ -i & 0
+\end{bmatrix}
+=-i
+\begin{bmatrix}
+0 & 1 \\ 1 & 0
+\end{bmatrix}
+$$
+Global phase can apply to a quantum gate as well, this means different matrices can perform the same operation. The gates $U_1$ and $U_2$ are equivalent if they can be expressed as $U_1=e^{i\gamma}U_2$ for some value $\gamma$. 
+
+#### Common Gates
+
+Here are some common gates and their adjoints which appear in quantum computing literature:
+$$
+S=\sqrt{Z}=\begin{bmatrix}1 & 0 \\ 0 & i\end{bmatrix} \\
+S^\dagger=Z\sqrt{Z}=\begin{bmatrix}1 & 0 \\ 0 & -i\end{bmatrix} \\
+T=\sqrt{S}= \sqrt[4]{Z} =\begin{bmatrix}1 & 0 \\ 0 & \frac{1}{\sqrt2}(1+i)\end{bmatrix} \\
+T^\dagger=ZS\sqrt{S} =\begin{bmatrix}1 & 0 \\ 0 & \frac{1}{\sqrt2}(1-i)\end{bmatrix} \\
+\sqrt{NOT}=\sqrt{\neg}=\sqrt{X}=\frac{1}{2}\begin{bmatrix}1+i & 1-i \\ 1-i & 1+i\end{bmatrix}= \frac{1}{\sqrt2}\begin{bmatrix}1 & -i \\ -i & 1\end{bmatrix} \\
+\sqrt{NOT}^\dagger=\sqrt{\neg}^\dagger=X\sqrt{X}=\frac{1}{2}\begin{bmatrix}1-i & 1+i \\ 1+i & 1-i\end{bmatrix}= \frac{-1}{\sqrt2}\begin{bmatrix}1 & i \\ i & 1\end{bmatrix}
+$$
+A rotation matrix's adjoint is equivalent to rotating clockwise instead of counterclockwise. That is to say, ${X^{\Delta}}^{\dagger}=X^{-\Delta}=X^{2-\Delta}$, since rotating one way by $\Delta$ and then immediately rotating the other way by $\Delta$ will produce an identity operation.
+
+#### Floating Point Rotations
+
+Classical computers don't always store precise values. For a value like $\pi$, it would require an infinite number of bits to perfectly represent. Instead, classical computers store estimations using a fixed number of bits which are called _floating point numbers_. It may not be possible to rotate by an arbitrary amount with perfect precision, so we will have to use approximations. 
+
+The **Solovay-Kitaev Theorem** implies any single qubit gate can be approximated using $O(\log^c(\frac{1}{\large\epsilon}))$ gates from a finite set. The value $c$ is a small constant, roughly 2. The minimum value of $c$ has not been proven. The value $0<\epsilon<1$ represents how accurate the approximation is. Since our rotation gates take the $\Delta$ parameter, any set containing the rotation gate will be infinite. An example of a finite set would be $\{\sqrt{X},\sqrt{Y},\sqrt{Z}\}$ 
 
 
 
-single qubit rotations
 
-their matrices
-
-S and T gates related to Z
-
-half a bit flip (both x and y)
 
 Solovay–Kitaev Theorem says you can produce a rotation gate R(theta) for any theta with precision epsilon using log(1/epsilon) gates to create arbitrary superposition. Kinda like floating point rotations
 
