@@ -742,9 +742,53 @@ This theorem is very important because it allows us to create arbitrary rotation
 
 ### [3.3](#QCSG)   Alternate Axes
 
-We have discussed rotating around the three major axes: X, Y, and Z. However, there is no reason why we can't rotate around other axes. A _minor axis_ is a line defined by the origin and a single point. Technically, the data representing an axis is the same as the quantum state, since it is just a vector. For example, consider the $W$ axis which is defined to be $\frac{1}{\sqrt2}(X+Y)$. This is a unit vector which lies in the $XY$ plane, it represents the line where $X=Y$. 
+We have discussed rotating around the three major axes: X, Y, and Z. However, there is no reason why we can't rotate around other axes. A _minor axis_ is a line defined by the origin and a single point. Technically, the data representing an axis is the same as the quantum state, since it is just a vector. For example, consider the $W$ axis which is defined to be $(X+Y)/\sqrt2$. This is a unit vector which lies in the $XY$ plane, it represents the line where $X=Y$. Just like the major axis rotations, there is also a matrix for rotating around the $W$ axis:
+$$
+W^\Delta= \begin{bmatrix}
+\cos(\frac{\Delta\pi}{2}) & -\frac{1}{\sqrt2}\sin(\frac{\Delta\pi}{2})(1+i) \\
+\frac{1}{\sqrt2}\sin(\frac{\Delta\pi}{2})(1-i) & \cos(\frac{\Delta\pi}{2})
+\end{bmatrix}
+$$
+The matrix for when $\Delta=0.5$ is:
+$$
+\sqrt{W}=\begin{bmatrix} 
+\frac{1}{\sqrt2} & -\frac{1}{2}-\frac{1}{2}i \\
+\frac{1}{2}-\frac{1}{2}i & \frac{1}{\sqrt2}
+\end{bmatrix}
+=
+\frac{1}{\sqrt2}
+\begin{bmatrix} 
+1 & -\sqrt{i} \\
+\sqrt{-i} & 1
+\end{bmatrix}
+$$
+Although the $W$ axis is not frequently seen in quantum computing literature, it provides a nice example of a minor axis rotation matrix. 
 
+#### The Hadamard Axis
 
+The **Hadamard Gate**, denoted $H$, is one of the most common gates used in quantum computing, and it performs the following operation:
+$$
+H|0\rangle=\frac{1}{\sqrt2}(|0\rangle+|1\rangle) \\
+H|1\rangle=\frac{1}{\sqrt2}(|0\rangle-|1\rangle)
+$$
+The Hadamard gate is synonymous with generating superposition because it transforms both basis states into equal superposition. The state $|0\rangle$ is mapped to the positive X axis and the state $|1\rangle$ is mapped to the negative X axis. This operation is exactly what is performed by _beam splitters_. A beam splitter is a half-silvered mirror which will split an incoming stream of photons, reflecting one stream and letting the other stream pass through. 
+
+{ Beam splitter diagram here }
+
+In the above diagram, the beam of light is coming from the left and splits into two separate beams. We can place two beam splitters and two mirrors in a configuration called a **Mach-Zender Interferometer** and add detectors for each of the projected output beams.
+
+{Mach-Zender Interferometer diagram here}
+
+Using the configuration of beam splitters and mirrors described above, say we produce 100 photons. How many of those photons will be detected by B?
+
+The answer is zero. All of the photons will be detected by A, the detector at B will never see a photon. This result seems unintuitive, if a beam splitter splits a stream of photons, why doesn't the second half-silvered mirror split both streams again? This is because $H^2=I$. In this experiment, the photon acted as a qubit, initialized to the state $|0\rangle$. After passing through the first beam splitter, the qubit entered superposition, but came back out of superposition after the second beam splitter. The Hadamard gate's matrix representation is:
+$$
+H=\begin{bmatrix}
+\frac{1}{\sqrt2} & \frac{1}{\sqrt2} \\
+\frac{1}{\sqrt2} & -\frac{1}{\sqrt2}
+\end{bmatrix}
+$$
+The $H$ gate can be decomposed into $H=\sqrt{Y}Z=X\sqrt{Y}$. Specifically, the Hadamard gate is a rotation of $\Delta=1$ around the Hadamard axis, $H=(X+Z)/\sqrt2$. The $H$ axis is a line in the $XZ$ plane where $X=Z$. Just like the $W$ axis, there is a matrix which generalizes a rotation of any amount:
 $$
 H^\Delta=
 \begin{bmatrix}
@@ -752,15 +796,21 @@ H^\Delta=
 -\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})+\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2})
 \end{bmatrix}
 $$
+These rotation matrices for minor axes are interesting, but where do they come from? How can we derive them?
+
+#### Arbitrary Axes
+
+The next step is to rotate our quantum state around any arbitrary axis. This is an applet which shows the accessible state space of rotating the state around the axis. The sliders on the left change the $\theta$ and $\phi$ of the quantum state and the sliders on the right change the $\theta$ and $\phi$ of the axis.
+
+<iframe height='500' scrolling='no' title='Arbitrary Axis Rotation Applet' src='resources\applets\arbitrary_axis\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Arbitrary Axis Rotation Applet</iframe>
+
+<center><i><a href="resources/applets/arbitrary_axis/index.html" target="_blank">Applet 3.3.3</a> Arbitrary Axis Rotations</i></center>
+
+The axis is set to the Hadamard axis by default. If the state is set to $|0\rangle$, it is apparent that a rotation of $\Delta=1$ will transform the state to sit on the positive X axis. 
 
 
 
 
-Hadamard, W
-
-Hadamard can either be ZY.5 or Y.5X
-
-Rotate an arbitrary amount around H and W axes
 
 Rotate around arbitrary axes
 
@@ -772,6 +822,10 @@ Significant Bits, tensors (ket and vector versions) , distributing states, matri
 
 Summations
 
+actual quantum circuits
+
+ancilla qubits
+
 ### [3.5](#QCSG)   CNOT Gate
 
 Interact with multiple qubits
@@ -780,15 +834,13 @@ CNOT(1,2) = HxH CNOT(2,1) HxH
 
 Swap = 3 cnots
 
-### [3.6](#QCSG)   Controlled-U Gate
-
-Any controlled gate!
+Any controlled gate: Controlled-U
 
 CZ gate and it's applications
 
 Controlled anything into pauli + CNOT
 
-### [3.7](#QCSG)   Reversible Computing
+### [3.6](#QCSG)   Reversible Computing
 
 Toffoli, Fredkin, Peres
 
@@ -798,7 +850,7 @@ Proving a quantum computer can simulate a classical computer in P time
 
 Arbitrary num controlled U gate
 
-### [3.8](#QCSG)   Quantum Programming
+### [3.7](#QCSG)   Quantum Programming
 
 Qiskit, Cirq, Qsharp
 
@@ -842,7 +894,7 @@ read 1 then know the other instantly (Maximally Entangled)
 
 ### 4.5   Case Study: Google's Quantum Supremacy
 
-In late 2019, Google announced they had achieved _quantum supremacy_ on their 53 qubit quantum processor named Sycamore, published in [Nature](https://www.nature.com/articles/s41586-019-1666-5). Quantum supremacy is the term for when a quantum program can beat a classical program at a task. What kind of task? It doesn't matter. There is no official benchmark, so the task can be any type of algorithm or can simply have a useless objective. As long as the QPU is significantly faster than a classical computer at **any** objective, quantum supremacy is declared.
+In late 2019, Google announced they had achieved _quantum supremacy_ on their 53 qubit quantum processor named Sycamore, published in <a href="https://www.nature.com/articles/s41586-019-1666-5" target="_blank">Nature</a>. Quantum supremacy is the term for when a quantum program can beat a classical program at a task. What kind of task? It doesn't matter. There is no official benchmark, so the task can be any type of algorithm or can simply have a useless objective. As long as the QPU is significantly faster than a classical computer at **any** objective, quantum supremacy is declared.
 
 What task did Google use to have their quantum computer compete in? Simulating a quantum computer. Sycamore is a quantum computer, so the simulation is just running a quantum circuit. So as long as the quantum computer can run faster than a classical computer can simulate it, the quantum computer wins. This may appear rather silly since there isn't really any objective to the computation, but that is actually why it is clever. If there was an objective to compute then there would be alternative methods for a classical programmer or patterns to exploit to make the classical program faster. 
 
@@ -880,7 +932,7 @@ In their paper, the team made the claim that using this hybrid algorithm to simu
 
 #### IBM's Rebuttal
 
-The quantum computing team at IBM [responded](https://www.ibm.com/blogs/research/2019/10/on-quantum-supremacy/) to Google's claim to quantum supremacy by using a pure Schrödinger algorithm. They showed that it was possible to rotate the memory for the quantum state out to disk, only keeping the active parts in RAM. Every coefficient is 8 bytes since they are complex numbers, stored as two single precision floating point numbers. The quantum state is $8\times2^{53}$ = 64 petabytes. That size is certainly large, but not unachievable by modern computers. IBM's team used a host of performance enhancing techniques to perform the simulation in 2.5 days. 
+The quantum computing team at IBM <a href="https://www.ibm.com/blogs/research/2019/10/on-quantum-supremacy/" target="_blank">responded</a> to Google's claim to quantum supremacy by using a pure Schrödinger algorithm. They showed that it was possible to rotate the memory for the quantum state out to disk, only keeping the active parts in RAM. Every coefficient is 8 bytes since they are complex numbers, stored as two single precision floating point numbers. The quantum state is $8\times2^{53}$ = 64 petabytes. That size is certainly large, but not unachievable by modern computers. IBM's team used a host of performance enhancing techniques to perform the simulation in 2.5 days. 
 
 By definition, Google's team still technically proved quantum supremacy since the quantum computer ran faster than the classical simulation (100 minutes < 2.5 days), even if it wasn't by their predicted margin of 10,000 years. However, due to the exponential nature of simulating quantum computers, a 100 qubit quantum state would take $8\times2^{100}\approx$ 9,000,000,000,000,000 (9 quadrillion) petabytes to store. This amount of memory is simply unachievable by modern or near future computers. Even if a 53 qubit processor strikes controversy over if it deserves quantum supremacy or not, 100 qubit processors will be developed in the near future and the outcome will be clear.
 
@@ -1018,9 +1070,9 @@ I know very little right now
 
 I know **nothing** right now, but it seems supa cool
 
-## References
+## Bibliography
 
-References ordered by the chapter they are most heavily related to. Referencing format: <a href="https://www.scientificstyleandformat.org/Tools/SSF-Citation-Quick-Guide.html" target="_blank">CSE Manual</a>.
+Resources ordered by the chapter they are most heavily related to. Referencing format: <a href="https://www.scientificstyleandformat.org/Tools/SSF-Citation-Quick-Guide.html" target="_blank">CSE Manual</a>.
 
 #### Chapter 1
 
@@ -1030,11 +1082,17 @@ a
 
 Nielsen M, Chuang I. 2010. <a href="https://www.amazon.com/Quantum-Computation-Information-10th-Anniversary/dp/1107002176" target="_blank">Quantum Computation and Quantum Information</a>. Cambridge (England): Cambridge University Press.
 
-Sutor R. 2019. <a href="https://www.amazon.com/Dancing-Qubits-quantum-computing-change/dp/1838827366" target="_blank">Dancing with Qubits</a>. Birmingham (England): Packt Publishing.
+Sutor R. 2019. <a href="https://www.amazon.com/Dancing-Qubits-quantum-computing-change/dp/1838827366" target="_blank">Dancing with Qubits</a>. Birmingham (England): Packt.
 
 #### Chapter 3
 
+Kitaev A. 1997. <a href="https://iopscience.iop.org/article/10.1070/RM1997v052n06ABEH002155/pdf" target="_blank">Quantum computations: algorithms and error correction</a>. Russian Mathematical Surveys. 52(6):1191-1249
+
+Ekert A, Hayden P, Inamori H. 2008. <a href="https://arxiv.org/abs/quant-ph/0011013v1" target="_blank">Basic Concepts in Quantum Computation</a>. arXiv.
+
 Glendinning I. 2010. <a href="http://www.vcpc.univie.ac.at/~ian/hotlist/qc/talks/bloch-sphere-rotations.pdf" target="_blank">Rotations on the Bloch Sphere</a> Lecture Notes. University of Vienna. 
+
+Lala P. 2019. <a href="https://www.amazon.com/Quantum-Computing-Parag-Lala/dp/1260123111" target="_blank">Quantum Computing: A Beginner's Introduction</a>. New York (NY): McGraw-Hill Education.
 
 Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69
 

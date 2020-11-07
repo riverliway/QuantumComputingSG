@@ -2,6 +2,14 @@
 
 [toc]
 
+#### Version 0.2.3 - November 6, 2020
+
+* Added Section - Alternate Axes
+
+#### Version 0.2.2 - November 3, 2020
+
+* Added Section - Rotation Gates
+
 #### Version 0.2.1 - October 31, 2020
 
 * Added Section - Definition of a Gate
