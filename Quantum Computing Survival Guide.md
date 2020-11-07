@@ -44,6 +44,10 @@ The first chapter is a simple introduction to the history of quantum computing a
 
 Schieberl, Zack. *Quantum Computing Survival Guide*. Github, 2020.
 
+##### CSE Manual Scientific Style and Format
+
+Schieberl Z. 2020. Quantum Computing Survival Guide. New York (NY): Github.
+
 ## Chapter 1:   Why Quantum Computing?
 
 The entire document is used to describe what quantum computing is, but I think it is important to understand why quantum computers are important. What is their history and what can they do for society? 
@@ -738,6 +742,16 @@ This theorem is very important because it allows us to create arbitrary rotation
 
 ### [3.3](#QCSG)   Alternate Axes
 
+We have discussed rotating around the three major axes: X, Y, and Z. However, there is no reason why we can't rotate around other axes. A _minor axis_ is a line defined by the origin and a single point. Technically, the data representing an axis is the same as the quantum state, since it is just a vector. For example, consider the $W$ axis which is defined to be $\frac{1}{\sqrt2}(X+Y)$. This is a unit vector which lies in the $XY$ plane, it represents the line where $X=Y$. 
+
+
+$$
+H^\Delta=
+\begin{bmatrix}
+\cos(\frac{\Delta\pi}{2})-\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2}) & -\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2}) \\
+-\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})+\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2})
+\end{bmatrix}
+$$
 
 
 
@@ -749,6 +763,8 @@ Hadamard can either be ZY.5 or Y.5X
 Rotate an arbitrary amount around H and W axes
 
 Rotate around arbitrary axes
+
+Rotating around itself is always an identity operation
 
 ### [3.4](#QCSG)   Quantum Registers
 
@@ -1001,3 +1017,27 @@ I know very little right now
 ## Chapter 13:   Chemical Simulation
 
 I know **nothing** right now, but it seems supa cool
+
+## References
+
+References ordered by the chapter they are most heavily related to. Referencing format: <a href="https://www.scientificstyleandformat.org/Tools/SSF-Citation-Quick-Guide.html" target="_blank">CSE Manual</a>.
+
+#### Chapter 1
+
+a
+
+#### Chapter 2
+
+Nielsen M, Chuang I. 2010. <a href="https://www.amazon.com/Quantum-Computation-Information-10th-Anniversary/dp/1107002176" target="_blank">Quantum Computation and Quantum Information</a>. Cambridge (England): Cambridge University Press.
+
+Sutor R. 2019. <a href="https://www.amazon.com/Dancing-Qubits-quantum-computing-change/dp/1838827366" target="_blank">Dancing with Qubits</a>. Birmingham (England): Packt Publishing.
+
+#### Chapter 3
+
+Glendinning I. 2010. <a href="http://www.vcpc.univie.ac.at/~ian/hotlist/qc/talks/bloch-sphere-rotations.pdf" target="_blank">Rotations on the Bloch Sphere</a> Lecture Notes. University of Vienna. 
+
+Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69
+
+#### Chapter 4
+
+Arute F, Arya K, Babbush R, *et al.* 2019. <a href="https://www.nature.com/articles/s41586-019-1666-5" target="_blank">Quantum supremacy using a programmable superconducting processor</a>. Nature. 574(7779):505–510.
