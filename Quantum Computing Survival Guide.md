@@ -836,6 +836,93 @@ However, we don't actually know the $\theta$ and $\phi$ of some generic quantum 
 
 ### [3.4](#QCSG)   Quantum Registers
 
+Up to this point, we have used the term _quantum system_ interchangeably with the term _qubit_ because we have only focused on a single qubit. However, a quantum system is a more general concept, it refers to all quantum objects of interest to us in a particular setting. When we have collection of qubits, it is called a _quantum register_ and they are grouped together under one quantum system. 
+$$
+|\psi\rangle=\frac{1}{2}(|00\rangle+|01\rangle+|10\rangle+|11\rang)
+$$
+Above is an example of a two qubit quantum system in equal superposition. The $|\psi\rangle$ is still used to describe the entire quantum register, although now there are more _basis states_. Rather than just having $|0\rangle$ and $|1\rangle$, there are now four basis states to describe every possible combination of states the qubits could collapse into. Each basis state also has a complex coefficient assigned to it, the probability of the quantum system collapsing into a particular basis state $i$ can be found: $P(|\psi\rangle=|i\rangle)=|c_i|^2$. In general, a quantum register of $n$ qubits can be described in ket notation:
+$$
+|\psi\rangle=\sum_{i=0}^{2^n} c_i|i\rangle \\
+\text{where } \sum_{i=0}^{2^n}|c_i|^2=1
+$$
+Suppose we are given two separate qubits, how do we create our quantum system to describe both of them?
+$$
+\begin{equation}\begin{aligned}
+|\psi_0\rangle&=\alpha_0|0\rangle+\beta_0|1\rangle \\
+|\psi_1\rangle&=\alpha_1|0\rangle+\beta_1|1\rangle \\
+\end{aligned} \\ \ \\
+\begin{aligned}
+|\psi\rangle=|\psi_1\rangle|\psi_0\rangle&= (\alpha_1|0\rangle+\beta_1|1\rangle)\otimes (\alpha_0|0\rangle+\beta_0|1\rangle) \\
+
+&= \alpha_1\alpha_0|0\rangle|0\rangle+\alpha_1\beta_0|0\rangle|1\rangle+\beta_1\alpha_0|1\rangle|0\rangle+\beta_1\beta_0|1\rangle|1\rangle
+\\
+&= \alpha_1\alpha_0|00\rangle+\alpha_1\beta_0|01\rangle+\beta_1\alpha_0|10\rangle+\beta_1\beta_0|11\rangle
+
+\end{aligned}\end{equation}
+$$
+The key to merging two separate qubits into one quantum system is the _tensor product_. This operation is denoted by the $\otimes$ symbol and it looks similar to distributing two binomials. There are different notations for the tensor product, but they all mean the same thing:
+$$
+|\psi_1\rangle\otimes|\psi_0\rangle=|\psi_1\rangle|\psi_0\rangle=|\psi_1\psi_0\rangle
+$$
+We have described how the tensor product works using the Dirac notation, but quantum states can also be described using vectors:
+$$
+|\psi_1\rangle\otimes|\psi_0\rangle=
+\begin{bmatrix}
+\alpha_1 \\ \beta_1
+\end{bmatrix} \otimes
+\begin{bmatrix}
+\alpha_0 \\ \beta_0
+\end{bmatrix} =
+\begin{bmatrix}
+\alpha_1
+\begin{bmatrix}
+\alpha_0 \\ \beta_0
+\end{bmatrix} \\ 
+\beta_1
+\begin{bmatrix}
+\alpha_0 \\ \beta_0
+\end{bmatrix}
+\end{bmatrix} = 
+\begin{bmatrix}
+\alpha_1\alpha_0 \\
+\alpha_1\beta_0\\
+\beta_1\alpha_0\\
+\beta_1\beta_0
+\end{bmatrix}
+$$
+In general, a tensor product between a vector with $n$ rows and another vector with $m$ rows produces a vector with $nm$ rows. The tensor product is associative, but it is not communitive, so $|\psi_0\psi_1\rangle\neq|\psi_1\psi_0\rangle$. For this reason, we need to be clear about the ordering of the qubits. The standard convention is to have the rightmost qubit be the least significant bit. This means the state $|100\rangle$ will represent the number 4 instead of the number 1. Since the quantum state is being created from an array of qubits, the indexes follow zero-based numbering. The least significant qubit is described as the zeroth qubit in the register. 
+
+Here is an algorithm which will create the amplitude at index $row$ after the tensor product of $n$ qubits:
+
+```python
+def create_amplitude(row_index, qubits):
+	amplitude = 1
+	for i in n:
+    	if ((row_index & 1 << i) == 0):
+        	amplitude *= qubits[i].alpha
+		else:
+        	amplitude *= qubits[i].beta
+	return amplitude
+```
+
+Consider the index $01001$ in a 5 qubit register. The amplitude at this position is $\alpha_4\beta_3\alpha_2\alpha_1\beta_0$. Each $0$ in the index corresponds to the amplitude being multiplied by that qubit's $\alpha$ component and each $1$ means the amplitude is multiplied by that qubit's $\beta$ component.
+
+The algorithm above iterates through each bit in the index and multiplies the amplitude by the corresponding component depending if the bit is $0$ or $1$. This algorithm uses _bitwise operators_ to determine the state of a bit inside the index. The following bitwise operators are frequently used:
+
+* `&` - Bitwise AND
+* `|` - Bitwise OR
+* `^` - Bitwise XOR
+* `<<` - Bitwise left shift 
+* `>>` - Bitwise right shift
+
+#### Quantum Circuits
+
+When describing which gates are being applied to which qubits, using the Dirac notation can become cluttered. _Quantum circuits_ are a visual way to show the ordering of the gates. 
+
+
+
+
+
 Significant Bits, tensors (ket and vector versions) , distributing states, matrix tensors
 
 Summations
@@ -857,6 +944,8 @@ Any controlled gate: Controlled-U
 CZ gate and it's applications
 
 Controlled anything into pauli + CNOT
+
+'depth' of a circuit
 
 ### [3.6](#QCSG)   Reversible Computing
 

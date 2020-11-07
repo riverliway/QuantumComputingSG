@@ -1,5 +1,33 @@
 "use strict";
 
+class QuantumCircuit {
+    // DEPENDENCY: ui.js
+
+    constructor(sketch, numQubits) {
+        this.sketch = sketch;
+
+        this.circuit = [];
+        for (let i = 0; i < numQubits; i++) {
+            this.circuit[i] = [];
+        }
+
+
+    }
+
+    clean() {
+
+    }
+
+    update() {
+        this.updateBoundingBox();
+        this.clean();
+    }
+
+    updateBoundingBox() {
+
+    }
+}
+
 class QuantumState {
     constructor(numQubits) {
         if (numQubits < 1) console.log("Error: QuantumState must have a positive number of qubits: " + numQubits);
