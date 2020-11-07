@@ -693,7 +693,11 @@ Z&=\begin{bmatrix}
 \end{bmatrix}
 \end{aligned}\end{equation}
 $$
-Note that the Pauli X and Y gate differ from what the rotation gate produces when $\Delta=1$. This is because global phase of the gate is different:
+All of the Pauli gates are their own inverse, which means:
+$$
+X^2=Y^2=Z^2=-iXYZ=I
+$$
+When all three of the Pauli matrices are multiplied together, it produces the identity matrix, except for the $-i$ scalar attached in front. The $-i$ is a global phase! This global phase is the same reason that the Pauli X and Y gate differ from what the rotation gate produces when $\Delta=1$:
 $$
 X^1=\begin{bmatrix}
 \cos(\frac{\pi}{2}) & -i\sin(\frac{\pi}{2}) \\ -i\sin(\frac{\pi}{2}) & \cos(\frac{\pi}{2})
@@ -773,11 +777,15 @@ H|1\rangle=\frac{1}{\sqrt2}(|0\rangle-|1\rangle)
 $$
 The Hadamard gate is synonymous with generating superposition because it transforms both basis states into equal superposition. The state $|0\rangle$ is mapped to the positive X axis and the state $|1\rangle$ is mapped to the negative X axis. This operation is exactly what is performed by _beam splitters_. A beam splitter is a half-silvered mirror which will split an incoming stream of photons, reflecting one stream and letting the other stream pass through. 
 
-{ Beam splitter diagram here }
+<img src="resources\img\3.3_beam_splitter.png" width="600px" />
 
-In the above diagram, the beam of light is coming from the left and splits into two separate beams. We can place two beam splitters and two mirrors in a configuration called a **Mach-Zender Interferometer** and add detectors for each of the projected output beams.
+<center><i>Figure 3.3.1 - Beam Splitter Diagram</i></center>
 
-{Mach-Zender Interferometer diagram here}
+In the above diagram, the beam of light is coming from the left and splits into two separate beams. The half-silvered mirror is placed diagonally in the box. We can place two beam splitters and two mirrors in a configuration called a **Mach-Zender Interferometer** and add detectors for each of the projected output beams.
+
+<img src="resources\img\3.3_mach_zender.png" width="732px" />
+
+<center><i>Figure 3.3.2 - Mach-Zender Interferometer</i></center>
 
 Using the configuration of beam splitters and mirrors described above, say we produce 100 photons. How many of those photons will be detected by B?
 
@@ -787,6 +795,8 @@ H=\begin{bmatrix}
 \frac{1}{\sqrt2} & \frac{1}{\sqrt2} \\
 \frac{1}{\sqrt2} & -\frac{1}{\sqrt2}
 \end{bmatrix}
+\\ \ \\ \ \\
+HH|0\rangle=|0\rangle
 $$
 The $H$ gate can be decomposed into $H=\sqrt{Y}Z=X\sqrt{Y}$. Specifically, the Hadamard gate is a rotation of $\Delta=1$ around the Hadamard axis, $H=(X+Z)/\sqrt2$. The $H$ axis is a line in the $XZ$ plane where $X=Z$. Just like the $W$ axis, there is a matrix which generalizes a rotation of any amount:
 $$
@@ -796,25 +806,33 @@ H^\Delta=
 -\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})+\frac{i}{\sqrt2}\sin(\frac{\Delta\pi}{2})
 \end{bmatrix}
 $$
-These rotation matrices for minor axes are interesting, but where do they come from? How can we derive them?
+These beam splitters are more than neat party tricks. Using the **KLM Protocol**, it is possible to create universal quantum computers using just mirrors, half-silvered mirrors, and phase shifters. 
 
 #### Arbitrary Axes
 
-The next step is to rotate our quantum state around any arbitrary axis. This is an applet which shows the accessible state space of rotating the state around the axis. The sliders on the left change the $\theta$ and $\phi$ of the quantum state and the sliders on the right change the $\theta$ and $\phi$ of the axis.
+The next step is to rotate our quantum state around any arbitrary axis. This is an applet which shows the accessible state space of rotating the state around any axis. The sliders on the left change the $\theta$ and $\phi$ of the quantum state and the sliders on the right change the $\theta$ and $\phi$ of the axis. The axis is set to the Hadamard axis by default.
 
 <iframe height='500' scrolling='no' title='Arbitrary Axis Rotation Applet' src='resources\applets\arbitrary_axis\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Arbitrary Axis Rotation Applet</iframe>
 
 <center><i><a href="resources/applets/arbitrary_axis/index.html" target="_blank">Applet 3.3.3</a> Arbitrary Axis Rotations</i></center>
 
-The axis is set to the Hadamard axis by default. If the state is set to $|0\rangle$, it is apparent that a rotation of $\Delta=1$ will transform the state to sit on the positive X axis. 
+The matrix for rotating around any axis $\hat n$ can be written as the sum of the identity matrix and the Pauli matrices:
+$$
+\hat n^\Delta = \cos(\frac{\Delta\pi}{2})I-i \sin(\frac{\Delta\pi}{2})(n_xX+n_yY+n_zZ)
+$$
+This is the equation used to derive the rotation around the $W$ and $H$ axes described above. Alternatively, the same matrix can be written as the product of the $Y$ and $Z$ rotation matrices:
+$$
+a = \frac{n_\phi}{\pi} \\
+b = \frac{n_\theta}{\pi} \\
+\hat n^\Delta=Z^{\large a} Y^{\large b} Z^\Delta Y^{\large -b} Z^{\large -a}
+$$
+Note how the sum equation uses the axis' Euclidean coordinates and the product equation uses the axis' spherical coordinates.
 
-
-
-
-
-Rotate around arbitrary axes
-
-Rotating around itself is always an identity operation
+Since a quantum state is mathematically equivalent to a vector, that implies we could use a quantum state as an axis to rotate around. For example, rotating around itself is always an identity operation:
+$$
+\psi^\Delta|\psi\rangle=I
+$$
+However, we don't actually know the $\theta$ and $\phi$ of some generic quantum state. To rotate around an axis, the coordinates of the axis must be known, otherwise how would we know which gates to apply?
 
 ### [3.4](#QCSG)   Quantum Registers
 
@@ -1086,15 +1104,17 @@ Sutor R. 2019. <a href="https://www.amazon.com/Dancing-Qubits-quantum-computing-
 
 #### Chapter 3
 
-Kitaev A. 1997. <a href="https://iopscience.iop.org/article/10.1070/RM1997v052n06ABEH002155/pdf" target="_blank">Quantum computations: algorithms and error correction</a>. Russian Mathematical Surveys. 52(6):1191-1249
+Kitaev A. 1997. <a href="https://iopscience.iop.org/article/10.1070/RM1997v052n06ABEH002155/pdf" target="_blank">Quantum computations: algorithms and error correction</a>. Russian Mathematical Surveys. 52(6):1191-1249.
 
 Ekert A, Hayden P, Inamori H. 2008. <a href="https://arxiv.org/abs/quant-ph/0011013v1" target="_blank">Basic Concepts in Quantum Computation</a>. arXiv.
+
+Zetie K, Adams S, Tocknell R. 2000. <a href="https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/zetie_et_al_mach_zehnder00.pdf" target="_blank">How does a Mach-Zender iterferometer work?</a>. Physics Education. 35(1):46-48.
 
 Glendinning I. 2010. <a href="http://www.vcpc.univie.ac.at/~ian/hotlist/qc/talks/bloch-sphere-rotations.pdf" target="_blank">Rotations on the Bloch Sphere</a> Lecture Notes. University of Vienna. 
 
 Lala P. 2019. <a href="https://www.amazon.com/Quantum-Computing-Parag-Lala/dp/1260123111" target="_blank">Quantum Computing: A Beginner's Introduction</a>. New York (NY): McGraw-Hill Education.
 
-Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69
+Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69.
 
 #### Chapter 4
 
