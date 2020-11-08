@@ -2,6 +2,12 @@
 
 [toc]
 
+
+
+#### Version 0.2.4 - November 7, 2020
+
+* Added Section - Quantum Registers
+
 #### Version 0.2.3 - November 6, 2020
 
 * Added Section - Alternate Axes

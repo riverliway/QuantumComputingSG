@@ -814,7 +814,7 @@ The next step is to rotate our quantum state around any arbitrary axis. This is 
 
 <iframe height='500' scrolling='no' title='Arbitrary Axis Rotation Applet' src='resources\applets\arbitrary_axis\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Arbitrary Axis Rotation Applet</iframe>
 
-<center><i><a href="resources/applets/arbitrary_axis/index.html" target="_blank">Applet 3.3.3</a> Arbitrary Axis Rotations</i></center>
+<center><i><a href="resources/applets/arbitrary_axis/index.html" target="_blank">Applet 3.3.3</a> Arbitrary Axis Rotations Applet</i></center>
 
 The matrix for rotating around any axis $\hat n$ can be written as the sum of the identity matrix and the Pauli matrices:
 $$
@@ -917,19 +917,23 @@ The algorithm above iterates through each bit in the index and multiplies the am
 
 #### Quantum Circuits
 
-When describing which gates are being applied to which qubits, using the Dirac notation can become cluttered. _Quantum circuits_ are a visual way to show the ordering of the gates. 
+When describing which gates are being applied to which qubits, using the Dirac notation can become cluttered. _Quantum circuits_ are a visual way to show the ordering of the gates. Below is an applet to show a simple quantum circuit with 2 qubits and an X, Y, and Z rotation gate on each. 
+
+<iframe height='300' scrolling='no' title='Simple Quantum Circuit Applet' src='resources\applets\simple_circuit\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Simple Quantum Circuit Applet</iframe>
+
+<center><i><a href="resources/applets/simple_circuit/index.html" target="_blank">Applet 3.4.1</a> Simple Quantum Circuit Applet</i></center>
+
+Starting from the left, first there are the inputs to the quantum circuit. Typically, a quantum circuit is initialized with $|0\rangle$ for each qubit, but sometimes a generic state $|\psi\rangle$ is the input when comparing multiple circuits. The top qubit is the least significant qubit which corresponds to the rightmost qubit in the  Dirac notation.
+
+Next are all of the gates in the circuit. Each wire runs horizontally and contains a sequence of gates which are applied to the qubit. Unlike the matrix form of gates, the gates in a circuit are read left-to-right. In our simple circuit, the X gate is applied first, followed by the Y gate and then the Z gate. For this example, each gate has a slider which controls the $\Delta$ parameter of that gate.
+
+The square on the right side is a visual representation of the quantum state. Each sub-box represents a basis state, the size of the circle represents the magnitude and the orientation of the circle represents the phase. The global phase is automatically adjusted so the $|0\rangle$ state remains real. 
+
+This example is just a simple quantum circuit for demonstration purposes. A more advanced quantum circuit builder is available at <a href="https://algassert.com/quirk" target="_blank">Quirk</a>. 
 
 
 
-
-
-Significant Bits, tensors (ket and vector versions) , distributing states, matrix tensors
-
-Summations
-
-actual quantum circuits - ordering left to right
-
-ancilla qubits
+matrix tensors
 
 ### [3.5](#QCSG)   CNOT Gate
 
@@ -946,6 +950,8 @@ CZ gate and it's applications
 Controlled anything into pauli + CNOT
 
 'depth' of a circuit
+
+ancilla qubits
 
 ### [3.6](#QCSG)   Reversible Computing
 
