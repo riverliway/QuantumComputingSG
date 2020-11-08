@@ -929,11 +929,57 @@ Next are all of the gates in the circuit. Each wire runs horizontally and contai
 
 The square on the right side is a visual representation of the quantum state. Each sub-box represents a basis state, the size of the circle represents the magnitude and the orientation of the circle represents the phase. The global phase is automatically adjusted so the $|0\rangle$ state remains real. 
 
-This example is just a simple quantum circuit for demonstration purposes. A more advanced quantum circuit builder is available at <a href="https://algassert.com/quirk" target="_blank">Quirk</a>. 
+This example is just a simple quantum circuit for demonstration purposes. A more advanced quantum circuit builder is available through <a href="https://algassert.com/quirk" target="_blank">Quirk</a>. 
 
+#### Matrix Tensor Product
 
-
-matrix tensors
+A 2-qubit quantum system can be created by using the tensor product on two vectors. How do we apply a gate to this larger vector? Our $2\times2$ matrices cannot be directly applied to a vector with $4$ rows, there would be a dimension mismatch. The key is to use the tensor product on the gate as well!
+$$
+|\psi_1\rangle\otimes H|\psi_0\rangle=(I\otimes H)|\psi_1\psi_0\rangle
+$$
+ If we would like to apply a Hadamard gate on the right qubit and nothing on the left qubit, it is the tensor product between the $H$ and $I$ matrices. In general, a tensor product between two matrices takes the form:
+$$
+\begin{bmatrix}
+a & b \\ c & d
+\end{bmatrix} \otimes
+\begin{bmatrix}
+e & f \\ g & h
+\end{bmatrix} = 
+\begin{bmatrix}
+a
+\begin{bmatrix}
+e & f \\ g & h
+\end{bmatrix} & 
+b
+\begin{bmatrix}
+e & f \\ g & h
+\end{bmatrix} \\
+c
+\begin{bmatrix}
+e & f \\ g & h
+\end{bmatrix} & 
+d
+\begin{bmatrix}
+e & f \\ g & h
+\end{bmatrix}
+\end{bmatrix} = 
+\begin{bmatrix}
+ae & af & be & bf \\
+ag & ah & bg & bh \\
+ce & cf & de & df \\
+cg & ch & dg & dh
+\end{bmatrix}
+$$
+The tensor product for matrices is still non-communitive. In order to apply a $2\times2$ gate to the $i$th qubit, there must be $n$ matrices tensored together:
+$$
+|\psi_{n-1}\cdots\psi_{i+1}\rangle\otimes U|\psi_i\rangle\otimes |\psi_{i-1}\cdots\psi_0\rangle = 
+\bigg( \bigotimes_{j=i+1}^nI \bigg) \otimes U \otimes \bigg(\bigotimes_{j=0}^i I \bigg) |\psi\rangle
+$$
+When applying just one $2 \times 2$ gate to a quantum register, it gets tensored with $n-1$ identity matrices. This fact highlights an interesting characteristic of the tensor product. Say we would like to apply two $2\times 2$ gates on a 2 qubit system, $U_0$ and $U_1$. We could tensor the gates together like shown with the general form of the tensor product, but we could also tensor each gate with the identity matrix like shown with the $i$th qubit form and then multiply:
+$$
+U_1 \otimes U_0=(U_1\otimes I)(I \otimes U_0)=(I\otimes U_0)(U_1\otimes I)
+$$
+Tensoring each matrix with the identity matrix and them multiplying them together is equivalent to tensoring the matrices together directly. Furthermore, the matrix multiplication of $U_1\otimes I$ and $I\otimes U_0$ is communitive! This can be generalized to any number of gates acting on a quantum register, the matric multiplication between all of these identity-tensored gates is communitive.
 
 ### [3.5](#QCSG)   CNOT Gate
 
@@ -953,7 +999,7 @@ Controlled anything into pauli + CNOT
 
 ancilla qubits
 
-### [3.6](#QCSG)   Reversible Computing
+### [3.6](#QCSG)   Reversible (Classical) Computing
 
 Toffoli, Fredkin, Peres
 
@@ -963,7 +1009,7 @@ Proving a quantum computer can simulate a classical computer in P time
 
 Arbitrary num controlled U gate
 
-### [3.7](#QCSG)   Quantum Programming
+### [3.6](#QCSG)   Quantum Programming
 
 Qiskit, Cirq, Qsharp
 
@@ -1156,6 +1202,8 @@ deferred form partitioning
 simulating classical computers on quantum computers - Maybe already covered in chap 3
 
 Schrödinger & Feynman path integrals / algorithms
+
+Some sets of universal gates are faster than others
 
 ## Chapter 11:   Quantum Algorithms
 

@@ -137,7 +137,7 @@ class RotatingGate {
         this.slider.onHover = () => this.circuit.update();
         this.slider.onUnHover = () => this.circuit.update();
         this.slider.onRelease = () => this.circuit.update();
-        this.circuit._doDraw();
+        this.circuit.update();
     }
 
     getFillColor(axis) {
