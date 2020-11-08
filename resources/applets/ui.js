@@ -406,6 +406,9 @@ class ArcSlider {
     /* Interface function onMove()      may be implemented by calling function */
     /* Interface function onPreDraw()   may be implemented by calling function */
     /* Interface function onPostDraw()  may be implemented by calling function */
+    /* Interface function onHover()     may be implemented by calling function */
+    /* Interface function onUnHover()   may be implemented by calling function */
+    /* Interface function onRelease()   may be implemented by calling function */
 
     constructor(sketch, x, y, radius, beginAngle, endAngle, startAngle) {
         this.beginAngle = (beginAngle == undefined) ? 0 : beginAngle;
@@ -424,6 +427,11 @@ class ArcSlider {
         this.bobble.clean = undefined;
         this.bobble.move = () => this.move();
         this.bobble.onPreDraw = () => this.draw();
+
+        // Pass triggers to calling function
+        this.bobble.onHover = () => {if (this.onHover != undefined) this.onHover();}
+        this.bobble.onUnHover = () => {if (this.onUnHover != undefined) this.onUnHover();}
+        this.bobble.onRelease = () => {if (this.onRelease != undefined) this.onRelease();}
 
         // Re-draw everything now that the plumbing is correct
         this.draw();
@@ -462,17 +470,20 @@ class ArcSlider {
         if (this.onMove != undefined) this.onMove();
     }
 
+    clean() {
+        this.sketch.noStroke();
+        this.sketch.fill(255);
+        this.sketch.ellipseMode(this.sketch.CENTER);
+        this.sketch.circle(this.x, this.y, 2 * (this.radius + this.bobbleRadius + 2));
+    }
+
     draw() {
         if (this.onPreDraw != undefined) this.onPreDraw();
 
         this.sketch.angleMode(this.sketch.DEGREES);
         this.sketch.push();
 
-        // Wipe clean
-        this.sketch.noStroke();
-        this.sketch.fill(255);
-        this.sketch.ellipseMode(this.sketch.CENTER);
-        this.sketch.circle(this.x, this.y, 2 * (this.radius + this.bobbleRadius + 2));
+        if (this.clean != undefined) this.clean();
 
         // Draw arc
         this.sketch.stroke(0);

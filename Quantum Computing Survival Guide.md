@@ -927,7 +927,7 @@ Significant Bits, tensors (ket and vector versions) , distributing states, matri
 
 Summations
 
-actual quantum circuits
+actual quantum circuits - ordering left to right
 
 ancilla qubits
 

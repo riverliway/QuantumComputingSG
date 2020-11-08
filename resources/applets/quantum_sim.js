@@ -1,30 +1,383 @@
 "use strict";
 
+class StaticGate {
+    // Once inserted, the user has no control over these rotation gates
+    constructor(sketch, row, col, axis, delta) {
+        this.gateType = "staticRotation";
+        this.circuit = undefined;
+        this.sketch = sketch;
+        this.row = row;
+        this.col = col;
+        this.axis = axis;
+        this.delta = delta;
+    }
+
+    _doDraw(x, y, size) {
+        // Draw square
+        this.sketch.fill(this.getFillColor(this.axis));
+        this.sketch.stroke(this.getOutlineColor(this.axis));
+        this.sketch.strokeWeight(1);
+        let half = size / 2;
+        this.sketch.rect(x - half, y - half, size, size);
+
+        // Draw text
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(0);
+        this.sketch.textSize(size * 0.35);
+        this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
+        this.sketch.text(this.axis, x - 5, y + 5);
+        this.sketch.textSize(size * 0.15);
+        this.sketch.text(this.delta.toFixed(2), x + 10, y - 14);
+    }
+
+    getFillColor(axis) {
+        switch (axis) {
+            case "X": return [255, 122, 122];
+            case "Y": return [138, 219, 140];
+            case "Z": return [139, 212, 224];
+        }
+    }
+
+    getOutlineColor(axis) {
+        switch (axis) {
+            case "X": return [158, 5, 5];
+            case "Y": return [21, 158, 78];
+            case "Z": return [61, 123, 217];
+        }
+    }
+
+    setCircuit(circuit) {
+        this.circuit = circuit;
+    }
+}
+
+class StaticCnot {
+    constructor(sketch, col, control, target) {
+        this.gateType = "cnot";
+        this.circuit = undefined;
+        this.sketch = sketch;
+        this.col = col;
+        this.control = control;
+        this.target = target;
+    }
+
+    _doDraw(x, y, size) {
+        const RADIUS = size * 0.4;
+
+        // Draw control
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(0);
+        this.sketch.circle(x, y, RADIUS);
+
+        // Draw target
+        this.sketch.noFill();
+        this.sketch.strokeWeight(2);
+        this.sketch.cicle(x, (this.target + 1) * this.circuit.SCALE, 2 * RADIUS);
+
+        // Draw connecting line
+        this.sketch.line(x, y, x, (this.target + 1) * this.circuit.SCALE);
+    }
+
+    setCircuit(circuit) {
+        this.circuit = circuit;
+    }
+}
+
+class RotatingGate {
+    // Spawns an arc slider which the user can use to change the value of delta
+    constructor(sketch, row, col, axis, delta) {
+        this.gateType = "rotating";
+        this.circuit = undefined;
+        this.sketch = sketch;
+        this.row = row;
+        this.col = col;
+        this.axis = axis;
+        this.delta = delta;
+
+        this.slider = undefined;
+    }
+
+    _doDraw(x, y, size) {
+        if (this.slider == undefined) this._buildSlider(x, y, size);
+
+        // Draw square
+        this.sketch.fill(this.getFillColor(this.axis));
+        this.sketch.stroke(this.getOutlineColor(this.axis));
+        this.sketch.strokeWeight(1);
+        let half = size / 2;
+        this.sketch.rect(x - half, y - half, size, size);
+
+        // Draw text
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(0);
+        this.sketch.textSize(size * 0.35);
+        this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
+        this.sketch.text(this.axis, x - 7, y + 7);
+        this.sketch.textSize(size * 0.15);
+        this.sketch.text(this.delta.toFixed(2), x + 8, y - 8);
+
+        this.slider.update();
+    }
+
+    _buildSlider(x, y, size) {
+        this.slider = new ArcSlider(this.sketch, x, y, size * 0.43, 0, 360, 270 - this.delta * 180);
+
+        // We've already cleaned in the QuantumCircuit class before the draw function is called
+        this.slider.clean = undefined;
+        this.slider.onMove = () => {
+            let value = 270 - this.slider.getValue();
+            if (value < 0) value += 360;
+            if (value >= 360) value -= 360;
+            this.delta = value / 180;
+            this.circuit.update();
+        }
+        this.slider.onHover = () => this.circuit.update();
+        this.slider.onUnHover = () => this.circuit.update();
+        this.slider.onRelease = () => this.circuit.update();
+        this.circuit._doDraw();
+    }
+
+    getFillColor(axis) {
+        switch (axis) {
+            case "X": return [255, 122, 122];
+            case "Y": return [138, 219, 140];
+            case "Z": return [139, 212, 224];
+        }
+    }
+
+    getOutlineColor(axis) {
+        switch (axis) {
+            case "X": return [158, 5, 5];
+            case "Y": return [21, 158, 78];
+            case "Z": return [61, 123, 217];
+        }
+    }
+
+    setCircuit(circuit) {
+        this.circuit = circuit;
+    }
+}
+
 class QuantumCircuit {
     // DEPENDENCY: ui.js
 
-    constructor(sketch, numQubits) {
+    constructor(sketch, numQubits, x, y) {
+        this.SCALE = 85;
         this.sketch = sketch;
+        this.numQubits = numQubits;
+        this.x = x;
+        this.y = y;
 
-        this.circuit = [];
-        for (let i = 0; i < numQubits; i++) {
-            this.circuit[i] = [];
-        }
+        // The circuit variable is an array of columns in the circuit, each column may contain zero or more gates
+        this.circuit = [[]];
 
-
+        this.labels = [];
     }
 
     clean() {
+        this.sketch.erase();
+        this.sketch.noStroke();
+        this.sketch.rect(this.bbox.x1, this.bbox.y1, this.bbox.x2 - this.bbox.x1, this.bbox.y2 - this.bbox.y1);
+        this.sketch.noErase();
+    }
 
+    _drawLabels() {
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(0);
+
+        this.sketch.textSize(this.SCALE * 0.3);
+        this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
+
+        for (let i = 0; i < this.labels.length; i++) {
+            this.sketch.text(this.labels[i], this.x + this.SCALE / 2, this.y + this.SCALE * (i + 1) - 1);
+        }
+    }
+
+    _drawWires() {
+        this.sketch.stroke(30);
+        this.sketch.noFill();
+        this.sketch.strokeWeight(1);
+        for (let i = 0; i < this.numQubits; i++) {
+            this.sketch.line(this.x + this.SCALE, this.y + this.SCALE * (i + 1), this.x + this.SCALE * (this.circuit.length + 2), this.y + this.SCALE * (i + 1));
+        }
+    }
+
+    _doDraw() {
+        this._drawLabels();
+        this._drawWires();
+        for (let i = 0; i < this.circuit.length; i++) {
+            if (this.circuit[i] == undefined) continue;
+            for (let j = 0; j < this.circuit[i].length; j++) {
+                if (this.circuit[i][j] != undefined) {
+                    this.circuit[i][j]._doDraw((i + 2) * this.SCALE, (j + 1) * this.SCALE, this.SCALE * 0.8);
+                }
+            }
+        }
     }
 
     update() {
         this.updateBoundingBox();
+        this.sketch.push();
         this.clean();
+
+        if (this.onPreDraw != undefined) this.onPreDraw();
+        this._doDraw();
+        if (this.onPostDraw != undefined) this.onPostDraw();
+        if (this._onStateUpdate != undefined) this._onStateUpdate();
+
+        this.sketch.pop();
+    }
+
+    addGate(gate) {
+        if (gate.col >= this.circuit.length) {
+            for (let i = this.circuit.length; i <= gate.col; i++) {
+                this.circuit[i] = [];
+            }
+        }
+        gate.setCircuit(this);
+        this.circuit[gate.col][gate.row] = gate;
+    }
+
+    addStaticGate(row, col, axis, delta) {
+        let staticGate = new StaticGate(this.sketch, row, col, axis, delta);
+        this.addGate(staticGate);
+    }
+
+    addStaticCnot(col, control, target) {
+        let cnot = new StaticCnot(this.sketch, col, control, target);
+        this.addGate(cnot);
+    }
+
+    addInteractiveRotation(row, col, axis, delta) {
+        let rotatingGate = new RotatingGate(this.sketch, row, col, axis, delta);
+        this.addGate(rotatingGate);
     }
 
     updateBoundingBox() {
+        this.bbox = {x1:this.x, y1:this.y, x2:this.x + this.SCALE * (this.circuit.length + 2), y2:this.y + this.SCALE * (this.numQubits + 1)};
+    }
 
+    setLabels(labels) {
+        this.labels = labels;
+    }
+}
+
+class VisualQuantumState {
+    // A visual representation of a quantum state
+    constructor(sketch, circuit, x, y, scale) {
+        this.scale = scale;
+        this.sketch = sketch;
+        this.circuit = circuit;
+        this.numQubits = circuit.numQubits;
+        this.width = (this.numQubits % 2 == 0) ? 1 << (this.numQubits / 2) : 1 << ((this.numQubits - 1) / 2);
+        this.height = (this.numQubits % 2 == 0) ? 1 << (this.numQubits / 2) : 1 << ((this.numQubits + 1) / 2);
+        this.x = x;
+        this.y = y;
+
+        circuit._onStateUpdate = () => this.update();
+    }
+
+    clean() {
+        this.sketch.erase();
+        this.sketch.noStroke();
+        this.sketch.rect(this.bbox.x1, this.bbox.y1, this.bbox.x2 - this.bbox.x1, this.bbox.y2 - this.bbox.y1);
+        this.sketch.noErase();
+    }
+
+    _drawAmplitude(index, x, y) {
+        let amp = this.state[index].getPolarCoords();
+        let midX = x + this.scale / 2;
+        let midY = y + this.scale / 2;
+        let mag = amp.radius * amp.radius;
+        if (mag < 0.0001) return;
+
+        // Draw outer circle
+        this.sketch.noFill();
+        this.sketch.strokeWeight(0.5);
+        this.sketch.stroke(80);
+        this.sketch.circle(midX, midY, amp.radius * this.scale);
+
+        // Draw filled box
+        this.sketch.fill([0, 176, 173]);
+        this.sketch.noStroke();
+        this.sketch.rect(x, y + (1 - mag) * this.scale, this.scale, mag * this.scale);
+
+        // Draw inner circle
+        this.sketch.fill([135, 249, 255]);
+        this.sketch.strokeWeight(0.75);
+        this.sketch.stroke(10);
+        this.sketch.circle(midX, midY, mag * this.scale);
+
+        // Draw phase line
+        this.sketch.noFill();
+        this.sketch.stroke(0);
+        this.sketch.line(midX, midY, midX + amp.radius * Math.cos(amp.angle) * this.scale / 2, midY + amp.radius * Math.sin(amp.angle) * this.scale / 2);
+    }
+
+    _doDraw() {
+        // Draw each amplitude
+        for (let i = 0; i < this.width; i++) {
+            for (let j = 0; j < this.height; j++) {
+                this._drawAmplitude(j * this.width + i, this.x + i * this.scale, this.y + j * this.scale);
+            }
+        }
+        // Draw grid overlay
+        this.sketch.noFill();
+        this.sketch.strokeWeight(0.5);
+        this.sketch.stroke(80);
+        for (let i = 0; i <= this.width; i++) {
+            this.sketch.line(this.x + i * this.scale, this.y, this.x + i * this.scale, this.y + this.height * this.scale);
+        }
+        for (let i = 0; i <= this.height; i++) {
+            this.sketch.line(this.x, this.y + i * this.scale, this.x + this.width * this.scale, this.y + i * this.scale);
+        }
+    }
+
+    update() {
+        this.sketch.push();
+        this.updateBoundingBox();
+
+        if (this.onPreDraw != undefined) this.onPreDraw();
+        this.clean();
+        this.runSimulation();
+        this._doDraw();
+        if (this.onPostDraw != undefined) this.onPostDraw();
+
+        this.sketch.pop();
+    }
+
+    runSimulation() {
+        let qs = new QuantumState(this.numQubits);
+        let circuit = this.circuit.circuit;
+        for (let col = 0; col < circuit.length; col++) {
+            if (circuit[col] == undefined) continue;
+
+            for (let row = 0; row < circuit[col].length; row++) {
+                if (circuit[col][row] != undefined) {
+                    this.simulateGate(circuit[col][row], qs);
+                }
+            }
+        }
+
+        qs.phaseNormalForm();
+        this.state = qs.state;
+    }
+
+    simulateGate(gate, qs) {
+        if (gate.gateType == "cnot") {
+            qs.cnot(gate.control, gate.target);
+        } else if (gate.gateType == "staticRotation" || gate.gateType == "rotating") {
+            qs.majorRotation(gate.row, gate.axis, gate.delta * Math.PI);
+        }
+    }
+
+    updateBoundingBox() {
+        const OFFSET = 1;
+        this.bbox = {x1:this.x - OFFSET, y1:this.y - OFFSET, x2:this.x + this.width * this.scale + OFFSET * 2, y2:this.y + this.height * this.scale + OFFSET * 2};
     }
 }
 
@@ -43,7 +396,7 @@ class QuantumState {
         }
     }
 
-    cnot(target, control, delta) {
+    cnot(control, target, delta) {
         let c = 1 << control;
         let t = 1 << target;
 
@@ -86,6 +439,15 @@ class QuantumState {
         this._applyGeneralGate(target, gate);
     }
 
+    majorRotation(target, axis, delta) {
+        switch (axis) {
+            case "X": this.x(target, delta); break;
+            case "Y": this.y(target, delta); break;
+            case "Z": this.z(target, delta); break;
+            default: console.log("Error: Invalid axis passed to QuantumState.majorRotation()");
+        }
+    }
+
     _applyGeneralGate(target, gate) {
         // Takes in any 2x2 matrix and applys it to the state. The gate object is a 1d array representing the matrix
 
@@ -115,6 +477,22 @@ class QuantumState {
 
         this.probs.isUpdated = true;
         return this.probs.p;
+    }
+
+    adjustGlobalPhase(phase) {
+        // Multiplies a phase factor into every element
+        let scalar = new Complex(1, phase, true);
+        for (let i = 0; i < this.length; i++) {
+            this.state[i] = Complex.multiply(this.state[i], scalar);
+        }
+    }
+
+    phaseNormalForm() {
+        // Adjusts the global phase so the first coefficent is real
+        let amp = this.state[0].getPolarCoords();
+        if (amp.radius > 0) {
+            this.adjustGlobalPhase(-amp.angle);
+        }
     }
 
     measure() {

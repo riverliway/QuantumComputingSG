@@ -33,7 +33,7 @@ const ThunkType = {
 };
 
 function registerThunk(thunkType, thunk, instance) {
-    if (instance == undefined) eventArray[thunkType].push([undefined, instance]);
+    if (instance == undefined) eventArray[thunkType].push([undefined, thunk]);
     else eventArray[thunkType].push([instance, thunk]);
 }
 
