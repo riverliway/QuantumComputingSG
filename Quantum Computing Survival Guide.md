@@ -979,7 +979,7 @@ When applying just one $2 \times 2$ gate to a quantum register, it gets tensored
 $$
 U_1 \otimes U_0=(U_1\otimes I)(I \otimes U_0)=(I\otimes U_0)(U_1\otimes I)
 $$
-Tensoring each matrix with the identity matrix and them multiplying them together is equivalent to tensoring the matrices together directly. Furthermore, the matrix multiplication of $U_1\otimes I$ and $I\otimes U_0$ is communitive! This can be generalized to any number of gates acting on a quantum register, the matric multiplication between all of these identity-tensored gates is communitive.
+Tensoring each matrix with the identity matrix and them multiplying them together is equivalent to tensoring the matrices together directly. Furthermore, the matrix multiplication of $U_1\otimes I$ and $I\otimes U_0$ is communitive! This can be generalized to any number of gates acting on a quantum register, the matrix multiplication between all of these identity-tensored gates is communitive.
 
 ### [3.5](#QCSG)   CNOT Gate
 
@@ -989,11 +989,9 @@ CNOT(1,2) = HxH CNOT(2,1) HxH
 
 Swap = 3 cnots
 
-Any controlled gate: Controlled-U
-
 CZ gate and it's applications
 
-Controlled anything into pauli + CNOT
+Any controlled gate: Controlled-U - Controlled anything into pauli + CNOT
 
 'depth' of a circuit
 
@@ -1050,6 +1048,14 @@ translate the bell states into each other
 read 1 then know the other instantly (Maximally Entangled)
 
 ​	but not always! (Partially Entangled)
+
+**More ideas:**
+
+full state reconstruction
+
+gate decomposition
+
+Q state space compared to P state space
 
 ### 4.5   Case Study: Google's Quantum Supremacy
 
@@ -1235,17 +1241,17 @@ I know **nothing** right now, but it seems supa cool
 
 Resources ordered by the chapter they are most heavily related to. Referencing format: <a href="https://www.scientificstyleandformat.org/Tools/SSF-Citation-Quick-Guide.html" target="_blank">CSE Manual</a>.
 
-#### Chapter 1
+### Chapter 1
 
 a
 
-#### Chapter 2
+### Chapter 2
 
 Nielsen M, Chuang I. 2010. <a href="https://www.amazon.com/Quantum-Computation-Information-10th-Anniversary/dp/1107002176" target="_blank">Quantum Computation and Quantum Information</a>. Cambridge (England): Cambridge University Press.
 
 Sutor R. 2019. <a href="https://www.amazon.com/Dancing-Qubits-quantum-computing-change/dp/1838827366" target="_blank">Dancing with Qubits</a>. Birmingham (England): Packt.
 
-#### Chapter 3
+### Chapter 3
 
 Kitaev A. 1997. <a href="https://iopscience.iop.org/article/10.1070/RM1997v052n06ABEH002155/pdf" target="_blank">Quantum computations: algorithms and error correction</a>. Russian Mathematical Surveys. 52(6):1191-1249.
 
@@ -1259,6 +1265,6 @@ Lala P. 2019. <a href="https://www.amazon.com/Quantum-Computing-Parag-Lala/dp/12
 
 Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69.
 
-#### Chapter 4
+### Chapter 4
 
 Arute F, Arya K, Babbush R, *et al.* 2019. <a href="https://www.nature.com/articles/s41586-019-1666-5" target="_blank">Quantum supremacy using a programmable superconducting processor</a>. Nature. 574(7779):505–510.
