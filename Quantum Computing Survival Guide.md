@@ -114,13 +114,13 @@ Many different types of quantum computers have been designed over the past few d
 
 ### [1.3](#QCSG)   Modern Applications of Quantum Computers
 
-cool stuff
+Current quantum computers are room-sized machines which require dozens of skilled technicians to operate. They are owned by research teams at universities or companies and generally not available to the public. There are exceptions, such as IBM's small quantum computer which can be used over the cloud, but there are severe limits to the compute capabilities of such quantum computers. 
+
+For reasons discussed later, simulating quantum phenomena on classical computers is tricky. However, it stands to reason that simulating quantum phenomena on a quantum computer would be much easier. Modern quantum computers are not large enough to run many of the algorithms designed for them, but simulating other quantum particles requires relatively few resources. This makes quantum simulation a viable target for near-term applications. 
 
 ### [1.4](#QCSG)   Future Applications of Quantum Computers
 
 super cool stuff
-
-
 
 ## [Chapter 2:](#QCSG)   Qubits & Superposition
 
@@ -981,7 +981,7 @@ U_1 \otimes U_0=(U_1\otimes I)(I \otimes U_0)=(I\otimes U_0)(U_1\otimes I)
 $$
 Tensoring each matrix with the identity matrix and them multiplying them together is equivalent to tensoring the matrices together directly. Furthermore, the matrix multiplication of $U_1\otimes I$ and $I\otimes U_0$ is communitive! This can be generalized to any number of gates acting on a quantum register, the matrix multiplication between all of these identity-tensored gates is communitive.
 
-### [3.5](#QCSG)   CNOT Gate
+### [3.5](#QCSG)   Controlled Gates
 
 Interact with multiple qubits
 

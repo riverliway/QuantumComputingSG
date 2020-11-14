@@ -2,7 +2,9 @@
 
 [toc]
 
+#### Version 0.2.5 - November 14, 2020
 
+* Added Section - Modern Applications of Quantum Computers
 
 #### Version 0.2.4 - November 7, 2020
 
@@ -22,7 +24,7 @@
 
 ### Version 0.2.0 - October 26, 2020
 
-* Chapters 1and 2 have been completed
+* Chapters 1 and 2 have been completed
 
 #### Version 0.1.13 - October 25, 2020
 
