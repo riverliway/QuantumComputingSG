@@ -120,7 +120,21 @@ For reasons discussed later, simulating quantum phenomena on classical computers
 
 ### [1.4](#QCSG)   Future Applications of Quantum Computers
 
-super cool stuff
+Quantum computers hold enormous potential to solve some of the world's hardest problems in the future. Once the hardware for quantum computers has been developed and refined, our society will be able to tackle the problems which classical computers have struggled with. Here are a few examples of how quantum computers will be able to help other areas of science.
+
+#### Cryptography and Network Security
+
+When discussing the history of quantum computers, we have introduced Shor's algorithm. This quantum algorithm is able to factor integers efficiently which undermines the RSA protocol for key exchange. If a quantum computer was suddenly introduced today, it would overturn modern society because we are not yet prepared for switching from RSA to another protocol. Luckily, it seems quantum computers large enough to factor RSA numbers are more than a decade away. 
+
+With the bad, there comes some good as well. Even though quantum computers threaten to shake our cryptography, they also enable us to create quantum networks which are able to transfer data securely, guaranteed by the laws of physics.
+
+#### Artificial Intelligence
+
+The intersection between artificial intelligence and quantum computing is a new area of research in the academic community and has a promising future. Quantum algorithms have been developed for solving optimization problems, of which artificial intelligence is just a subset. Finding optimal solutions using quantum computers also has benefits to many other disciplines such as finance for portfolio management, transportation for delivery routes, and manufacturing for factory layout.
+
+#### Pharmaceutical Development
+
+As discussed in the previous chapter, it seems natural for quantum computers to simulate quantum interactions much better than classical computers. One of the most exciting applications of this is drug development in the pharmaceutical industry. Medicine compounds are made up of many molecules and perfectly simulating their interactions on a classical computer is infeasible. One day, chemical experiments might be reduced to running a quantum program and finding how all the molecules interact with each other.
 
 ## [Chapter 2:](#QCSG)   Qubits & Superposition
 

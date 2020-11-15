@@ -5,7 +5,7 @@
 #### Version 0.2.5 - November 14, 2020
 
 * Added Section - Modern Applications of Quantum Computers
-* 
+* Added Section - Future Applications of Quantum Computers
 
 #### Version 0.2.4 - November 7, 2020
 
