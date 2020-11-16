@@ -1,7 +1,7 @@
 "use strict";
 
 class StaticGate {
-    // Once inserted, the user has no control over these rotation gates
+    // Once inserted, the user has no control over static gates
     constructor(sketch, row, col, axis, delta) {
         this.gateType = "staticRotation";
         this.circuit = undefined;
@@ -16,7 +16,7 @@ class StaticGate {
         // Draw square
         this.sketch.fill(this.getFillColor(this.axis));
         this.sketch.stroke(this.getOutlineColor(this.axis));
-        this.sketch.strokeWeight(1);
+        this.sketch.strokeWeight(2);
         let half = size / 2;
         this.sketch.rect(x - half, y - half, size, size);
 
@@ -26,9 +26,14 @@ class StaticGate {
         this.sketch.strokeWeight(0);
         this.sketch.textSize(size * 0.35);
         this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
-        this.sketch.text(this.axis, x - 5, y + 5);
-        this.sketch.textSize(size * 0.15);
-        this.sketch.text(this.delta.toFixed(2), x + 10, y - 14);
+        if (this.delta == undefined || this.delta == "") {
+            this.sketch.text(this.axis, x, y);
+        } else {
+            this.sketch.text(this.axis, x - 5, y + 5);
+            this.sketch.textSize(size * 0.15);
+            let content = (typeof this.delta == "string") ? this.delta : this.delta.toFixed(2);
+            this.sketch.text(content, x + 10, y - 14);
+        }
     }
 
     getFillColor(axis) {
@@ -36,6 +41,7 @@ class StaticGate {
             case "X": return [255, 122, 122];
             case "Y": return [138, 219, 140];
             case "Z": return [139, 212, 224];
+            default: return 255;
         }
     }
 
@@ -44,6 +50,7 @@ class StaticGate {
             case "X": return [158, 5, 5];
             case "Y": return [21, 158, 78];
             case "Z": return [61, 123, 217];
+            default: return 0;
         }
     }
 
@@ -60,24 +67,161 @@ class StaticCnot {
         this.col = col;
         this.control = control;
         this.target = target;
+        this.row = control;
     }
 
     _doDraw(x, y, size) {
-        const RADIUS = size * 0.4;
+        const CONTROL_RADIUS = size * 0.2;
 
         // Draw control
         this.sketch.fill(0);
         this.sketch.stroke(0);
         this.sketch.strokeWeight(0);
-        this.sketch.circle(x, y, RADIUS);
+        this.sketch.circle(x, y, CONTROL_RADIUS);
 
         // Draw target
         this.sketch.noFill();
         this.sketch.strokeWeight(2);
-        this.sketch.cicle(x, (this.target + 1) * this.circuit.SCALE, 2 * RADIUS);
+        const TARGET_RADIUS = CONTROL_RADIUS * 1.7;
+        let ty = (this.target - this.control) * this.circuit.SCALE + y;
+        this.sketch.circle(x, ty, 2 * TARGET_RADIUS);
 
         // Draw connecting line
-        this.sketch.line(x, y, x, (this.target + 1) * this.circuit.SCALE);
+        let line_extension = (this.control < this.target) ? TARGET_RADIUS : -TARGET_RADIUS;
+        this.sketch.line(x, y, x, ty + line_extension);
+
+        // Draw target horizontal line
+        this.sketch.line(x - TARGET_RADIUS, ty, x + TARGET_RADIUS, ty);
+    }
+
+    setCircuit(circuit) {
+        this.circuit = circuit;
+    }
+}
+
+class StaticCZ {
+    constructor(sketch, col, control, target) {
+        this.gateType = "cz";
+        this.circuit = undefined;
+        this.sketch = sketch;
+        this.col = col;
+        this.control = control;
+        this.target = target;
+        this.row = control;
+    }
+
+    _doDraw(x, y, size) {
+        const CONTROL_RADIUS = size * 0.2;
+
+        // Draw controls
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(0);
+        this.sketch.circle(x, y, CONTROL_RADIUS);
+        let ty = (this.target - this.control) * this.circuit.SCALE + y;
+        this.sketch.circle(x, ty, CONTROL_RADIUS);
+
+        // Draw connecting line
+        this.sketch.strokeWeight(2);
+        this.sketch.line(x, y, x, ty);
+    }
+
+    setCircuit(circuit) {
+        this.circuit = circuit;
+    }
+}
+
+class StaticCU {
+    constructor(sketch, col, control, target, axis, exp) {
+        this.gateType = "cu";
+        this.circuit = undefined;
+        this.sketch = sketch;
+        this.col = col;
+        this.control = control;
+        this.target = target;
+        this.row = control;
+        this.axis = axis;
+        this.exp = exp;
+        this.fillColor = sketch.color(255);
+        this.outlineColor = sketch.color(0);
+    }
+
+    _doDraw(x, y, size) {
+        const CONTROL_RADIUS = size * 0.2;
+
+        // Draw control
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(0);
+        this.sketch.circle(x, y, CONTROL_RADIUS);
+
+        // Draw connecting line
+        this.sketch.strokeWeight(2);
+        let half = size / 2;
+        let line_extension = (this.control < this.target) ? half : -half;
+        let ty = (this.target - this.control) * this.circuit.SCALE + y;
+        this.sketch.line(x, y, x, ty - line_extension);
+
+        // Draw square
+        this.sketch.fill(this.fillColor);
+        this.sketch.stroke(this.outlineColor);
+        y = ty;
+        this.sketch.rect(x - half, y - half, size, size);
+
+        // Draw text
+        this.sketch.fill(0);
+        this.sketch.stroke(this.outlineColor);
+        this.sketch.strokeWeight(0);
+        this.sketch.textSize(size * 0.35);
+        this.sketch.textAlign(this.sketch.CENTER, this.sketch.CENTER);
+        if (this.exp == undefined || this.exp == "") {
+            this.sketch.text(this.axis, x, y);
+        } else {
+            this.sketch.text(this.axis, x - 5, y + 5);
+            this.sketch.textSize(size * 0.15);
+            let content = (typeof this.exp == "string") ? this.exp : this.exp.toFixed(2);
+            this.sketch.text(content, x + 10, y - 14);
+        }
+    }
+
+    setCircuit(circuit) {
+        this.circuit = circuit;
+    }
+
+    setColors(fillColor, outlineColor) {
+        this.fillColor = fillColor;
+        this.outlineColor = outlineColor;
+    }
+}
+
+class StaticSWAP {
+    constructor(sketch, col, qubit1, qubit2) {
+        this.gateType = "swap";
+        this.circuit = undefined;
+        this.sketch = sketch;
+        this.col = col;
+        this.qubit1 = qubit1;
+        this.qubit2 = qubit2;
+        this.row = qubit1;
+    }
+
+    _doDraw(x, y, size) {
+        const LENGTH = size * 0.2;
+
+        // Draw first cross
+        this.sketch.fill(0);
+        this.sketch.stroke(0);
+        this.sketch.strokeWeight(2);
+        this.sketch.line(x - LENGTH, y - LENGTH, x + LENGTH, y + LENGTH);
+        this.sketch.line(x + LENGTH, y - LENGTH, x - LENGTH, y + LENGTH);
+
+        // Draw second cross
+        let ty = (this.target - this.control) * this.circuit.SCALE + y;
+        this.sketch.line(x - LENGTH, ty - LENGTH, x + LENGTH, ty + LENGTH);
+        this.sketch.line(x + LENGTH, ty - LENGTH, x - LENGTH, ty + LENGTH);
+
+        // Draw connecting line
+        this.sketch.line(x, y, x, ty);
     }
 
     setCircuit(circuit) {
@@ -105,7 +249,7 @@ class RotatingGate {
         // Draw square
         this.sketch.fill(this.getFillColor(this.axis));
         this.sketch.stroke(this.getOutlineColor(this.axis));
-        this.sketch.strokeWeight(1);
+        this.sketch.strokeWeight(2);
         let half = size / 2;
         this.sketch.rect(x - half, y - half, size, size);
 
@@ -213,7 +357,7 @@ class QuantumCircuit {
             if (this.circuit[i] == undefined) continue;
             for (let j = 0; j < this.circuit[i].length; j++) {
                 if (this.circuit[i][j] != undefined) {
-                    this.circuit[i][j]._doDraw((i + 2) * this.SCALE, (j + 1) * this.SCALE, this.SCALE * 0.8);
+                    this.circuit[i][j]._doDraw(this.x + (i + 2) * this.SCALE, this.y + (j + 1) * this.SCALE, this.SCALE * 0.8);
                 }
             }
         }
@@ -242,7 +386,7 @@ class QuantumCircuit {
         this.circuit[gate.col][gate.row] = gate;
     }
 
-    addStaticGate(row, col, axis, delta) {
+    addStaticGate(col, row, axis, delta) {
         let staticGate = new StaticGate(this.sketch, row, col, axis, delta);
         this.addGate(staticGate);
     }
@@ -252,7 +396,25 @@ class QuantumCircuit {
         this.addGate(cnot);
     }
 
-    addInteractiveRotation(row, col, axis, delta) {
+    addStaticCZ(col, control, target) {
+        let cz = new StaticCZ(this.sketch, col, control, target);
+        this.addGate(cz);
+    }
+
+    addStaticCU(col, control, target, axis, exp, fillColor, outlineColor) {
+        let cu = new StaticCU(this.sketch, col, control, target, axis, exp);
+        if (fillColor != undefined) {
+            cu.setColors(fillColor, outlineColor);
+        }
+        this.addGate(cu);
+    }
+
+    addStaticSWAP(col, qubit1, qubit2) {
+        let swap = new StaticSWAP(this.sketch, col, qubit1, qubit2);
+        this.addGate(swap);
+    }
+
+    addInteractiveRotation(col, row, axis, delta) {
         let rotatingGate = new RotatingGate(this.sketch, row, col, axis, delta);
         this.addGate(rotatingGate);
     }
@@ -370,6 +532,8 @@ class VisualQuantumState {
     simulateGate(gate, qs) {
         if (gate.gateType == "cnot") {
             qs.cnot(gate.control, gate.target);
+        } else if (gate.gateType == "swap") {
+            qs.swap(gate.qubit1, gate.qubit2);
         } else if (gate.gateType == "staticRotation" || gate.gateType == "rotating") {
             qs.majorRotation(gate.row, gate.axis, gate.delta * Math.PI);
         }
@@ -412,6 +576,12 @@ class QuantumState {
         }
 
         this.probs.isUpdated = false;
+    }
+
+    swap(qubit1, qubit2) {
+        this.cnot(qubit1, qubit2);
+        this.cnot(qubit2, qubit1);
+        this.cnot(qubit1, qubit2);
     }
 
     z(target, delta) {

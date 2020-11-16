@@ -997,13 +997,101 @@ Tensoring each matrix with the identity matrix and them multiplying them togethe
 
 ### [3.5](#QCSG)   Controlled Gates
 
-Interact with multiple qubits
+The goal of this section is to address how qubits interact with each other. So far, we have treated qubits as separate entities which can be operated on independently. To create a powerful model of computation, qubit states need to be able to impact each other. In quantum computing, we use transformations called _controlled operations_ which are able to connect qubits.
 
-CNOT(1,2) = HxH CNOT(2,1) HxH
+#### Controlled Not Gate
 
-Swap = 3 cnots
+The most fundamental controlled gate is called the _controlled not_ and it takes in 2 qubits: a control qubit and a target qubit. In English, the transformation a controlled not (CNOT) gate performs is described as: _if the control qubit is_ $|1\rangle$, _then flip the target qubit_. We can create a truth table which describes the operation if the left qubit is the control and the right qubit is the target
+$$
+\begin{equation}\begin{aligned}
+|c\ t\rangle& \\
+|00\rangle&\rightarrow|00\rangle \\
+|01\rangle&\rightarrow|01\rangle \\
+|10\rangle&\rightarrow|11\rangle \\
+|11\rangle&\rightarrow|10\rangle
+\end{aligned}\end{equation}
+$$
+The above ket notation shows a truth table for every basis state. If the control qubit is $|0\rangle$, the CNOT acts as an identity operation and nothing happens. If the control qubit is $|1\rangle$, the target qubit is flipped. The same operation can be visualized in the tensored vector form:
 
-CZ gate and it's applications
+<img src="resources\img\3.5_cnot_vector_switch.png" />
+
+The CNOT transformation switches the placement of the $|10\rangle$ and $|11\rangle$ coefficients. The CNOT gate is also called the CX gate since it is essentially a controlled X rotation. The matrix form of the CNOT gate is written as:
+
+<img src="resources\img\3.5_cnot_matrix.png" />
+
+Notice how the transformation the CNOT applies changes depending which qubit is acting as the control. In circuit form, the small black dot denotes the control qubit and the large $\oplus$ shows the target qubit. Remember that we are using the standard where the topmost qubit line is the least significant qubit. The truth table and the tensored vector descriptions are referring to the top circuit where the control qubit is below the target qubit. Some sources use a different standard where the bottom-most qubit is the least significant qubit, which would switch the matrix-circuit representations.
+
+The control and target qubits cannot be the same qubit in a CNOT gate. Such an operation would create the following truth table, which is not reversible:
+$$
+|0\rangle\rightarrow|0\rangle \\
+|1\rangle\rightarrow|0\rangle \\
+\text{Not a reversible operation!}
+$$
+One question students often ask is "why use the $\oplus$ symbol for the CNOT gate?" In computational logic, the $\oplus$ symbol refers to the exclusive or (XOR) of two bits. The controlled-not gate is a reversible version of XOR, the control qubit is unaffected and the target qubit becomes the XOR of the control and the target:
+$$
+|c\rangle|t\rangle\rightarrow|c\rangle|c\oplus t\rangle
+$$
+
+#### SWAP Gate
+
+An interesting property of the XOR operation is that it can swap the values of two variables without using a temporary variable. Consider the binary variables $X$ and $Y$ and perform the following algorithm on them:
+$$
+X := X\oplus Y \\
+Y := Y\oplus X \\
+X := X\oplus Y
+$$
+After 3 XORs, the variable $X$ will contain the original value of $Y$ and vice versa. As we have already discussed, the CNOT gate is the reversible equivalent to the XOR gate, which means we can create a SWAP gate out of 3 CNOT gates:
+
+<img src="resources\img\3.5_swap_circuit.png" width="850px" />
+
+This gate switches the incoming qubit states so the bottom qubit now contains the original state of the top qubit and vice versa. The SWAP gate is symmetric with respect to the qubits it is swapping. That is to say, $\text{SWAP}(|\psi\rangle,|\varphi\rangle)=\text{SWAP}(|\varphi\rangle,|\psi\rangle)$. As expected, the SWAP gate is its own inverse, so two sequential SWAP gates is an identity operation. The matrix of the SWAP gate is:
+$$
+\text{SWAP}=
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+#### Controlled Z Gate
+
+Similar to how the CNOT gate is a controlled X rotation of $\Delta=1$, we can also create the CZ gate for a controlled Z rotation. The CZ gate performs the following operation:
+$$
+\begin{matrix}
+|c\ t\rangle\quad\   \\
+|00\rangle\rightarrow&\ \ \ |00\rangle \\
+|01\rangle\rightarrow&\ \ \ |01\rangle \\
+|10\rangle\rightarrow&\ \ \ |10\rangle \\
+|11\rangle\rightarrow&-|11\rangle
+\end{matrix}
+$$
+The controlled Z gate applies a phase shift only when both qubits are in the state $|11\rangle$. This operation is symmetric with respect to the input qubits:
+
+<img src="resources\img\3.5_cz_circuit.png" width="450px" />
+
+Since the orientation of the CZ gate doesn't matter, another common notation for the gate is to have control dots on both qubits. The matrix representation of the gate is:
+
+<img src="resources\img\3.5_cz_matrix.png"  width="350px"/>
+
+A CZ gate can be constructed using a CNOT gate and 2 Hadamard gates like so:
+
+<img src="resources\img\3.5_cx_cz_equal.png" width="550px"/>
+
+Using the above relationship, we can flip the CZ gate since it is symmetric and create a method to flip the CNOT gate using Hadamard gates.
+
+<img src="resources\img\3.5_cx_flip.png" width="550px"/>
+
+The controlled Z gate has applications in simulating quantum circuits on quantum computers. The runtime of simulating a CZ gate is faster than a CNOT gate, so if a circuit can be transformed into an equivalent circuit using approximately the same number of gates, the simulation will be noticeably faster.
+
+#### Controlled U Gate
+
+
+
+
+
+
 
 Any controlled gate: Controlled-U - Controlled anything into pauli + CNOT
 
@@ -1031,15 +1119,7 @@ Simulators vs quantum assembly
 
 swoosh
 
-### 4.1   The Tensor Product
-
-distributing vectors and distributing kets
-
-### 4.2   Superposition of Quantum Registers
-
-Summations n stuff
-
-### 4.3   Generating Entanglement
+### 4.1   Generating Entanglement
 
 mixed states, r<1
 
@@ -1051,7 +1131,7 @@ information instantly
 
 due to entanglement, 2 quantum computers with 50 qubits is FAR less powerful than 1 computer with 100 qubits
 
-### 4.4   Bell States
+### 4.2   Bell States
 
 Hadamard then CNOT
 
@@ -1063,15 +1143,27 @@ read 1 then know the other instantly (Maximally Entangled)
 
 ​	but not always! (Partially Entangled)
 
-**More ideas:**
-
-full state reconstruction
-
-gate decomposition
+### 4.3   Entangled State Space
 
 Q state space compared to P state space
 
-### 4.5   Case Study: Google's Quantum Supremacy
+Applet
+
+How many layers to access all states?
+
+### 4.4   Gate Decomposition
+
+Decomposing a gate into minimum universal set
+
+CAN gate and Weyl chamber
+
+Full state reconstruction
+
+### 4.5   State Mapping
+
+mapping a scrambled state to an unscrambled state
+
+### 4.6   Case Study: Google's Quantum Supremacy
 
 In late 2019, Google announced they had achieved _quantum supremacy_ on their 53 qubit quantum processor named Sycamore, published in <a href="https://www.nature.com/articles/s41586-019-1666-5" target="_blank">Nature</a>. Quantum supremacy is the term for when a quantum program can beat a classical program at a task. What kind of task? It doesn't matter. There is no official benchmark, so the task can be any type of algorithm or can simply have a useless objective. As long as the QPU is significantly faster than a classical computer at **any** objective, quantum supremacy is declared.
 
@@ -1203,11 +1295,11 @@ parallelization & race conditions
 
 ## Chapter 10:   Simulating Quantum Computers
 
-classically!
+we trying
+
+### 10.1   Schrödinger State Simulation
 
 matrix form
-
-simulation in linear memory - each final amplitude separate. Depends on $2^d$ where d is depth 
 
 algorithm form: bitwise CNOT & bitwise X&Y&Z
 
@@ -1215,13 +1307,27 @@ algorithm form: bitwise CNOT & bitwise X&Y&Z
 
 ​	phase != 0 instead of == 1
 
+### 10.2   Schrödinger State Optimizations
+
+GPU optimization
+
+### 10.3   Feynman Path Integrals
+
+simulation in linear memory - each final amplitude separate. Depends on $2^d$ where d is depth 
+
+### 10.4   Hybrid Algorithms
+
+tensor contraction
+
+### 10.5   Quantum State Estimation
+
+Estimating quantum states
+
+
+
 qiskit universal gate form
 
 deferred form partitioning
-
-simulating classical computers on quantum computers - Maybe already covered in chap 3
-
-Schrödinger & Feynman path integrals / algorithms
 
 Some sets of universal gates are faster than others
 
@@ -1279,6 +1385,10 @@ Lala P. 2019. <a href="https://www.amazon.com/Quantum-Computing-Parag-Lala/dp/12
 
 Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69.
 
+Garcia-Escartin J, Chamorro-Posada P. 2011. <a href="https://arxiv.org/pdf/1110.2998.pdf" target="_blank">Equivalent Quantum Circuits</a>. arXiv.
+
 ### Chapter 4
+
+Crooks G. 2019. <a href="https://threeplusone.com/pubs/on_gates.pdf" target="_blank">Gates, States, and Circuits</a>. ThreePlusOne.
 
 Arute F, Arya K, Babbush R, *et al.* 2019. <a href="https://www.nature.com/articles/s41586-019-1666-5" target="_blank">Quantum supremacy using a programmable superconducting processor</a>. Nature. 574(7779):505–510.
