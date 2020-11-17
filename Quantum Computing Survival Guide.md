@@ -1087,17 +1087,28 @@ The controlled Z gate has applications in simulating quantum circuits on quantum
 
 #### Controlled U Gate
 
+The controlled X and controlled Z gates are specific instances of the general controlled U gate. Any single qubit gate $U$ can be transformed into a CU gate:
+$$
+U=\begin{bmatrix}
+u_{00} & u_{01} \\
+u_{10} & u_{11}
+\end{bmatrix}
+$$
+<img src="resources\img\3.5_cu_matrix.png"/>
 
+Every 2 qubit gate described above has acted on adjacent qubits inside the circuit. It is also possible to have the control further away and "jump over" qubits to reach the target. The CU gate does not impact the two qubits which do not have a control or gate placed on them. However, what if we have a constraint on our circuit that all 2 qubit gates must act on adjacent qubits? This can be overcome by simply using SWAP gates to pull the control closer:
 
+<img src="resources\img\3.5_cu_space.png" width="600px"/>
 
+This idea can be extended for any number of intermediate qubits by increasing the staircase of SWAP gates. Engineering physical quantum computers is already a challenging task, creating controlled gates between any pair of arbitrary qubits in the circuit may be infeasible. As a result, this trick can be used so engineers only need to implement controlled operations between adjacent qubits in the circuit. 
 
+#### Circuit Specifications
 
+In the above CU circuit, originally there weren't any gates on the middle two qubits. However, there are several gates acting on them after the transformation. In this circuit, the middle two qubits are acting as _ancilla qubits_. An ancilla qubit is a qubit which has operations performed on it that do not directly contribute to the result, but help indirectly. They typically come in two flavors: identity ancilla qubits and garbage ancilla qubits. 
 
-Any controlled gate: Controlled-U - Controlled anything into pauli + CNOT
+The ancilla qubits in the CU circuit are acting as identity ancilla qubits because even though there are gates being applied to them, the end result is equivalent to the identity operation. These identity ancilla qubits were borrowed to accomplish a more complicated goal, but had the affects undone after the goal was accomplished. Garbage ancilla qubits do not have such restrictions, the results after measuring a garbage ancilla qubit are discarded. Garbage ancilla qubits are particularly useful in quantum computation for reducing the _depth_ of a circuit. 
 
-'depth' of a circuit
-
-ancilla qubits
+The depth of a circuit refers to how long it takes to run. This is measured by the number of _timesteps_ a circuit has. In one timestep, several gates can be applied to the quantum register, but two gates cannot be applied to the same qubit in a single timestep. Many quantum circuits are extremely parallelizable since multiple gates are applied in sync. The depth of a circuit can change after a quantum complier changes the circuit to fit the architecture of the computer. For example, if our quantum computer can only apply two qubit gates to adjacent qubits, the CU circuit above transforms from having a depth of 1 to a depth of 5. This is similar to how classical programs change length after being compiled for a target machine. Typically, the actual depth of a quantum circuit is not used, just the asymptotic gate depth. It is expressed using big-oh notation as a function of the input. For example, linear gate depth would be $O(n)$. 
 
 ### [3.6](#QCSG)   Reversible (Classical) Computing
 

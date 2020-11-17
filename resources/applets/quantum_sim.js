@@ -216,7 +216,7 @@ class StaticSWAP {
         this.sketch.line(x + LENGTH, y - LENGTH, x - LENGTH, y + LENGTH);
 
         // Draw second cross
-        let ty = (this.target - this.control) * this.circuit.SCALE + y;
+        let ty = (this.qubit2 - this.qubit1) * this.circuit.SCALE + y;
         this.sketch.line(x - LENGTH, ty - LENGTH, x + LENGTH, ty + LENGTH);
         this.sketch.line(x + LENGTH, ty - LENGTH, x - LENGTH, ty + LENGTH);
 
