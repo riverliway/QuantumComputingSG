@@ -1110,16 +1110,6 @@ The ancilla qubits in the CU circuit are acting as identity ancilla qubits becau
 
 The depth of a circuit refers to how long it takes to run. This is measured by the number of _timesteps_ a circuit has. In one timestep, several gates can be applied to the quantum register, but two gates cannot be applied to the same qubit in a single timestep. Many quantum circuits are extremely parallelizable since multiple gates are applied in sync. The depth of a circuit can change after a quantum complier changes the circuit to fit the architecture of the computer. For example, if our quantum computer can only apply two qubit gates to adjacent qubits, the CU circuit above transforms from having a depth of 1 to a depth of 5. This is similar to how classical programs change length after being compiled for a target machine. Typically, the actual depth of a quantum circuit is not used, just the asymptotic gate depth. It is expressed using big-oh notation as a function of the input. For example, linear gate depth would be $O(n)$. 
 
-### [3.6](#QCSG)   Reversible (Classical) Computing
-
-Toffoli, Fredkin, Peres
-
-Universal set of reversible computing
-
-Proving a quantum computer can simulate a classical computer in P time
-
-Arbitrary num controlled U gate
-
 ### [3.6](#QCSG)   Quantum Programming
 
 After discussing the operations a quantum computer can perform to its qubits, how would we program a quantum computer? To date, a high-level quantum programming language has not yet been developed so modern quantum computers are coded with individual gates, similar to assembly for classical computers. There aren't even any independent quantum languages, most of the "languages" are just libraries accessed from classical languages.
@@ -1146,55 +1136,7 @@ Released in December of 2017, Qsharp is Microsoft's quantum computing framework 
 
 Released in July of 2018, Cirq is Google's quantum computing framework for Python. Similar to Q#, Cirq is just a quantum simulator with no currently announced plans of offering a physical backend to run circuits. Cirq has close ties with Google's OpenFermion project which uses quantum algorithms to simulate fermionic systems like quantum chemistry. 
 
-## Chapter 4:   Entanglement
-
-swoosh
-
-### 4.1   Generating Entanglement
-
-mixed states, r<1
-
-undistributable
-
-EPR pair
-
-information instantly
-
-due to entanglement, 2 quantum computers with 50 qubits is FAR less powerful than 1 computer with 100 qubits
-
-### 4.2   Bell States
-
-Hadamard then CNOT
-
-4 bell states
-
-translate the bell states into each other
-
-read 1 then know the other instantly (Maximally Entangled)
-
-​	but not always! (Partially Entangled)
-
-### 4.3   Entangled State Space
-
-Q state space compared to P state space
-
-Applet
-
-How many layers to access all states?
-
-### 4.4   Gate Decomposition
-
-Decomposing a gate into minimum universal set
-
-CAN gate and Weyl chamber
-
-Full state reconstruction
-
-### 4.5   State Mapping
-
-mapping a scrambled state to an unscrambled state
-
-### 4.6   Case Study: Google's Quantum Supremacy
+### [3.7](#QCSG)   Case Study: Google's Quantum Supremacy
 
 In late 2019, Google announced they had achieved _quantum supremacy_ on their 53 qubit quantum processor named Sycamore, published in <a href="https://www.nature.com/articles/s41586-019-1666-5" target="_blank">Nature</a>. Quantum supremacy is the term for when a quantum program can beat a classical program at a task. What kind of task? It doesn't matter. There is no official benchmark, so the task can be any type of algorithm or can simply have a useless objective. As long as the QPU is significantly faster than a classical computer at **any** objective, quantum supremacy is declared.
 
@@ -1240,161 +1182,9 @@ By definition, Google's team still technically proved quantum supremacy since th
 
 One incredibly important point brought up in IBM's response is the entire concept of quantum "supremacy". The nature of quantum  processors are to be devices which coordinate with classical computers, not compete against them. The notion of claiming quantum supremacy is no less ridiculous than claiming "GPU supremacy" because a GPU was shown to be faster at one specific task. The term quantum supremacy was blown out of proportion by the media and broadly misunderstood by the general public. 
 
-## Chapter 5:   Quantum Networks
-
-it cool
-
-### 5.1   No-Cloning Theorem
-
-Heisenberg uncertainty principal
-
-Cloning via recomputing
-
-### 5.2   Teleportation
-
-not like the movies
-
-moving a qubit state over a long distance
-
-distributing quantum pairs ahead of time
-
-destroys sending qubit (measures)
-
-decoherence
-
-### 5.3   Superdense Coding
-
-teleportation in reverse
-
-2 bits for the price of 1 (kinda)
-
-can't use Huffman encoding in quantum, so we gotta think of new encoding schemes
-
-### 5.4   Pseudo Clones
-
-Work arounds and cloning with a chance
-
-## Chapter 6:   Quantum Cryptography
-
-BB84 and other quantum key distributions
-
-Quantum cryptography vs post-quantum cryptography
-
-## Chapter 7:   Quantum Error Correction
-
-Up to this point we have been assuming we have 'perfect' qubits
-
-decoherence and fidelity
-
-probability correction
-
-phase correction
-
-physical qubits vs logical qubits
-
-## Chapter 8:   Quantum Computer Architecture
-
-superconducting qubits (Google, IBM, Rigetti, Intel)
-
-​	dilution refrigeration (~10mK), low vibration, magnetic shielding
-
-​	current flow
-
-​	Josephson junction
-
-ion trap (IonQ)
-
-​	lasers - slow but stable
-
-​	qubit storage (quantum RAM), quantum hard drives don't really exist yet
-
-Quantum annealers (D-WAVE)
-
-​	different qubits than the gate model. Low degrees of freedom comparatively 
-
-Quantum walks on graphs
-
-​	wacky
-
-## Chapter 9:   Quantum Compilers
-
-phase normal form
-
-#of cnots in circuit > (n-1)!
-
-parallelization & race conditions
-
-## Chapter 10:   Simulating Quantum Computers
-
-we trying
-
-### 10.1   Schrödinger State Simulation
-
-matrix form
-
-algorithm form: bitwise CNOT & bitwise X&Y&Z
-
-​	cubeOffset instead of cubeDepth
-
-​	phase != 0 instead of == 1
-
-### 10.2   Schrödinger State Optimizations
-
-GPU optimization
-
-### 10.3   Feynman Path Integrals
-
-simulation in linear memory - each final amplitude separate. Depends on $2^d$ where d is depth 
-
-### 10.4   Hybrid Algorithms
-
-tensor contraction
-
-### 10.5   Quantum State Estimation
-
-Estimating quantum states
-
-
-
-qiskit universal gate form
-
-deferred form partitioning
-
-Some sets of universal gates are faster than others
-
-## Chapter 11:   Quantum Algorithms
-
-General format of a quantum algorithm: classical preprocessing, quantum circuit, classical postprocessing
-
-General goal of a quantum algorithm: Minimize probability of 'wrong' answers & maximize probability of 'right' answers
-
-QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
-
-<img src="resources\img\1.2_comp_class.png" width="400px"/>
-
-<center><i>Figure 1.2.1 Common Complexity Classes</i></center>
-
-The study of _computational complexity classes_ is from the theory side of computer science which describes how long a computer program takes to solve a certain problem based off the size of the input. 
-
-BQP complexity class
-
-https://www.cs.virginia.edu/~robins/The_Limits_of_Quantum_Computers.pdf
-
-## Chapter 12:   Quantum Artificial Intelligence
-
-I know very little right now
-
-## Chapter 13:   Chemical Simulation
-
-I know **nothing** right now, but it seems supa cool
-
 ## Bibliography
 
 Resources ordered by the chapter they are most heavily related to. Referencing format: <a href="https://www.scientificstyleandformat.org/Tools/SSF-Citation-Quick-Guide.html" target="_blank">CSE Manual</a>.
-
-### Chapter 1
-
-a
 
 ### Chapter 2
 
@@ -1417,8 +1207,6 @@ Lala P. 2019. <a href="https://www.amazon.com/Quantum-Computing-Parag-Lala/dp/12
 Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69.
 
 Garcia-Escartin J, Chamorro-Posada P. 2011. <a href="https://arxiv.org/pdf/1110.2998.pdf" target="_blank">Equivalent Quantum Circuits</a>. arXiv.
-
-### Chapter 4
 
 Crooks G. 2019. <a href="https://threeplusone.com/pubs/on_gates.pdf" target="_blank">Gates, States, and Circuits</a>. ThreePlusOne.
 

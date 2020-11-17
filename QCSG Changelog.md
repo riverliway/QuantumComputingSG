@@ -2,6 +2,11 @@
 
 [toc]
 
+#### Version 0.2.6 - November 16, 2020
+
+* Added Section - Controlled U gate
+* Added Section - Quantum Programming
+
 #### Version 0.2.5 - November 14, 2020
 
 * Added Section - Modern Applications of Quantum Computers
