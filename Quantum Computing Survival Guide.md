@@ -848,6 +848,75 @@ $$
 $$
 However, we don't actually know the $\theta$ and $\phi$ of some generic quantum state. To rotate around an axis, the coordinates of the axis must be known, otherwise how would we know which gates to apply?
 
+#### Single Qubit Gate Decomposition
+
+Decomposing a rotation around an arbitrary axis into 5 major axis rotations is decent, but we can take it one step further. In the previous chapter, we stated that $\text{span}(ZYZ)$ was complete with respect to $P^1$. This means any generic single qubit gate $U$ can be decomposed into three gates and a global phase: $e^{ia}Z^{\Delta_1}Y^{\Delta_2}Z^{\Delta_3}$
+$$
+\begin{equation}\begin{aligned}
+
+U&=\begin{bmatrix}
+r_1e^{i\varphi_1} & r_2e^{i\varphi_2} \\
+r_3e^{i\varphi_3} & r_4e^{i\varphi_4}
+\end{bmatrix} \\
+
+&=\begin{bmatrix}
+\cos(\frac{\Delta_2\pi}{2}) e^{ia} & -\sin(\frac{\Delta_2\pi}{2})e^{ia+i\Delta_3\pi} \\
+\sin(\frac{\Delta_2\pi}{2})e^{ia+i\Delta_1\pi} & \cos(\frac{\Delta_2\pi}{2}) e^{ia+i\Delta_1\pi+i\Delta_3\pi}
+\end{bmatrix} \\
+
+&=e^{ia}\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\Delta_1\pi}
+\end{bmatrix}\begin{bmatrix}
+\cos(\frac{\Delta_2\pi}{2}) & -\sin(\frac{\Delta_2\pi}{2}) \\
+\sin(\frac{\Delta_2\pi}{2}) & \cos(\frac{\Delta_2\pi}{2})
+\end{bmatrix}\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\Delta_3\pi}
+\end{bmatrix} \\
+
+&=e^{ia}Z^{\Delta_1}Y^{\Delta_2}Z^{\Delta_3}
+
+\end{aligned}
+\end{equation}
+$$
+We can find the rotation parameters using the following equations:
+$$
+\begin{equation}
+\begin{aligned}
+
+a &= \varphi_1 \\
+\Delta_1 &= \frac{\varphi_3-\varphi_1}{\pi} \\
+\Delta_2 &= \frac{2}{\pi}\text{atan2}(r_1,r_3) \\
+\Delta_3 &=\frac{\varphi_2-\varphi_1}{\pi}
+
+\end{aligned}
+\end{equation}
+$$
+Applying this method of gate decomposition to our rotation around an arbitrary axis, we can shorten it to 3 gates instead of 5. The first step is to get the arbitrary axis formula into one matrix so we can create our $r$ and $\varphi$ variables.
+$$
+\begin{equation}\begin{aligned}
+\hat n^\Delta &= \cos(\frac{\Delta\pi}{2})I-i \sin(\frac{\Delta\pi}{2})(n_xX+n_yY+n_zZ) \\
+&= \begin{bmatrix}
+\cos(\frac{\Delta\pi}{2})-i n_z \sin(\frac{\Delta\pi}{2}) & -n_y\sin(\frac{\Delta\pi}{2})-in_x\sin(\frac{\Delta\pi}{2}) \\
+n_y\sin(\frac{\Delta\pi}{2})-in_x\sin(\frac{\Delta\pi}{2}) & \cos(\frac{\Delta\pi}{2})+i n_z \sin(\frac{\Delta\pi}{2})
+\end{bmatrix}
+\end{aligned}\end{equation}
+$$
+The next step is to create the $r$ and $\varphi$ variables:
+$$
+\begin{equation}\begin{aligned}
+r_1&=\sqrt{\cos^2(\frac{\Delta\pi}{2})+n_z^2 \sin^2(\frac{\Delta\pi}{2})} \\
+r_3&=\sin^2(\frac{\Delta\pi}{2})\sqrt{n_x^2+n_y^2} \\
+\varphi_1&=\text{atan2}(\cos(\frac{\Delta\pi}{2}), -n_z\sin(\frac{\Delta\pi}{2})) \\
+\varphi_2&=\text{atan2}(-n_y\sin(\frac{\Delta\pi}{2}), -n_x\sin(\frac{\Delta\pi}{2})) \\
+\varphi_3&=\text{atan2}(n_y\sin(\frac{\Delta\pi}{2}), -n_x\sin(\frac{\Delta\pi}{2}))
+\end{aligned}\end{equation}
+$$
+These variables can simply be substituted into the equations for the $\Delta$ variables to find how much to rotate around the ZYZ axes. The formulas for rotation with 3 gates are significantly less clean than the 5 gate version. Since modern quantum computers are slower and less accurate compared to classical computers, it is worth the extra steps on the classical side to reduce the number of gates the quantum computer needs to apply.
+
+In the previous chapter, we also stated that $\text{span}(YZ)\cup\text{span}(ZY)$ is complete with respect to $P^1$, which implies any single qubit gate could be reduced even further to 2 gates, if the order could be swapped. However, this is not done because the order of the gates is state-dependent, and the current state to be rotated is not known at compile time, when the substitution is deployed. Furthermore, the actual state of the qubit is not known until measurement, so we can't know how to order the gates until after they have already been applied.
+
 ### [3.4](#QCSG)   Quantum Registers
 
 Up to this point, we have used the term _quantum system_ interchangeably with the term _qubit_ because we have only focused on a single qubit. However, a quantum system is a more general concept, it refers to all quantum objects of interest to us in a particular setting. When we have collection of qubits, it is called a _quantum register_ and they are grouped together under one quantum system. 
@@ -1110,9 +1179,13 @@ The ancilla qubits in the CU circuit are acting as identity ancilla qubits becau
 
 The depth of a circuit refers to how long it takes to run. This is measured by the number of _timesteps_ a circuit has. In one timestep, several gates can be applied to the quantum register, but two gates cannot be applied to the same qubit in a single timestep. Many quantum circuits are extremely parallelizable since multiple gates are applied in sync. The depth of a circuit can change after a quantum complier changes the circuit to fit the architecture of the computer. For example, if our quantum computer can only apply two qubit gates to adjacent qubits, the CU circuit above transforms from having a depth of 1 to a depth of 5. This is similar to how classical programs change length after being compiled for a target machine. Typically, the actual depth of a quantum circuit is not used, just the asymptotic gate depth. It is expressed using big-oh notation as a function of the input. For example, linear gate depth would be $O(n)$. 
 
-### [3.6](#QCSG)   Reversible (Classical) Computing
+### [3.6](#QCSG)   Reversible Computing
 
-Toffoli, Fredkin, Peres
+As discussed in previous sections, all quantum gates are reversible. 
+
+
+
+Toffoli, Fredkin
 
 Universal set of reversible computing
 
@@ -1120,7 +1193,7 @@ Proving a quantum computer can simulate a classical computer in P time
 
 Arbitrary num controlled U gate
 
-### [3.6](#QCSG)   Quantum Programming
+### [3.7](#QCSG)   Quantum Programming
 
 After discussing the operations a quantum computer can perform to its qubits, how would we program a quantum computer? To date, a high-level quantum programming language has not yet been developed so modern quantum computers are coded with individual gates, similar to assembly for classical computers. There aren't even any independent quantum languages, most of the "languages" are just libraries accessed from classical languages.
 
@@ -1128,7 +1201,7 @@ Modern quantum programming workflow first creates a desired circuit in a quantum
 
 <img src="resources\img\3.7_workflow.png"/>
 
-<center><i>Figure 3.6.1 - Modern Quantum Programming Workflow</i></center>
+<center><i>Figure 3.7.1 - Modern Quantum Programming Workflow</i></center>
 
 The compilers are a very important step in this process which often get overlooked. Just like classical compilers, a quantum compiler takes in some general circuit and changes the gates to run most effectively on the target platform. The platform can be a specific architecture or simulator type which handles certain types of circuits better than others.
 
@@ -1183,6 +1256,8 @@ Applet
 How many layers to access all states?
 
 ### 4.4   Gate Decomposition
+
+
 
 Decomposing a gate into minimum universal set
 

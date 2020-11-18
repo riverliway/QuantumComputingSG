@@ -2,6 +2,10 @@
 
 [toc]
 
+#### Version 0.2.7 - November 17, 2020
+
+* Added Subsection - Single Qubit Gate Decomposition
+
 #### Version 0.2.6 - November 16, 2020
 
 * Added Section - Controlled U gate
