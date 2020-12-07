@@ -60,38 +60,46 @@ class StaticGate {
 }
 
 class StaticCnot {
-    constructor(sketch, col, control, target) {
+    constructor(sketch, col, controls, target) {
+        // Controls is an array of indexes which to control on
         this.gateType = "cnot";
         this.circuit = undefined;
         this.sketch = sketch;
         this.col = col;
-        this.control = control;
+        this.controls = controls;
         this.target = target;
-        this.row = control;
+        this.row = target;
+        this.minControl = Math.min(Math.min(...controls), target);
+        this.maxControl = Math.max(Math.max(...controls), target)
     }
 
     _doDraw(x, y, size) {
+        // The x and y passed in are the position of the target gate, not the controls
+
         const CONTROL_RADIUS = size * 0.2;
 
-        // Draw control
+        // Draw controls
         this.sketch.fill(0);
         this.sketch.stroke(0);
         this.sketch.strokeWeight(0);
-        this.sketch.circle(x, y, CONTROL_RADIUS);
+        for (let i = 0; i < this.controls.length; i++) {
+            this.sketch.circle(x, this._createY(this.controls[i], y), CONTROL_RADIUS);
+        }
 
         // Draw target
         this.sketch.noFill();
         this.sketch.strokeWeight(2);
         const TARGET_RADIUS = CONTROL_RADIUS * 1.7;
-        let ty = (this.target - this.control) * this.circuit.SCALE + y;
-        this.sketch.circle(x, ty, 2 * TARGET_RADIUS);
+        this.sketch.circle(x, y, 2 * TARGET_RADIUS);
+        this.sketch.line(x - TARGET_RADIUS, y, x + TARGET_RADIUS, y);
+        this.sketch.line(x, y - TARGET_RADIUS, x, y + TARGET_RADIUS);
 
         // Draw connecting line
-        let line_extension = (this.control < this.target) ? TARGET_RADIUS : -TARGET_RADIUS;
-        this.sketch.line(x, y, x, ty + line_extension);
+        this.sketch.line(x, this._createY(this.minControl, y), x, this._createY(this.maxControl, y));
+    }
 
-        // Draw target horizontal line
-        this.sketch.line(x - TARGET_RADIUS, ty, x + TARGET_RADIUS, ty);
+    _createY(index, y) {
+        return (index - this.target) * this.circuit.SCALE + y;
     }
 
     setCircuit(circuit) {
@@ -392,8 +400,13 @@ class QuantumCircuit {
     }
 
     addStaticCnot(col, control, target) {
-        let cnot = new StaticCnot(this.sketch, col, control, target);
+        let cnot = new StaticCnot(this.sketch, col, [control], target);
         this.addGate(cnot);
+    }
+
+    addStaticToffoli(col, control1, control2, target) {
+        let toff = new StaticCnot(this.sketch, col, [control1, control2], target);
+        this.addGate(toff);
     }
 
     addStaticCZ(col, control, target) {

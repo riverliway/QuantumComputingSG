@@ -1181,7 +1181,28 @@ The depth of a circuit refers to how long it takes to run. This is measured by t
 
 ### [3.6](#QCSG)   Reversible Computing
 
-As discussed in previous sections, all quantum gates are reversible. 
+As discussed in previous sections, all quantum gates are reversible. However, the concept of reversible computation is not exclusive to quantum computers. _Reversible computing_ has been studied extensively in the field of classical computer architectures in an attempt to improve the energy consumption of computers. Irreversible bit operations like AND, OR, and XOR dissipate energy and create entropy, but reversible bit operations like NOT and CNOT preserve the entropy of the system. Therefore, it is very important to know if the AND, OR, and XOR gates can be expressed in terms of NOT and CNOT operations.
+
+#### Scrambled State Problem
+
+We know the AND, OR, and XOR gates are universal, which means every boolean function $f:\{0,1\}^n\rightarrow\{0,1\}$ can be implemented as a sequence of those gates. Equivalently, we can check if every bijective boolean function $f:\{0,1\}^n\rightarrow\{0,1\}^n$ can be implemented as a sequence of NOT and CNOT gates. Another way of viewing bijective boolean functions is the _scrambled state problem_. Consider a vector of length $2^n$, if each element of the vector is the index the element is at, the vector is said to be unscrambled. Here is an example for $n=3$:
+$$
+\begin{equation}\begin{aligned}
+\text{unscrambled state}&=\begin{bmatrix}
+0&1&2&3&4&5&6&7
+\end{bmatrix} \\
+\text{scrambled state}&=\begin{bmatrix}
+4&1&6&0&3&7&2&5
+\end{bmatrix}
+\end{aligned}\end{equation}
+$$
+If the state is scrambled, it means the order of the elements have been shuffled. Each vector has $2^n$ entries, which means each entry can be expressed in binary using $n$ bits. Our goal is to take in a scrambled state and use reversible operations to unscramble it. The question remains: can we can unscramble every scrambled state using just NOT and CNOT gates? For $n=1$ and $n=2$, yes! However, not every state can be unscrambled when $n=3$. Out of the $2^3!=40,320$ states, only $1,344$ of them can be unscrambled using NOT and CNOT gates. 
+
+How can we unscramble the remaining states? For this, we'll introduce a new gate, the **Toffoli** gate. The Toffoli gate is a controlled-controlled NOT operation, denoted as CCNOT or $C^2(X)$. If both of the control bits are on, the target bit gets flipped. 
+
+<img src="resources\img\3.5_toff_matrix.png"/>
+
+a
 
 
 
@@ -1189,7 +1210,7 @@ Toffoli, Fredkin
 
 Universal set of reversible computing
 
-Proving a quantum computer can simulate a classical computer in P time
+Proving a quantum computer can simulate a classical computer in P time, will quantum computers completely replace classical ones?
 
 Arbitrary num controlled U gate
 
@@ -1217,7 +1238,7 @@ Released in December of 2017, Qsharp is Microsoft's quantum computing framework 
 
 #### Cirq
 
-Released in July of 2018, Cirq is Google's quantum computing framework for Python. Similar to Q#, Cirq is just a quantum simulator with no currently announced plans of offering a physical backend to run circuits. Cirq has close ties with Google's OpenFermion project which uses quantum algorithms to simulate fermionic systems like quantum chemistry. 
+Released in July of 2018, Cirq is Google's quantum computing framework for Python. Similar to Qiskit, Cirq offers a connection to real quantum hardware for running circuits. Cirq has close ties with Google's OpenFermion project which uses quantum algorithms to simulate fermionic systems like quantum chemistry, as well as the TensorFlow Quantum project which aims to create hybrid quantum-classical machine learning models.
 
 ## Chapter 4:   Entanglement
 
@@ -1413,6 +1434,8 @@ algorithm form: bitwise CNOT & bitwise X&Y&Z
 
 ​	phase != 0 instead of == 1
 
+storing 2x2 gates as ZYZ rotations instead of 4 complex numbers, more memory efficient
+
 ### 10.2   Schrödinger State Optimizations
 
 GPU optimization
@@ -1427,7 +1450,27 @@ tensor contraction
 
 ### 10.5   Quantum State Estimation
 
-Estimating quantum states
+The pervious algorithms described how to perfectly simulate a quantum computer on a classical one. The problems in simulating a quantum computer arise from the exponential computing cost in terms of the circuit size. There is another approach to the problem: what if we don't require the simulation to be perfect, but close enough? The algorithm described in this section creates an estimation of the final quantum state which runs much faster than a perfect simulation.
+
+First choose hyperparameters $c$ and $k$ based on how powerful the simulating computer is. $c$ is a memory constraint, approximately 20-25 for a modern desktop. $k$ is a time constraint, approximately 30-35. 
+
+Begin simulating the circuit using Schrodinger state simulation, one state per qubit. Only tensor states together when necessary, as a 2 qubit gate requires it. Halt Schrodinger state simulation when a gate would create a tensor larger than $2^c$. Switch to Feynman path simulation. Choose the largest  $2^c$ amplitudes out of the entire state, which can be found from all the separate tensors. Simulate those amplitudes through $k$ superposition gates using Feynman path simulation. 
+
+After the first two steps, we have created a collection of the largest $2^c$ amplitudes. These amplitudes have a plurality of the probability mass compared to any other group of $2^c$ amplitudes, which theoretically means they hold the most information. We assume (incorrectly, but efficiently) that the rest of the amplitudes follow a uniform distribution, each of them close to zero. We then continue to simulate these $2^c$ amplitudes, dropping an amplitude if it becomes too small, and promoting an amplitude if it becomes large enough. 
+
+After every gate in the circuit has been processed, we ideally have the $2^c$ largest amplitudes of the actual state. If the circuit obeys our assumption that the remainder of the amplitudes follow a uniform distribution for each gate, then we legitimately do have the actual state's largest amplitudes. However, that assumption is almost always wrong since there will be slight variations between the amplitudes, which is why the result is an estimation. The estimation's accuracy is dependent on how close remaining amplitudes are to uniformity. 
+
+There is a question we need to ask ourselves: what is the purpose of simulating a quantum circuit? In most use cases, the entire resulting quantum state is not useful, we only care about the largest amplitudes since those are the results of whatever we were trying to compute. For lots of quantum algorithms, the answer we are seeking is in the largest 10 amplitudes. When we run this quantum state estimation algorithm, we are hoping the real state's largest 10 amplitudes are captured in the largest $2^c$ estimated amplitudes. 
+
+This simulation algorithm relies on the idea that the problem the circuit is solving is in the NP complexity class. That is, a solution to the problem can be verified in polynomial time. Once the largest $2^c$ estimated amplitudes have been found, each of them are considered a potential solution to the problem, so they all must be verified. Starting with the largest amplitude and working down, if an amplitude has been verified as correct, the estimation is considered to be a success. This algorithm is not guaranteed to produce a success for every circuit. Increasing the values of $c$ and $k$ make the likelihood of a success higher, but cannot guarantee a success until $c$ equals the number of qubits or $k$ equals the number of superposition gates in the circuit.
+
+Why begin with Schrodinger and Feynman style simulation for the first two steps before switching to an estimation algorithm? For one reason, it is more efficient to begin with the other styles until the exponential nature becomes too difficult to compute. The quantum state estimation algorithm has time complexity $\Theta(d)$ where $d$ is the number of gates and space complexity $\Theta(1)$. It seems odd to say an exponential style of simulation is more efficient, but it is true for low gate depth. The time and space complexities of the estimation algorithm are deceptive because it ignores the very high constants defined by the $c$ hyperparameter. 
+
+The other reason why the other two styles of simulation are used before switching to estimation is for accuracy. The estimation assumes all other amplitudes not currently tracked are in a uniform distribution, which is a bad assumption for low gate counts. It is difficult to get a good estimation of lightly entangled states using this method, heavily entangled states produce better estimations. 
+
+Since this algorithm is an estimation, it can be considered a form of noise. Future research should be conducted to see if error correcting circuits can be designed specifically for this type of noise to increase the accuracy and perhaps the efficiency of the estimation. 
+
+ 
 
 
 
@@ -1492,6 +1535,8 @@ Lala P. 2019. <a href="https://www.amazon.com/Quantum-Computing-Parag-Lala/dp/12
 Aaronson S. 2008. <a href="https://www.scientificamerican.com/article/the-limits-of-quantum-computers/" target="_blank">The Limits of Quantum</a>. Scientific American. 298(3):62-69.
 
 Garcia-Escartin J, Chamorro-Posada P. 2011. <a href="https://arxiv.org/pdf/1110.2998.pdf" target="_blank">Equivalent Quantum Circuits</a>. arXiv.
+
+Gidney G. 2015. <a href="https://algassert.com/circuits/2015/06/05/Constructing-Large-Controlled-Nots.html" target="_blank">Constructing Large Controlled Nots</a>. Algorithmic Assertions.
 
 ### Chapter 4
 
