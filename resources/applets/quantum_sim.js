@@ -46,6 +46,7 @@ class StaticGate {
     }
 
     getOutlineColor(axis) {
+        // Returns the color of the outline depending on the axis
         switch (axis) {
             case "X": return [158, 5, 5];
             case "Y": return [21, 158, 78];
