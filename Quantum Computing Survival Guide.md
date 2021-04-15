@@ -34,7 +34,7 @@ Some amount of review for these topics is provided, but we are assuming readers 
 
 The first chapter is a simple introduction to the history of quantum computing and why it is & will be useful. This chapter is not required, but can be useful for providing a bridge to the real world. The next three chapters form the foundations of quantum computing. After the chapter on entanglement, the document opens up, allowing instructors to focus on a particular subfield if they so choose.
 
-<img src="resources\img\Preface_chap_dep.svg" width="700px"/>
+<img src="html\resources\img\Preface_chap_dep.svg" width="700px"/>
 
 <center><i>Figure 0.1.1 The Chapter Dependency Graph</i></center>
 
@@ -66,7 +66,7 @@ To answer your question: pretty much. Formally, the word _quantum_, and its plur
 
 Researchers have shown that some problems such as integer factoring and searching unsorted data can be implemented more efficiently on a quantum computer than a classical one. Using a _Quantum Processing Unit (QPU)_, a CPU could send it specific jobs which are solved much faster on a quantum computer. There are many issues plaguing current quantum computers which make them difficult to offer to the general public, but the future of quantum computing looks very bright and there is still much to be discovered. 
 
-<img src="resources\img\1.1_device_arch.png" width="500px"/>
+<img src="html\resources\img\1.1_device_arch.png" width="500px"/>
 
 <center><i>Figure 1.1.1 A Possible Future Computer Architecture</i></center>
 
@@ -84,7 +84,7 @@ Then, in 1994, Peter Shor shocked the world with his quantum algorithm to factor
 
 The field of quantum computing has foundations in quantum physics, but ultimately, they have separated. New students looking to study quantum computing don't need previous knowledge from quantum physics similar to how classical computer scientists don't need knowledge from electrical engineering. 
 
-<img src="resources\img\1.1_venn.png" width="500px"/>
+<img src="html\resources\img\1.1_venn.png" width="500px"/>
 
 <center><i>Figure 1.2.1 The Two Parallel Fields</i></center>
 
@@ -94,7 +94,7 @@ Quantum information science is a parallel field of study to quantum computing, a
 
 Typically, there are three approaches to learning about quantum computing. These depend on which field the student is coming from. With classical computers, the fields in order of increasing abstractness are: electrical engineering, computer engineering, computer science, and mathematics. Electrical engineers deal with the physical implementations of computers, mathematicians deal with the proofs of logic, and the computer engineers & scientists fill in the gaps.
 
-<img src="resources\img\1.2_fields.png" width="500px"/>
+<img src="html\resources\img\1.2_fields.png" width="500px"/>
 
 <center><i>Figure 1.2.2 The Parent Fields</i></center>
 
@@ -149,7 +149,7 @@ $$
 F(x)=A\sin(B(x+C))+D
 $$
 
-<center><iframe height='500' scrolling='no' title='Sine Wave Applet' src='resources\applets\sin_wave\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sine Wave Applet</iframe></center>
+<center><iframe height='500' scrolling='no' title='Sine Wave Applet' src='..\resources\applets\sin_wave\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sine Wave Applet</iframe></center>
 
 <center><i><a href="resources/applets/sin_wave/index.html" target="_blank">Applet 2.1.1</a> The Sine Wave</i></center>
 
@@ -157,13 +157,13 @@ This figure shown above is called an _applet_. It is an interactable program emb
 
 Several famous experiments, such as the double slit experiment, have shown that light and matter can have properties of both particles and waves. This is known as _wave/particle duality_. When an electron is released from a source, it acts as a wave which propagates through space until contacting a surface. Once the electron collides with a surface, it is only observable in one location. 
 
-<img src="resources\img\2.1_electron.png" width="650px"/>
+<img src="html\resources\img\2.1_electron.png" width="650px"/>
 
 <center><i>Figure 2.1.2 - Electron Colliding with a Wall in a Random Location</i></center>
 
 The location where it will be observable is random and cannot be determined ahead of time. However, the likelihood of the electron appearing in a specific location can be calculated using a probability function.  
 
-<img src="resources\img\2.1_prob_wave.svg" width="550px"/>
+<img src="html\resources\img\2.1_prob_wave.svg" width="550px"/>
 
 <center><i>Figure 2.1.3 - A Probability Function</i></center>
 
@@ -179,7 +179,7 @@ There are already many decades worth of development in computer science which is
 
 To extend our example from the previous section, we can convert to binary by drawing a line across our wall and seeing if the electron is observed above or below the line. The electron has a probability $p$ of being above the line where $p$ is $0\leq p\leq1$. There is also a probability of $q = 1-p$ that the electron is below the line where $q$ is also $0\leq q\leq1$. 
 
-<img src="resources\img\2.2_electron_prob.png" width="650px"/>
+<img src="html\resources\img\2.2_electron_prob.png" width="650px"/>
 
 <center><i>Figure 2.2.1 - Electron Colliding with a Discretely Sectioned Wall</i></center>
 
@@ -187,7 +187,7 @@ What we have just described is known as a _probabilistic bit_, or _pbit_. A pbit
 
 Our goal is to convert a wave equation like the sine function into a pbit. One of the first things a precalculus course teaches is the relationship between trigonometric functions and circles. Taking a look at the unit circle, we can see the X and Y coordinates of the circle with radius 1 are the outputs of the cosine and sine functions.
 
-<iframe height='500' scrolling='no' title='Unit Circle Applet' src='resources\applets\unit_circle\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Unit Circle Applet</iframe>
+<iframe height='500' scrolling='no' title='Unit Circle Applet' src='..\resources\applets\unit_circle\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Unit Circle Applet</iframe>
 
 <center><i><a href="resources/applets/unit_circle/index.html" target="_blank">Applet 2.2.2</a> The Unit Circle</i></center>
 
@@ -322,7 +322,7 @@ _Spherical coordinates_ is a system of coordinates in 3 dimensions which uses a 
 
 This notation may differ from a multivariable calculus class, where $\theta$ & $\phi$'s roles are switched and $r$ is denoted $\rho$. We will be using the notation commonly used in physics and defined by the <a href="https://www.iso.org/standard/64973.html" target="_blank">ISO standard</a>.
 
-<iframe height='500' scrolling='no' title='Bloch Sphere Applet' src='resources\applets\bloch_sphere\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Sphere Applet</iframe>
+<iframe height='500' scrolling='no' title='Bloch Sphere Applet' src='..\resources\applets\bloch_sphere\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Sphere Applet</iframe>
 
 
 
@@ -339,7 +339,7 @@ The **Bloch sphere**, named after Felix Bloch, is the full model of the qubit. I
 
 The fact that $|0\rangle$ and $|1\rangle$ are orthogonal to each other may be surprising and perhaps confusing. They certainly do not seem to be perpendicular, in fact they look parallel! Let us look at a static image of the Bloch sphere:
 
-<img src="resources\img\bloch_sphere.png" width="300px"/>
+<img src="html\resources\img\bloch_sphere.png" width="300px"/>
 
 <center><i>Figure 2.4.2 - A Static Bloch Sphere</i></center>
 
@@ -391,7 +391,7 @@ $$
 $$
 It is also common to replace $X^{0.5}$ with $\sqrt{X}$. Do not change $X^{-0.7}$ into $\frac{1}{X^{0.7}}$.
 
-<iframe height='500' scrolling='no' title='Bloch Rotation Applet' src='resources\applets\bloch_rotations\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Rotation Applet</iframe>
+<iframe height='500' scrolling='no' title='Bloch Rotation Applet' src='..\resources\applets\bloch_rotations\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch Rotation Applet</iframe>
 
 <center><i><a href="resources/applets/bloch_rotations/index.html" target="_blank">Applet 2.5.1</a> Rotations on the Bloch Sphere</i></center>
 
@@ -466,7 +466,7 @@ $$
 $$
 In English, this says to first create the set $\text{span}(X)$ of our state, and then union the set $\text{span}(Z)$ for every state inside of $\text{span}(X)$. Geometrically, this describes stacking an infinite number of rings on top of each other, one for every point on the ring created by $\text{span}(X)$. This creates a band around the Bloch sphere.
 
-<iframe height='530' scrolling='no' title='Bloch State Space Applet' src='resources\applets\bloch_state_space\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch State Space Applet</iframe>
+<iframe height='530' scrolling='no' title='Bloch State Space Applet' src='..\resources\applets\bloch_state_space\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Bloch State Space Applet</iframe>
 
 <center><i><a href="resources/applets/bloch_state_space/index.html" target="_blank">Applet 2.6.1</a> State Space of Two Sequential Rotations</i></center>
 
@@ -791,13 +791,13 @@ H|1\rangle=\frac{1}{\sqrt2}(|0\rangle-|1\rangle)
 $$
 The Hadamard gate is synonymous with generating superposition because it transforms both basis states into equal superposition. The state $|0\rangle$ is mapped to the positive X axis and the state $|1\rangle$ is mapped to the negative X axis. This operation is exactly what is performed by _beam splitters_. A beam splitter is a half-silvered mirror which will split an incoming stream of photons, reflecting one stream and letting the other stream pass through. 
 
-<img src="resources\img\3.3_beam_splitter.png" width="600px" />
+<img src="html\resources\img\3.3_beam_splitter.png" width="600px" />
 
 <center><i>Figure 3.3.1 - Beam Splitter Diagram</i></center>
 
 In the above diagram, the beam of light is coming from the left and splits into two separate beams. The half-silvered mirror is placed diagonally in the box. We can place two beam splitters and two mirrors in a configuration called a **Mach-Zender Interferometer** and add detectors for each of the projected output beams.
 
-<img src="resources\img\3.3_mach_zender.png" width="732px" />
+<img src="html\resources\img\3.3_mach_zender.png" width="732px" />
 
 <center><i>Figure 3.3.2 - Mach-Zender Interferometer</i></center>
 
@@ -826,7 +826,7 @@ These beam splitters are more than neat party tricks. Using the **KLM Protocol**
 
 The next step is to rotate our quantum state around any arbitrary axis. This is an applet which shows the accessible state space of rotating the state around any axis. The sliders on the left change the $\theta$ and $\phi$ of the quantum state and the sliders on the right change the $\theta$ and $\phi$ of the axis. The axis is set to the Hadamard axis by default.
 
-<iframe height='500' scrolling='no' title='Arbitrary Axis Rotation Applet' src='resources\applets\arbitrary_axis\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Arbitrary Axis Rotation Applet</iframe>
+<iframe height='500' scrolling='no' title='Arbitrary Axis Rotation Applet' src='..\resources\applets\arbitrary_axis\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Arbitrary Axis Rotation Applet</iframe>
 
 <center><i><a href="resources/applets/arbitrary_axis/index.html" target="_blank">Applet 3.3.3</a> Arbitrary Axis Rotations Applet</i></center>
 
@@ -1002,7 +1002,7 @@ The algorithm above iterates through each bit in the index and multiplies the am
 
 When describing which gates are being applied to which qubits, using the Dirac notation can become cluttered. _Quantum circuits_ are a visual way to show the ordering of the gates. Below is an applet to show a simple quantum circuit with 2 qubits and an X, Y, and Z rotation gate on each. 
 
-<iframe height='300' scrolling='no' title='Simple Quantum Circuit Applet' src='resources\applets\simple_circuit\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Simple Quantum Circuit Applet</iframe>
+<iframe height='300' scrolling='no' title='Simple Quantum Circuit Applet' src='..\resources\applets\simple_circuit\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Simple Quantum Circuit Applet</iframe>
 
 <center><i><a href="resources/applets/simple_circuit/index.html" target="_blank">Applet 3.4.1</a> Simple Quantum Circuit Applet</i></center>
 
@@ -1082,11 +1082,11 @@ $$
 $$
 The above ket notation shows a truth table for every basis state. If the control qubit is $|0\rangle$, the CNOT acts as an identity operation and nothing happens. If the control qubit is $|1\rangle$, the target qubit is flipped. The same operation can be visualized in the tensored vector form:
 
-<img src="resources\img\3.5_cnot_vector_switch.png" />
+<img src="html\resources\img\3.5_cnot_vector_switch.png" />
 
 The CNOT transformation switches the placement of the $|10\rangle$ and $|11\rangle$ coefficients. The CNOT gate is also called the CX gate since it is essentially a controlled X rotation. The matrix form of the CNOT gate is written as:
 
-<img src="resources\img\3.5_cnot_matrix.png" />
+<img src="html\resources\img\3.5_cnot_matrix.png" />
 
 Notice how the transformation the CNOT applies changes depending which qubit is acting as the control. In circuit form, the small black dot denotes the control qubit and the large $\oplus$ shows the target qubit. Remember that we are using the standard where the topmost qubit line is the least significant qubit. The truth table and the tensored vector descriptions are referring to the top circuit where the control qubit is below the target qubit. Some sources use a different standard where the bottom-most qubit is the least significant qubit, which would switch the matrix-circuit representations.
 
@@ -1111,7 +1111,7 @@ X := X\oplus Y
 $$
 After 3 XORs, the variable $X$ will contain the original value of $Y$ and vice versa. As we have already discussed, the CNOT gate is the reversible equivalent to the XOR gate, which means we can create a SWAP gate out of 3 CNOT gates:
 
-<img src="resources\img\3.5_swap_circuit.png" width="850px" />
+<img src="html\resources\img\3.5_swap_circuit.png" width="850px" />
 
 This gate switches the incoming qubit states so the bottom qubit now contains the original state of the top qubit and vice versa. The SWAP gate is symmetric with respect to the qubits it is swapping. That is to say, $\text{SWAP}(|\psi\rangle,|\varphi\rangle)=\text{SWAP}(|\varphi\rangle,|\psi\rangle)$. As expected, the SWAP gate is its own inverse, so two sequential SWAP gates is an identity operation. The matrix of the SWAP gate is:
 $$
@@ -1138,19 +1138,19 @@ $$
 $$
 The controlled Z gate applies a phase shift only when both qubits are in the state $|11\rangle$. This operation is symmetric with respect to the input qubits:
 
-<img src="resources\img\3.5_cz_circuit.png" width="450px" />
+<img src="html\resources\img\3.5_cz_circuit.png" width="450px" />
 
 Since the orientation of the CZ gate doesn't matter, another common notation for the gate is to have control dots on both qubits. The matrix representation of the gate is:
 
-<img src="resources\img\3.5_cz_matrix.png"  width="350px"/>
+<img src="html\resources\img\3.5_cz_matrix.png"  width="350px"/>
 
 A CZ gate can be constructed using a CNOT gate and 2 Hadamard gates like so:
 
-<img src="resources\img\3.5_cx_cz_equal.png" width="550px"/>
+<img src="html\resources\img\3.5_cx_cz_equal.png" width="550px"/>
 
 Using the above relationship, we can flip the CZ gate since it is symmetric and create a method to flip the CNOT gate using Hadamard gates.
 
-<img src="resources\img\3.5_cx_flip.png" width="550px"/>
+<img src="html\resources\img\3.5_cx_flip.png" width="550px"/>
 
 The controlled Z gate has applications in simulating quantum circuits on quantum computers. The runtime of simulating a CZ gate is faster than a CNOT gate, so if a circuit can be transformed into an equivalent circuit using approximately the same number of gates, the simulation will be noticeably faster.
 
@@ -1163,11 +1163,11 @@ u_{00} & u_{01} \\
 u_{10} & u_{11}
 \end{bmatrix}
 $$
-<img src="resources\img\3.5_cu_matrix.png"/>
+<img src="html\resources\img\3.5_cu_matrix.png"/>
 
 Every 2 qubit gate described above has acted on adjacent qubits inside the circuit. It is also possible to have the control further away and "jump over" qubits to reach the target. The CU gate does not impact the two qubits which do not have a control or gate placed on them. However, what if we have a constraint on our circuit that all 2 qubit gates must act on adjacent qubits? This can be overcome by simply using SWAP gates to pull the control closer:
 
-<img src="resources\img\3.5_cu_space.png" width="600px"/>
+<img src="html\resources\img\3.5_cu_space.png" width="600px"/>
 
 This idea can be extended for any number of intermediate qubits by increasing the staircase of SWAP gates. Engineering physical quantum computers is already a challenging task, creating controlled gates between any pair of arbitrary qubits in the circuit may be infeasible. As a result, this trick can be used so engineers only need to implement controlled operations between adjacent qubits in the circuit. 
 
@@ -1200,7 +1200,7 @@ If the state is scrambled, it means the order of the elements have been shuffled
 
 How can we unscramble the remaining states? For this, we'll introduce a new gate, the **Toffoli** gate. The Toffoli gate is a controlled-controlled NOT operation, denoted as CCNOT or $C^2(X)$. If both of the control bits are on, the target bit gets flipped. 
 
-<img src="resources\img\3.5_toff_matrix.png"/>
+<img src="html\resources\img\3.5_toff_matrix.png"/>
 
 a
 
@@ -1220,7 +1220,7 @@ After discussing the operations a quantum computer can perform to its qubits, ho
 
 Modern quantum programming workflow first creates a desired circuit in a quantum programming library on a classical computer. Then that circuit is sent to either a quantum computer or a quantum simulator to run. After, the result of the computation is returned to the user, typically as a histogram of measurement results. This histogram is now considered classical data and the user can use it as they please. 
 
-<img src="resources\img\3.7_workflow.png"/>
+<img src="html\resources\img\3.7_workflow.png"/>
 
 <center><i>Figure 3.7.1 - Modern Quantum Programming Workflow</i></center>
 
@@ -1306,7 +1306,7 @@ There are limitations on the quantum computer as well. The Sycamore processor is
 
 To create circuits that have all three properties, the Google quantum team used a pseudorandom generator which uses a seed to create circuits in this format:
 
-<img src="resources\img\4.5_circuit.png" width="800px" />
+<img src="html\resources\img\4.5_circuit.png" width="800px" />
 
 
 
@@ -1314,7 +1314,7 @@ To create circuits that have all three properties, the Google quantum team used 
 
 The circuit is divided into _m_ cycles in which every cycle has 1 single qubit gate applied per qubit followed a double qubit gate. The single qubit gates are chosen pseudo randomly and can be $\sqrt{X}$, $\sqrt{Y}$, or $\sqrt{W}$. Two gates of the same axis cannot be chosen sequentially. The $\sqrt{W}$ gate is a rotation of $\frac{\pi}{2}$ radians around the axis $(X+Y)/\sqrt2$. Similar to the Hadamard axis, this axis is formed by the line $X=Y$ when $Z=0$. The double qubit gates are chosen from a set sequence: repeat $ABCDCDAB$. The chosen letter represents the gate being applied to every pair of neighbor qubits connected by a colored coupler. 
 
-<iframe height='500' scrolling='no' title='Sycamore Coupler Applet' src='resources\applets\sycamore_couplers\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sycanmore Couplet Applet</iframe>
+<iframe height='500' scrolling='no' title='Sycamore Coupler Applet' src='..\resources\applets\sycamore_couplers\index.html' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; user-select:none;'>Sycanmore Couplet Applet</iframe>
 
 <center><i><a href="resources/applets/sycamore_couplers/index.html" target="_blank">Applet 4.5.2</a> Sycamore's QPU Architecture</i></center>
 
@@ -1488,7 +1488,7 @@ General goal of a quantum algorithm: Minimize probability of 'wrong' answers & m
 
 QFT, Shors, Grovers, Deutsch-Jozsa Problem, Simons Problem, etc.
 
-<img src="resources\img\1.2_comp_class.png" width="400px"/>
+<img src="html\resources\img\1.2_comp_class.png" width="400px"/>
 
 <center><i>Figure 1.2.1 Common Complexity Classes</i></center>
 

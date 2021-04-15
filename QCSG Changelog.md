@@ -2,6 +2,10 @@
 
 [toc]
 
+#### Version 0.2.8 - April 15, 2021
+
+* Split the document into separate files for each chapter
+
 #### Version 0.2.7 - November 17, 2020
 
 * Added Subsection - Single Qubit Gate Decomposition
