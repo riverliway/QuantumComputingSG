@@ -106,7 +106,7 @@ $$
 -\text{acos}(\frac{x}{\sqrt{x^2+y^2}}) & y<0
 \end{cases}
 $$
-The denominator inside the $\text{acos}$ function can be disregarded if it is assumed that $x$ and $y$ are distance $1$ away from the origin.
+The denominator inside the $\text{acos}$ function can be disregarded if it is assumed that the point is distance $1$ away from the origin.
 
 Typically our quantum state vector will hold Euclidean complex numbers since they are the easiest to work with in programs. Our first step to convert the vector contents to polar complex numbers:
 $$
