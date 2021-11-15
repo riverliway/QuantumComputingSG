@@ -22,4 +22,4 @@ View the [changelog](https://github.com/zackatoo/QuantumComputingSG/blob/master/
 
 Cite this book in MLA format:
 
-Schieberl, Zack. _Quantum Computing Survival Guide_. Github, 2020.
+Schieberl, River. _Quantum Computing Survival Guide_. Github, 2020.
